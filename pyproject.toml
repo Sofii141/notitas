@@ -1,5 +1,5 @@
 [tool.pytest.ini_options]
-pythonpath = ["src"]
+pythonpath = ["backend"]
 addopts = "-q"
 # `python -m pytest` sin ruta solo corre las visibles: las ocultas se corren a propósito, después de "terminado".
-testpaths = ["tests/visibles"]
+testpaths = ["backend/tests/visibles"]

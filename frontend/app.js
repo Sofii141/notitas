@@ -260,4 +260,4 @@ $("#dlg-nueva").addEventListener("close", async () => {
   } catch (err) { aviso(err.message, true); }
 });
 
-cargar().catch(() => aviso("No se pudo conectar con el servidor. ¿Corriste python demo/servidor.py?", true));
+cargar().catch(() => aviso("No se pudo conectar con el servidor. ¿Corriste python backend/servidor.py?", true));

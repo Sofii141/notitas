@@ -1,8 +1,8 @@
 # Tareas de Notitas
 
-Notitas es un tablero kanban de notas adhesivas (columnas **Por hacer · En curso · Hecho**). Cada tarea es **una regla del backend**, escrita como una función o clase pura de Python, con pruebas visibles y ocultas. El front (la página con animaciones) ya está hecho y **no se mide**: usa estas funciones a través de `demo/servidor.py`.
+Notitas es un tablero kanban de notas adhesivas (columnas **Por hacer · En curso · Hecho**). Cada tarea es **una regla del backend**, escrita como una función o clase pura de Python, con pruebas visibles y ocultas. El front (la página con animaciones) ya está hecho y **no se mide**: usa estas funciones a través de `backend/servidor.py`. Programar una tarea es reemplazar el `raise NotImplementedError` de su archivo por la lógica.
 
-Tamaño: S ≈ 15–25 min · M ≈ 25–45 min · L ≈ 45–70 min (estimado; lo real lo dirá el cronómetro).
+Tamaño (estimado por juicio; ver el README): **S** pequeña ≈ 15–25 min · **M** mediana ≈ 25–45 min · **L** grande ≈ 45–70 min. Lo real lo dirá el cronómetro.
 Columnas válidas en todas las tareas: `"por_hacer"`, `"en_curso"` y `"hecho"`.
 
 | ID | Tarea | Tamaño | Difícil |
@@ -34,7 +34,7 @@ Columnas válidas en todas las tareas: `"por_hacer"`, `"en_curso"` y `"hecho"`.
 
 ## t01 · Validar el título de una nota (S)
 
-Archivo: `src/notitas/t01.py`
+Archivo: `backend/notitas/t01.py`
 
 Firma: `def validar_titulo(s: str) -> str`
 
@@ -46,7 +46,7 @@ Devuelve el título limpio o lanza `ValueError`.
 
 ## t02 · Color de la nota (S)
 
-Archivo: `src/notitas/t02.py`
+Archivo: `backend/notitas/t02.py`
 
 Firma: `def normalizar_color(c: str) -> str`
 
@@ -67,7 +67,7 @@ Las notitas solo pueden tener un color de la paleta del tablero:
 
 ## t03 · Transiciones entre columnas (M) ⚠️
 
-Archivo: `src/notitas/t03.py`
+Archivo: `backend/notitas/t03.py`
 
 Firma: `def puede_mover(origen: str, destino: str) -> bool`
 
@@ -79,7 +79,7 @@ Las columnas son `"por_hacer"`, `"en_curso"` y `"hecho"`.
 
 ## t04 · Límite WIP de "En curso" (M) ⚠️
 
-Archivo: `src/notitas/t04.py`
+Archivo: `backend/notitas/t04.py`
 
 Firma: `def validar_wip(notas: list[dict], nota_id: str, destino: str, limite: int = 3) -> None`
 
@@ -91,7 +91,7 @@ Cada nota es un diccionario con al menos `"id"` y `"columna"`. El módulo ya def
 
 ## t05 · Insertar en una posición (M)
 
-Archivo: `src/notitas/t05.py`
+Archivo: `backend/notitas/t05.py`
 
 Firma: `def insertar_en_posicion(ids: list[str], nota_id: str, posicion: int) -> list[str]`
 
@@ -102,7 +102,7 @@ Firma: `def insertar_en_posicion(ids: list[str], nota_id: str, posicion: int) ->
 
 ## t06 · Filtrar por etiquetas (S)
 
-Archivo: `src/notitas/t06.py`
+Archivo: `backend/notitas/t06.py`
 
 Firma: `def filtrar_por_etiquetas(notas: list[dict], etiquetas: list[str], modo: str = "todas") -> list[dict]`
 
@@ -114,7 +114,7 @@ Cada nota tiene `"etiquetas"` (lista de textos).
 
 ## t07 · Buscar sin tildes ni mayúsculas (M) ⚠️
 
-Archivo: `src/notitas/t07.py`
+Archivo: `backend/notitas/t07.py`
 
 Firma: `def buscar(notas: list[dict], texto: str) -> list[str]`
 
@@ -126,7 +126,7 @@ Cada nota tiene `"id"`, `"titulo"` y `"contenido"`. Devuelve los `id` de las not
 
 ## t08 · Estado de vencimiento (M) ⚠️
 
-Archivo: `src/notitas/t08.py`
+Archivo: `backend/notitas/t08.py`
 
 Firma: `def estado_vencimiento(vence: str | None, ahora: datetime) -> str`
 
@@ -137,7 +137,7 @@ Firma: `def estado_vencimiento(vence: str | None, ahora: datetime) -> str`
 
 ## t09 · Normalizar etiquetas (S)
 
-Archivo: `src/notitas/t09.py`
+Archivo: `backend/notitas/t09.py`
 
 Firma: `def normalizar_etiquetas(etiquetas: list[str]) -> list[str]`
 
@@ -147,7 +147,7 @@ Firma: `def normalizar_etiquetas(etiquetas: list[str]) -> list[str]`
 
 ## t10 · Qué notas se archivan (S)
 
-Archivo: `src/notitas/t10.py`
+Archivo: `backend/notitas/t10.py`
 
 Firma: `def notas_para_archivar(notas: list[dict], hoy: date) -> list[str]`
 
@@ -158,7 +158,7 @@ Cada nota tiene `"id"`, `"columna"` y, si está hecha, `"fecha_hecho"` (`"AAAA-M
 
 ## t11 · Deshacer movimientos (M)
 
-Archivo: `src/notitas/t11.py`
+Archivo: `backend/notitas/t11.py`
 
 Clase: `Historial` con `registrar(movimiento: dict) -> None` y `deshacer() -> dict | None`
 
@@ -169,7 +169,7 @@ Un movimiento es `{"nota_id": ..., "desde": ..., "hacia": ...}`.
 
 ## t12 · Dos personas mueven la misma nota (L) ⚠️
 
-Archivo: `src/notitas/t12.py`
+Archivo: `backend/notitas/t12.py`
 
 Clase: `Tablero(notas: list[dict])` con `mover(nota_id: str, destino: str, version: int) -> dict`. El módulo ya define la excepción `Conflicto`.
 
@@ -182,7 +182,7 @@ Cada nota tiene `"id"`, `"columna"` y `"version"` (entero). Es **bloqueo optimis
 
 ## t13 · Exportar e importar el tablero (M)
 
-Archivo: `src/notitas/t13.py`
+Archivo: `backend/notitas/t13.py`
 
 Firmas: `def exportar(tablero: dict) -> str` y `def importar(texto: str) -> dict`
 
@@ -193,7 +193,7 @@ Un tablero es `{"notas": [ {...}, ... ]}`.
 
 ## t14 · Contenido seguro (sin inyectar HTML) (M) ⚠️
 
-Archivo: `src/notitas/t14.py`
+Archivo: `backend/notitas/t14.py`
 
 Firma: `def limpiar_contenido(texto: str) -> str`
 
@@ -205,7 +205,7 @@ El contenido de una nota se muestra como HTML en el tablero. No se puede permiti
 
 ## t15 · Resumen por columna (S)
 
-Archivo: `src/notitas/t15.py`
+Archivo: `backend/notitas/t15.py`
 
 Firma: `def resumen_columnas(notas: list[dict]) -> dict`
 
@@ -215,7 +215,7 @@ Firma: `def resumen_columnas(notas: list[dict]) -> dict`
 
 ## t16 · Ordenar por prioridad y fecha (S)
 
-Archivo: `src/notitas/t16.py`
+Archivo: `backend/notitas/t16.py`
 
 Firma: `def ordenar(notas: list[dict]) -> list[dict]`
 
@@ -226,7 +226,7 @@ Cada nota tiene `"prioridad"` (1 baja, 2 media, 3 alta) y `"vence"` (`"AAAA-MM-D
 
 ## t17 · Paginar el listado (S)
 
-Archivo: `src/notitas/t17.py`
+Archivo: `backend/notitas/t17.py`
 
 Firma: `def paginar(items: list, pagina: int, tamano: int = 10) -> dict`
 
@@ -237,7 +237,7 @@ Firma: `def paginar(items: list, pagina: int, tamano: int = 10) -> dict`
 
 ## t18 · Iniciales del responsable (S)
 
-Archivo: `src/notitas/t18.py`
+Archivo: `backend/notitas/t18.py`
 
 Firma: `def iniciales(nombre: str) -> str`
 
@@ -249,7 +249,7 @@ Para el circulito del responsable en cada nota.
 
 ## t19 · Progreso de la checklist (M)
 
-Archivo: `src/notitas/t19.py`
+Archivo: `backend/notitas/t19.py`
 
 Firma: `def progreso_checklist(items: list[dict]) -> dict`
 
@@ -261,7 +261,7 @@ Cada ítem es `{"texto": str, "hecho": bool}`.
 
 ## t20 · Duplicar una nota (S) ⚠️
 
-Archivo: `src/notitas/t20.py`
+Archivo: `backend/notitas/t20.py`
 
 Firma: `def duplicar(nota: dict, nuevo_id: str) -> dict`
 
@@ -271,7 +271,7 @@ Firma: `def duplicar(nota: dict, nuevo_id: str) -> dict`
 
 ## t21 · Fusionar cambios de dos dispositivos (L) ⚠️
 
-Archivo: `src/notitas/t21.py`
+Archivo: `backend/notitas/t21.py`
 
 Firma: `def fusionar(base: dict, a: dict, b: dict) -> dict`
 
@@ -287,7 +287,7 @@ Reglas, **campo por campo** (todos los campos de `base`, `a` y `b`, menos `"modi
 
 ## t22 · Notas bloqueadas (M)
 
-Archivo: `src/notitas/t22.py`
+Archivo: `backend/notitas/t22.py`
 
 Firma: `def mover_bloqueada(nota: dict, destino: str, motivo: str | None = None) -> dict`. El módulo ya define la excepción `NotaBloqueada`.
 
@@ -299,7 +299,7 @@ Una nota puede estar bloqueada (`"bloqueada": True`), por ejemplo porque espera 
 
 ## t23 · Tiempo de ciclo (M) ⚠️
 
-Archivo: `src/notitas/t23.py`
+Archivo: `backend/notitas/t23.py`
 
 Firma: `def tiempo_ciclo(eventos: list[dict]) -> float | None`
 
@@ -311,7 +311,7 @@ Cada evento es `{"hacia": columna, "en": fecha ISO 8601 con zona horaria}`: el m
 
 ## t24 · Límite de notas por minuto (M) ⚠️
 
-Archivo: `src/notitas/t24.py`
+Archivo: `backend/notitas/t24.py`
 
 Clase: `LimiteCreacion(max_por_minuto: int = 5)` con `permitir(usuario: str, ahora: float) -> bool`
 

@@ -2,9 +2,9 @@
 
 Toda la lógica vive en las tareas t01–t24; este archivo solo guarda las notas en un JSON y las llama.
 Si una tarea todavía no está implementada, su regla queda "pendiente" y el tablero sigue funcionando sin ella:
-así la demo se va "encendiendo" a medida que avanzan. La página (`index.html`) no valida nada.
+así la demo se va "encendiendo" a medida que avanzan. La página (`frontend/`) no valida nada.
 
-Uso:  python demo/servidor.py  y abrir http://localhost:8000
+Uso:  python backend/servidor.py  y abrir http://localhost:8000
 La demo NO se mide y no se toca durante una sesión cronometrada.
 """
 import copy
@@ -19,7 +19,8 @@ from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
 AQUI = Path(__file__).resolve().parent
-sys.path.insert(0, str(AQUI.parent / "src"))
+FRONT = AQUI.parent / "frontend"
+sys.path.insert(0, str(AQUI))
 
 from notitas import (t01, t02, t03, t04, t05, t06, t07, t08, t09, t10, t11, t12,  # noqa: E402
                      t13, t14, t15, t16, t17, t18, t19, t20, t21, t22, t23, t24)
@@ -281,8 +282,8 @@ class Manejador(BaseHTTPRequestHandler):
             if texto is None:
                 return self._responder(501, {"error": "Exportar todavía no está disponible (tarea t13 pendiente)."})
             return self._responder(200, texto.encode("utf-8"), "application/json; charset=utf-8")
-        archivo = AQUI / ("index.html" if url.path in ("/", "") else url.path.lstrip("/"))
-        if archivo.is_file() and AQUI in archivo.resolve().parents:
+        archivo = FRONT / ("index.html" if url.path in ("/", "") else url.path.lstrip("/"))
+        if archivo.is_file() and FRONT.resolve() in archivo.resolve().parents:
             tipo = {".html": "text/html", ".css": "text/css", ".js": "text/javascript", ".ttf": "font/ttf", ".svg": "image/svg+xml"}
             return self._responder(200, archivo.read_bytes(), tipo.get(archivo.suffix, "application/octet-stream") + "; charset=utf-8")
         self._responder(404, {"error": "No encontrado"})

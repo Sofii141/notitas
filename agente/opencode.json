@@ -3,12 +3,12 @@
   "permission": {
     "read": {
       "*": "allow",
-      "tests/ocultas/*": "deny",
+      "backend/tests/ocultas/*": "deny",
       "*.env": "deny"
     },
     "edit": {
       "*": "ask",
-      "tests/*": "deny"
+      "backend/tests/*": "deny"
     },
     "bash": {
       "*": "ask",
