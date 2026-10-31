@@ -21,7 +21,7 @@ Ana Sofía Arango Yanza · Juan José Arias Chacua · Prof. César Pardo
 | `99 - Videos` | Video de respaldo de la demo (2 min) |
 | `_Estilo` | Paleta "Macarons", fuentes, `estilo.css`, plantilla HTML, `html_a_pdf.py` y `estilo_xlsx.py` (para Excel): **todo documento y las diapositivas siguen este estilo** |
 
-> **31/10:** el caso base cambió a **Notitas** (tablero kanban de notas), con aprobación del profe; plazo del caso base hasta el 3/11. Versiones vigentes: [GQM v3](03%20-%20Linea%20base/31102026_01_GQM_v3.md) y [bitácora v3](05%20-%20Ciclos%20y%20bitacora/31102026_01_Bitacora_v3.xlsx). `_Privado/` (soluciones de referencia) no se sube y no se abre antes de medir.
+> **31/10:** el caso base cambió a **Notitas** (tablero kanban de notas), con aprobación del profe; plazo del caso base hasta el 3/11. **Lo que se entrega el 3/11:** [31102026_01_Punto_Control_v3.pdf](09%20-%20Control%20de%20entrega/31102026_01_Punto_Control_v3.pdf). **Paso a paso:** [31102026_02_Guia_Entrega_y_Medicion_v2.pdf](09%20-%20Control%20de%20entrega/31102026_02_Guia_Entrega_y_Medicion_v2.pdf). Versiones vigentes: [spec v1](04%20-%20Especificacion%20agentes/31102026_01_Spec_Copiloto_v1.md), [GQM v3](03%20-%20Linea%20base/31102026_01_GQM_v3.md) y [bitácora v3](05%20-%20Ciclos%20y%20bitacora/31102026_01_Bitacora_v3.xlsx). `_Privado/` (soluciones de referencia) no se sube y no se abre antes de medir.
 
 ## Ramas del repositorio (https://github.com/Sofii141/CAMEIA-lite)
 - `main`: código del caso base (carpeta local `Repositorio/CAMEIA-lite`).
