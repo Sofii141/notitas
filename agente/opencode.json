@@ -1,0 +1,23 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "permission": {
+    "read": {
+      "*": "allow",
+      "tests/ocultas/*": "deny",
+      "*.env": "deny"
+    },
+    "edit": {
+      "*": "ask",
+      "tests/*": "deny"
+    },
+    "bash": {
+      "*": "ask",
+      "git commit *": "deny",
+      "git push *": "deny",
+      "git merge *": "deny"
+    },
+    "external_directory": "deny",
+    "webfetch": "deny",
+    "websearch": "deny"
+  }
+}

@@ -1,18 +1,23 @@
-# Cómo preparar Claude Code para los ciclos (no se usa en la línea base)
+# Cómo preparar el agente para los ciclos (no se usa en la línea base)
 
-La spec v1 dice que el agente trabaja en una **copia del repo sin `tests/ocultas`** y que **no puede hacer commit ni push ni leer las ocultas**. Para cumplirlo:
+**Agente:** OpenCode con el modelo gratuito **DeepSeek V4.1 Flash**. Los dos usan exactamente el mismo modelo durante todo el ciclo.
 
-1. Crear la copia de trabajo de la tarea, fuera de esta carpeta:
+La spec v1 dice que el agente trabaja en una **copia del repo sin `tests/ocultas`** y que **no puede hacer commit, push ni leer las ocultas**. Para cumplirlo, en cada tarea:
+
+1. Crear la copia de trabajo, fuera de esta carpeta:
    ```bash
    git clone https://github.com/Sofii141/CAMEIA-lite.git notitas-agente
    cd notitas-agente
    rm -rf tests/ocultas
-   mkdir .claude
-   cp agente/settings.json .claude/settings.json
+   cp agente/opencode.json opencode.json
    ```
-2. Abrir Claude Code **en esa carpeta** (`claude`) y anotar en la hoja *Sesiones* el modelo (`/model`) y la versión (`claude --version`).
-3. Pegarle solo lo que dice la spec: el enunciado de la tarea en `TAREAS.md`, `src/notitas/tNN.py` y `tests/visibles/test_tNN.py`.
-4. Cada propuesta del agente es una fila de la bitácora: aceptar, corregir o rechazar, con su razón.
+2. Abrir OpenCode **en esa carpeta** (`opencode`), escribir `/models` y elegir **DeepSeek V4.1 Flash**. Anotar en la hoja *Sesiones* el nombre del modelo tal como aparece y la versión de OpenCode (`opencode --version`).
+3. Darle solo lo que dice la spec: el enunciado de la tarea en `TAREAS.md`, `src/notitas/tNN.py` y `tests/visibles/test_tNN.py`.
+4. Cada propuesta del agente es una fila de la bitácora: aceptar, corregir o rechazar, con su razón. `opencode.json` hace que **pida permiso** antes de editar un archivo o correr un comando: ese es el punto de control humano.
 5. Al declarar "terminado", **la persona** copia `tNN.py` al repo original, hace el commit y corre ahí las pruebas ocultas.
 
-`settings.json` le niega a Claude Code: hacer commit, push o merge; leer `tests/ocultas`; editar las pruebas; leer `.env`; y salir de la carpeta.
+`opencode.json` (sintaxis oficial: https://opencode.ai/docs/permissions/) le niega lo siguiente: leer `tests/ocultas` y `.env`; editar las pruebas; hacer commit, push o merge; salir de la carpeta; y buscar en internet. Todo lo demás lo pregunta antes de hacerlo.
+
+**Antes del ciclo 1:** hagan un piloto con t04 o t06 (las de repuesto) para comprobar que los permisos funcionan. Pídanle que lea `tests/ocultas`: debe negarse. El piloto no cuenta en la medición.
+
+**Privacidad:** los modelos gratuitos pueden guardar lo que se les envía. Notitas no tiene datos personales ni secretos, así que no hay problema; igual se menciona en el análisis de riesgos (confidencialidad).
