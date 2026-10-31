@@ -50,25 +50,17 @@
 | Condición | **Pareja humana** (driver/navigator, sin IA) | **Pareja con agente** (una persona + agente copiloto) |
 | Casos | ≥10 tareas | ≥5 tareas por ciclo (≥10 en total) |
 
-**Caso base:** tareas de desarrollo **reales** de CAMEIA (backlog/Jira/repos; ya lo usaron en E1/E2 y tienen datos históricos). Si usan el proyecto de Juan José, igual: lo importante es que sea real. Tareas pequeñas (30–90 min) para que quepan en el tiempo.
+**Caso base (actualizado el 31/10):** **Notitas**, un tablero kanban de notas adhesivas con 24 tareas de backend (10 S · 12 M · 2 L, 10 difíciles), aprobado por el profe en reemplazo de CAMEIA-lite (que quedó en el tag `congelado-v1`). Plazo del caso base: martes 3/11.
 - Incluyan **difíciles a propósito** (≥4 de 12): código que ninguno escribió, requisito ambiguo, API/librería que no conocen, bug difícil de reproducir, una tarea con un riesgo de seguridad escondido, una parte con factor de camión 0.
 - **Clasifiquen por tamaño (S/M/L) y asignen condición por sorteo dentro de cada tamaño** (así se hizo en el estudio de METR; Hannay et al. 2009 muestran que el efecto del pairing depende de la complejidad).
 - Congelen el caso (fecha en cada ficha) **antes** de medir. Lo que falte después va como limitación.
 - Revisen datos sensibles antes de dárselos al agente (y si el repo es del Proyecto II, que el equipo esté de acuerdo).
 
-**GQM (una sola práctica, varias preguntas):**
-Objetivo: *evaluar si desarrollar con un agente copiloto, frente a la pareja humana, reduce tiempo sin aumentar retrabajo ni errores y sin perder la comprensión del código.*
+**GQM (actualizado el 31/10):** son 5 métricas directas: minutos, ocultas que fallan, minutos de retrabajo, codewalk 0–5 y pronóstico. El detalle está en `03 - Linea base/31102026_01_GQM_v3.md`.
 
-| Pregunta | Métrica | Cómo se toma |
-|---|---|---|
-| P1 ¿Se tarda menos? | Minutos efectivos por tarea (por tamaño) | Cronómetro, no estimado ni "sentido" |
-| P2 ¿Hay más retrabajo? | Commits/cambios hechos después de declarar "terminado" | Historial git de la rama |
-| P3 ¿Se detectan errores a tiempo? | Defectos detectados antes del merge vs. escapados | Pruebas + revisión del compañero |
-| P4 ¿Qué aprendizaje desaparece? *(el tema)* | Comprensión 0–5 del autor y del compañero | *Codewalk* de 5 min / 5 preguntas sin mirar el código ni al agente (su instrumento de la E2) |
+El codewalk es lo que conecta todo con el tema. La literatura revisada por pares dice que con IA se acepta con **menos escrutinio** (Welter et al. 2025), que los estudiantes **no entendían por qué funcionaban** las sugerencias (Shihab et al. 2025) y que hay **más confianza con menos seguridad** (Perry et al. 2023); en contra, Kazemitabaar et al. (2023) no encontró menos retención. Ustedes lo comprueban o lo refutan con su propio caso.
 
-P4 es lo que conecta todo: la literatura dice que con IA **se siente** más rápido (METR 2025: 19 % más lentos creyéndose 20 % más rápidos), se revisa con **menos escrutinio** (Welter et al. 2025) y **se entiende menos** (Anthropic 2026: ~17 puntos menos en comprensión). Ustedes lo comprueban o lo refutan con su propio caso.
-
-**Agentes:** empiecen con **uno solo** (Copiloto/navegante). Agreguen un "Revisor" en el ciclo 2 **solo si** la bitácora del ciclo 1 muestra un problema que el primero no resolvía, y expliquen qué pasa cuando discrepan. Plantilla de spec ya creada en `04 - Especificacion agentes`.
+**Agentes:** empiecen con **uno solo** (Copiloto/navegante): **OpenCode con DeepSeek V4.1 Flash**, el mismo modelo para los dos. Agreguen un "Revisor" en el ciclo 2 **solo si** la bitácora del ciclo 1 muestra un problema que el primero no resolvía, y expliquen qué pasa cuando discrepan. Plantilla de spec ya creada en `04 - Especificacion agentes`.
 
 ---
 
@@ -78,7 +70,7 @@ P4 es lo que conecta todo: la literatura dice que con IA **se siente** más ráp
 - [ ] Confirmar que el tema 3 quedó registrado en el archivo compartido (cerró el 24/10) y guardar captura en `09`.
 - [ ] Ojo con la semana: **Entrega 2 el 27/10 y Parcial 2 el 28/10** del curso, y el punto de control es el **30/10**. Repártanse bien.
 
-### 🔴 Próxima entrega: Punto de control — viernes 30 de octubre (sin nota, pero con consecuencia)
+### 🔴 Próxima entrega: caso base y línea base hasta el martes 3 de noviembre (el profe amplió el plazo; paso a paso en `09 - Control de entrega/31102026_02_Guia_Entrega_y_Medicion_v2.pdf`)
 - [ ] **Caso base**: ≥10 fichas (mejor 12) con difíciles marcadas, congeladas. → `02 - Caso base/Casos propios`
 - [ ] **Línea base medida**: ≥10 tareas en pareja humana con la hoja *Medicion por caso* llena + condiciones (quién, cuánto duró, herramientas). → `03 - Linea base`
 - [ ] **GQM** escrito. → `03 - Linea base`
@@ -118,10 +110,11 @@ P4 es lo que conecta todo: la literatura dice que con IA **se siente** más ráp
 - Afirmar causalidad con n = 10.
 - Darle al agente lo que no le darían a un tercero (secretos, datos personales).
 
-## 6. Archivos ya creados (versiones vigentes al 29/10)
-- `05 - Ciclos y bitacora/29102026_01_Bitacora_v2.xlsx` — sesiones, medición por caso, codewalk, bitácora y resumen.
-- `04 - Especificacion agentes/29102026_01_Spec_Copiloto_v1.md` — spec v1 con los 8 campos del PDF.
-- `03 - Linea base/29102026_01_GQM_v2.md` — GQM.
-- `01 - Exposicion/Fuentes/29102026_01_Fuentes_v2.md` y `29102026_02_Como_Medir_y_Presentar_v2.md` — fuentes revisadas por pares y cómo presentar resultados.
-- `09 - Control de entrega/29102026_02_Punto_Control_v2.pdf` — lo que se lleva el 30/10.
+## 6. Archivos ya creados (versiones vigentes al 31/10)
+- `Repositorio/CAMEIA-lite` (rama `main`): caso base **Notitas** — `TAREAS.md`, `sorteo.py`, `demo/` y `agente/opencode.json`.
+- `05 - Ciclos y bitacora/31102026_01_Bitacora_v3.xlsx` — sesiones, medición por caso, codewalk, bitácora y resumen.
+- `04 - Especificacion agentes/31102026_01_Spec_Copiloto_v1.md` — spec v1 (OpenCode + DeepSeek V4.1 Flash).
+- `03 - Linea base/31102026_01_GQM_v3.md` — GQM con 5 métricas directas.
+- `01 - Exposicion/Fuentes/29102026_01_Fuentes_v2.md` y `31102026_01_Como_Medir_y_Presentar_v3.md` — fuentes revisadas por pares y cómo presentar los resultados.
+- `09 - Control de entrega/31102026_01_Punto_Control_v3.pdf` — lo que se envía el 3/11; `31102026_02_Guia_Entrega_y_Medicion_v2.pdf` — el paso a paso.
 - `02 - Caso base/Plantilla_Ficha_Caso.md` — ficha de cada caso.

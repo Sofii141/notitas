@@ -2,7 +2,7 @@
 
 Ana Sofía Arango Yanza · Juan José Arias Chacua · Prof. César Pardo
 
-**Empiecen por [GUIA_EntregaFinal.md](GUIA_EntregaFinal.md)**. Para el punto de control del 30/10, lean primero la revisión del 29/10: [09 - Control de entrega/29102026_01_Revision_Entrega_v1.pdf](09%20-%20Control%20de%20entrega/29102026_01_Revision_Entrega_v1.pdf). Ahí están el semáforo, lo que se corrigió y los pasos pendientes en orden. **Lo que se envía el 30/10:** [29102026_02_Punto_Control_v2.pdf](09%20-%20Control%20de%20entrega/29102026_02_Punto_Control_v2.pdf). **Cómo medir la línea base, paso a paso:** [29102026_03_Guia_Entrega_y_Medicion_v1.pdf](09%20-%20Control%20de%20entrega/29102026_03_Guia_Entrega_y_Medicion_v1.pdf).
+**Empiecen por [GUIA_EntregaFinal.md](GUIA_EntregaFinal.md)**. **Lo que se envía el martes 3/11:** [31102026_01_Punto_Control_v3.pdf](09%20-%20Control%20de%20entrega/31102026_01_Punto_Control_v3.pdf). **Paso a paso para revisar, congelar, sortear y medir:** [31102026_02_Guia_Entrega_y_Medicion_v2.pdf](09%20-%20Control%20de%20entrega/31102026_02_Guia_Entrega_y_Medicion_v2.pdf). Los documentos con fecha del 25 al 29/10 son de CAMEIA-lite y se conservan como historial.
 
 ## Carpetas
 | Carpeta | Qué va |
