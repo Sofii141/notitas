@@ -18,7 +18,7 @@ h1, h2, h3 { font-family: "Fraunces", Georgia, serif; color: var(--chocolate); m
   background: var(--chocolate); color: var(--crema); box-shadow: 0 4px 18px #79371d40; }
 .marca { display: flex; align-items: center; gap: 10px; }
 .marca h1 { color: var(--crema); font-size: 26px; font-weight: 800; }
-.logo { font-size: 26px; color: var(--fresa); display: inline-block; animation: girar 9s linear infinite; }
+.logo { font-size: 26px; color: var(--fresa); line-height: 0; display: inline-block; animation: girar 9s linear infinite; }
 .buscador { flex: 1; min-width: 200px; }
 .buscador input { width: 100%; padding: 10px 14px; border-radius: 999px; border: 0; background: #ffffff1f; color: var(--crema); font: inherit; transition: background .2s; }
 .buscador input::placeholder { color: #fff8efaa; }
@@ -75,7 +75,13 @@ h1, h2, h3 { font-family: "Fraunces", Georgia, serif; color: var(--chocolate); m
 .chip.vencida { background: var(--chocolate); color: #fff; animation: latido 1.6s infinite; }
 .chip.hoy { background: var(--rosa); color: #fff; }
 .chip.pronto { background: #fff; color: var(--rosa); }
-.prio { letter-spacing: -2px; color: var(--chocolate); }
+.prio { display: inline-flex; gap: 2px; }
+.prio b { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.ic { width: 1.1em; height: 1.1em; vertical-align: -0.2em; flex: none; }
+.boton { display: inline-flex; align-items: center; gap: 6px; }
+.menu button, .menu .como-boton { display: flex; align-items: center; gap: 8px; }
+.punto { display: inline-block; width: 10px; height: 10px; border-radius: 50%; vertical-align: middle; }
+#lista-archivadas { list-style: none; }
 .avatar { margin-left: auto; width: 26px; height: 26px; border-radius: 50%; background: var(--chocolate); color: var(--crema); display: grid; place-items: center; font: 800 11px "Nunito Sans"; }
 .check { display: grid; gap: 3px; margin: 6px 0 8px; font-size: 13px; }
 .check label { display: flex; gap: 6px; align-items: center; cursor: pointer; }
@@ -86,7 +92,7 @@ h1, h2, h3 { font-family: "Fraunces", Georgia, serif; color: var(--chocolate); m
 .nota:hover .herramientas { opacity: 1; }
 .herramientas button { all: unset; cursor: pointer; width: 24px; height: 24px; display: grid; place-items: center; border-radius: 50%; font-size: 13px; }
 .herramientas button:hover { background: #ffffff99; }
-.candado { position: absolute; top: -10px; right: -8px; font-size: 20px; animation: balanceo 2s ease-in-out infinite; }
+.candado { position: absolute; top: -10px; right: -8px; width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; background: var(--chocolate); color: var(--crema); animation: balanceo 2s ease-in-out infinite; }
 .ciclo { font-weight: 800; }
 
 /* ---------- Diálogos y avisos ---------- */

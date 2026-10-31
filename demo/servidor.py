@@ -4,7 +4,7 @@ Toda la lógica vive en las tareas t01–t24; este archivo solo guarda las notas
 Si una tarea todavía no está implementada, su regla queda "pendiente" y el tablero sigue funcionando sin ella:
 así la demo se va "encendiendo" a medida que avanzan. La página (`index.html`) no valida nada.
 
-Uso:  python demo/servidor.py   →  abrir http://localhost:8000
+Uso:  python demo/servidor.py  y abrir http://localhost:8000
 La demo NO se mide y no se toca durante una sesión cronometrada.
 """
 import copy
@@ -198,8 +198,8 @@ def simular_dos_dispositivos(estado, d):
     nota = buscar_nota(estado, d["id"])
     base = {k: v for k, v in nota.items() if k in ("titulo", "color", "prioridad")}
     hace = lambda m: (ahora() - timedelta(minutes=m)).isoformat(timespec="seconds")  # noqa: E731
-    a = dict(base, titulo=base["titulo"] + " ✏️", prioridad=3, modificado={"titulo": hace(5), "prioridad": hace(5)}, dispositivo="celular")
-    b = dict(base, titulo=base["titulo"] + " 💻", color="#FFABA9", modificado={"titulo": hace(2), "color": hace(2)}, dispositivo="portatil")
+    a = dict(base, titulo=base["titulo"] + " (editada en el celular)", prioridad=3, modificado={"titulo": hace(5), "prioridad": hace(5)}, dispositivo="celular")
+    b = dict(base, titulo=base["titulo"] + " (editada en el portátil)", color="#FFABA9", modificado={"titulo": hace(2), "color": hace(2)}, dispositivo="portatil")
     r = regla("t21", t21.fusionar, base, a, b, por_defecto=None)
     if r is None:
         raise ErrorRegla(501, "La fusión todavía no está disponible (tarea t21 pendiente).")

@@ -1,5 +1,17 @@
 // Notitas: la página solo muestra y anima. Toda regla (validar, mover, filtrar…) la decide el backend con las tareas t01–t24.
 const COLORES = { matcha: "#BCC86F", semolina: "#F5CB99", fresa: "#FFABA9", rosa: "#F68578", mani: "#B9794A", chocolate: "#79371D" };
+// Íconos propios en SVG (trazo de 2 px, sin emojis): se pintan con el color del texto.
+const TRAZOS = {
+  nota: "M4 4h16v10l-6 6H4z M14 20v-6h6", ordenar: "M7 4v16 M3 8l4-4 4 4 M17 20V4 M13 16l4 4 4-4",
+  deshacer: "M9 14 4 9l5-5 M4 9h10a6 6 0 0 1 0 12h-3", mas: "M5 12h.01 M12 12h.01 M19 12h.01", agregar: "M12 5v14 M5 12h14",
+  archivar: "M3 4h18v4H3z M5 8v12h14V8 M10 12h4", lista: "M8 6h13 M8 12h13 M8 18h13 M3 6h.01 M3 12h.01 M3 18h.01",
+  bajar: "M12 3v12 M7 10l5 5 5-5 M5 21h14", subir: "M12 15V3 M7 8l5-5 5 5 M5 21h14", copiar: "M9 9h11v11H9z M5 15H4V4h11v1",
+  candado: "M5 11h14v10H5z M8 11V7a4 4 0 0 1 8 0v4", abierto: "M5 11h14v10H5z M8 11V7a4 4 0 0 1 7.5-2",
+  sincronizar: "M4 7h13l-3-3 M20 17H7l3 3", reloj: "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z M12 7v5l3 2",
+  izquierda: "M15 18l-6-6 6-6", derecha: "M9 18l6-6-6-6",
+};
+const ic = n => `<svg class="ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="${n === "mas" ? 3.2 : 2}" stroke-linecap="round" stroke-linejoin="round"><path d="${TRAZOS[n]}"/></svg>`;
+document.querySelectorAll("[data-i]").forEach(el => { el.outerHTML = ic(el.dataset.i); });
 const OSCUROS = new Set(["#B9794A", "#79371D"]);
 const VENCE = { vencida: "Vencida", hoy: "Vence hoy", pronto: "Pronto" };
 const estado = { q: "", etiquetas: new Set(), orden: "", datos: null, arrastrando: null, pagina: 1, contadores: {} };
@@ -43,11 +55,11 @@ function tarjeta(n) {
   const contenido = n.html !== null ? n.html : escapar(n.contenido || "");
   const prog = n.progreso;
   el.innerHTML = `
-    ${n.bloqueada ? '<span class="candado" title="Bloqueada">🔒</span>' : ""}
+    ${n.bloqueada ? `<span class="candado" title="Bloqueada">${ic("candado")}</span>` : ""}
     <div class="herramientas">
-      <button data-accion="duplicar" title="Duplicar">⧉</button>
-      <button data-accion="bloquear" title="${n.bloqueada ? "Desbloquear" : "Bloquear"}">${n.bloqueada ? "🔓" : "🔒"}</button>
-      <button data-accion="dispositivos" title="Simular edición en dos dispositivos">⇄</button>
+      <button data-accion="duplicar" title="Duplicar">${ic("copiar")}</button>
+      <button data-accion="bloquear" title="${n.bloqueada ? "Desbloquear" : "Bloquear"}">${ic(n.bloqueada ? "abierto" : "candado")}</button>
+      <button data-accion="dispositivos" title="Simular edición en dos dispositivos">${ic("sincronizar")}</button>
     </div>
     <h3>${escapar(n.titulo)}</h3>
     ${contenido ? `<div class="contenido">${contenido}</div>` : ""}
@@ -55,10 +67,10 @@ function tarjeta(n) {
       `<label><input type="checkbox" data-indice="${i}" ${c.hecho ? "checked" : ""}> ${escapar(c.texto)}</label>`).join("")}</div>` : ""}
     ${prog ? `<div class="barrita" title="${prog.texto}"><div style="width:${prog.porcentaje}%"></div></div>` : ""}
     <div class="pie">
-      <span class="prio" title="Prioridad">${"●".repeat(n.prioridad || 1)}</span>
+      <span class="prio" title="Prioridad ${["", "baja", "media", "alta"][n.prioridad || 1]}">${"<b></b>".repeat(n.prioridad || 1)}</span>
       ${VENCE[n.vencimiento] ? `<span class="chip ${n.vencimiento}">${VENCE[n.vencimiento]}</span>` : ""}
       ${(n.etiquetas || []).map(e => `<span class="chip">#${escapar(e)}</span>`).join("")}
-      ${n.ciclo !== null && n.ciclo !== undefined ? `<span class="chip ciclo" title="Tiempo de ciclo">⏱ ${n.ciclo} h</span>` : ""}
+      ${n.ciclo !== null && n.ciclo !== undefined ? `<span class="chip ciclo" title="Tiempo de ciclo">${ic("reloj")} ${n.ciclo} h</span>` : ""}
       ${n.iniciales ? `<span class="avatar" title="${escapar(n.responsable)}">${escapar(n.iniciales)}</span>` : ""}
     </div>`;
   return el;
@@ -167,7 +179,7 @@ document.addEventListener("click", async e => {
   const id = b.closest(".nota").dataset.id;
   const nota = Object.values(estado.datos.columnas).flat().find(n => n.id === id);
   try {
-    if (b.dataset.accion === "duplicar") { await api("/api/duplicar", { id }); aviso("Nota duplicada ⧉"); }
+    if (b.dataset.accion === "duplicar") { await api("/api/duplicar", { id }); aviso("Nota duplicada"); }
     if (b.dataset.accion === "bloquear") await api("/api/bloquear", { id, bloqueada: !nota.bloqueada });
     if (b.dataset.accion === "dispositivos") {
       const r = await api("/api/dispositivos", { id });
@@ -187,7 +199,7 @@ let espera;
 $("#q").addEventListener("input", e => { clearTimeout(espera); espera = setTimeout(() => { estado.q = e.target.value; cargar(); }, 200); });
 $("#btn-orden").onclick = e => { estado.orden = estado.orden ? "" : "prioridad"; e.target.classList.toggle("principal"); cargar(); };
 async function deshacer() {
-  try { await api("/api/deshacer", {}); aviso("Movimiento deshecho ↶"); cargar(); } catch (err) { aviso(err.message, true); }
+  try { await api("/api/deshacer", {}); aviso("Movimiento deshecho"); cargar(); } catch (err) { aviso(err.message, true); }
 }
 $("#btn-deshacer").onclick = deshacer;
 document.addEventListener("keydown", e => { if ((e.ctrlKey || e.metaKey) && e.key === "z" && !e.target.matches("input, textarea")) { e.preventDefault(); deshacer(); } });
@@ -197,7 +209,7 @@ $("#menu-mas").addEventListener("click", async e => {
   if (!accion) return;
   $("#menu-mas").hidden = true;
   try {
-    if (accion === "archivar") { const r = await api("/api/archivar", {}); aviso(`${r.archivadas} notas archivadas 🗄`); cargar(); }
+    if (accion === "archivar") { const r = await api("/api/archivar", {}); aviso(`${r.archivadas} notas archivadas`); cargar(); }
     if (accion === "archivadas") { estado.pagina = 1; await verArchivadas(); $("#dlg-archivadas").showModal(); }
     if (accion === "exportar") {
       const r = await fetch("/api/exportar");
@@ -213,12 +225,12 @@ $("#importar").addEventListener("change", async e => {
   $("#menu-mas").hidden = true;
   const r = await fetch("/api/importar", { method: "POST", body: await archivo.text() });
   const d = await r.json();
-  r.ok ? (aviso("Tablero importado ⬆"), cargar()) : aviso(d.error, true);
+  r.ok ? (aviso("Tablero importado"), cargar()) : aviso(d.error, true);
   e.target.value = "";
 });
 async function verArchivadas() {
   const r = await api("/api/archivadas?pagina=" + estado.pagina);
-  $("#lista-archivadas").innerHTML = r.items.map(n => `<li style="color:${n.color}">● <span style="color:var(--tinta)">${escapar(n.titulo)}</span></li>`).join("") || "<li>No hay notas archivadas.</li>";
+  $("#lista-archivadas").innerHTML = r.items.map(n => `<li><i class="punto" style="background:${n.color}"></i> <span style="color:var(--tinta)">${escapar(n.titulo)}</span></li>`).join("") || "<li>No hay notas archivadas.</li>";
   $("#pag-txt").textContent = `${r.pagina} / ${Math.max(r.total_paginas, 1)}`;
   $("#pag-ant").disabled = r.pagina <= 1;
   $("#pag-sig").disabled = !r.hay_siguiente;
@@ -243,7 +255,7 @@ $("#dlg-nueva").addEventListener("close", async () => {
   try {
     await api("/api/notas", { titulo: f.get("titulo"), contenido: f.get("contenido"), color: f.get("color"), prioridad: f.get("prioridad"),
       vence: f.get("vence"), responsable: f.get("responsable"), etiquetas: lista(f.get("etiquetas")), checklist: lista(f.get("checklist")) });
-    aviso("¡Notita pegada! ✿");
+    aviso("¡Notita pegada!");
     cargar();
   } catch (err) { aviso(err.message, true); }
 });

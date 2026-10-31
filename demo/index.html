@@ -8,19 +8,19 @@
 </head>
 <body>
 <header class="barra">
-  <div class="marca"><span class="logo">✿</span><h1>Notitas</h1></div>
+  <div class="marca"><span class="logo"><i data-i="nota"></i></span><h1>Notitas</h1></div>
   <div class="buscador"><input id="q" type="search" placeholder="Buscar (sin importar tildes)…" aria-label="Buscar notas"></div>
   <div class="acciones">
-    <button id="btn-orden" class="boton suave" title="Ordenar por prioridad y fecha">↕ Prioridad</button>
-    <button id="btn-deshacer" class="boton suave" title="Deshacer (Ctrl+Z)">↶ Deshacer</button>
-    <button id="btn-mas" class="boton suave" title="Más opciones">⋯</button>
-    <button id="btn-nueva" class="boton principal">+ Nueva notita</button>
+    <button id="btn-orden" class="boton suave" title="Ordenar por prioridad y fecha"><i data-i="ordenar"></i> Prioridad</button>
+    <button id="btn-deshacer" class="boton suave" title="Deshacer (Ctrl+Z)"><i data-i="deshacer"></i> Deshacer</button>
+    <button id="btn-mas" class="boton suave" title="Más opciones" aria-label="Más opciones"><i data-i="mas"></i></button>
+    <button id="btn-nueva" class="boton principal"><i data-i="agregar"></i> Nueva notita</button>
   </div>
   <div id="menu-mas" class="menu" hidden>
-    <button data-accion="archivar">🗄 Archivar hechas (+7 días)</button>
-    <button data-accion="archivadas">📦 Ver archivadas</button>
-    <button data-accion="exportar">⬇ Exportar tablero</button>
-    <label class="como-boton">⬆ Importar tablero<input id="importar" type="file" accept=".json" hidden></label>
+    <button data-accion="archivar"><i data-i="archivar"></i> Archivar hechas (más de 7 días)</button>
+    <button data-accion="archivadas"><i data-i="lista"></i> Ver archivadas</button>
+    <button data-accion="exportar"><i data-i="bajar"></i> Exportar tablero</button>
+    <label class="como-boton"><i data-i="subir"></i> Importar tablero<input id="importar" type="file" accept=".json" hidden></label>
   </div>
 </header>
 
@@ -56,7 +56,7 @@
 
 <dialog id="dlg-archivadas" class="dialogo">
   <h3>Archivadas</h3><ul id="lista-archivadas"></ul>
-  <div class="botones"><button id="pag-ant" class="boton suave">‹</button><span id="pag-txt"></span><button id="pag-sig" class="boton suave">›</button><button id="cerrar-arch" class="boton principal">Cerrar</button></div>
+  <div class="botones"><button id="pag-ant" class="boton suave" aria-label="Anterior"><i data-i="izquierda"></i></button><span id="pag-txt"></span><button id="pag-sig" class="boton suave" aria-label="Siguiente"><i data-i="derecha"></i></button><button id="cerrar-arch" class="boton principal">Cerrar</button></div>
 </dialog>
 
 <div id="toasts" aria-live="polite"></div>
