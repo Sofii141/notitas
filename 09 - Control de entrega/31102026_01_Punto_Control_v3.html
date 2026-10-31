@@ -28,7 +28,7 @@
   <p class="lead">Con su aprobación, cambiamos el caso base de CAMEIA-lite a <strong>Notitas</strong>, y el plazo del caso base quedó para el martes 3/11. Todavía no hemos usado el agente.</p>
   <div class="tarjetas">
     <div class="tarjeta verde"><div class="t">Caso base</div><div class="v">24 casos</div>10 S · 12 M · 2 L · <strong>10 difíciles</strong></div>
-    <div class="tarjeta miel"><div class="t">Especificación v1</div><div class="v">1 agente</div>8 campos · Claude Code</div>
+    <div class="tarjeta miel"><div class="t">Especificación v1</div><div class="v">1 agente</div>8 campos · OpenCode + DeepSeek V4.1 Flash</div>
     <div class="tarjeta rosa"><div class="t">Línea base</div><div class="v">10 tareas</div>pareja humana, sin IA (§5)</div>
   </div>
   <table>
@@ -87,7 +87,7 @@
   <div class="caja nota"><h4>Limitaciones declaradas</h4>
     <ul>
       <li><strong>Es un caso diseñado para el experimento</strong>, no el backlog de un proyecto en curso: los resultados no se generalizan a un sistema real.</li>
-      <li>Las tareas, las pruebas y la demo se generaron con Claude Code, <strong>la misma herramienta que usaremos como agente</strong>: el caso podría quedar "a su medida" y favorecerlo. Lo controlamos así: nadie ve las pruebas ocultas antes de terminar, el agente trabaja sin acceso a ellas y se incorporan 3 casos de otra pareja que no diseñamos nosotros. Si el agente rinde mucho mejor en nuestras tareas que en las recibidas, lo reportaremos.</li>
+      <li>Las tareas, las pruebas y la demo se generaron con Claude Code. Para que el caso no quede "a la medida" del agente, el agente de los ciclos es <strong>otro modelo</strong> (DeepSeek V4.1 Flash en OpenCode); además nadie ve las pruebas ocultas antes de terminar, el agente no tiene acceso a ellas y se incorporan 3 casos de otra pareja.</li>
       <li>Las tareas son reglas aisladas: no medimos el costo de integrarlas con el resto del sistema.</li>
     </ul>
   </div>
@@ -178,7 +178,7 @@
       <tr><td><strong>Rol y alcance</strong></td><td>Hace de navegante en el desarrollo de <em>una</em> tarea de Notitas: propone un enfoque, el código y los casos borde que conviene probar. La persona conduce y decide.</td></tr>
       <tr><td><strong>Entradas</strong></td><td>Solo el enunciado y los criterios de aceptación de la tarea (<code>TAREAS.md</code>), su archivo <code>src/notitas/tNN.py</code> y sus pruebas visibles.</td></tr>
       <tr><td><strong>Salidas</strong></td><td>En markdown fijo: un plan de 3 a 6 pasos, el diff (solo en <code>tNN.py</code>), los supuestos que hizo y los casos borde que cree que faltan, como texto.</td></tr>
-      <tr><td><strong>Herramientas y permisos</strong></td><td><strong>Claude Code</strong> (los dos lo tienen). El modelo y la versión exactos se anotan en el primer uso y no cambian durante los ciclos. Trabaja en una copia del repositorio <strong>sin</strong> <code>tests/ocultas</code>, con permisos que le niegan hacer commit o push y leer esa carpeta. Sin acceso a credenciales. Es la misma herramienta que generó el caso: se declara como limitación (§2).</td></tr>
+      <tr><td><strong>Herramientas y permisos</strong></td><td><strong>OpenCode</strong> con el modelo gratuito <strong>DeepSeek V4.1 Flash</strong>, el mismo para los dos durante todo el ciclo (modelo y versión se anotan en el primer uso). Trabaja en una copia del repositorio <strong>sin</strong> <code>tests/ocultas</code>, con un <code>opencode.json</code> que le niega leer las ocultas, editar las pruebas, hacer commit o push, salir de la carpeta y buscar en internet, y que lo obliga a pedir permiso para todo lo demás. No es de la familia Claude, con la que se construyó el caso.</td></tr>
       <tr><td><strong>Prohibiciones</strong></td><td>No hacer commit, push ni merge. No modificar <code>tests/</code> ni otros archivos. No leer las pruebas ocultas. No desactivar ni saltarse pruebas. No inventar requisitos. No manejar credenciales ni datos personales.</td></tr>
       <tr><td><strong>Criterio de validación</strong></td><td>Se acepta solo si pasan las pruebas visibles, cumple cada criterio de aceptación y quien conduce puede explicar cada línea sin mirar al agente.</td></tr>
       <tr><td><strong>Punto de control humano</strong></td><td>Antes de cada commit, quien conduce decide aceptar, corregir o rechazar y lo registra en la bitácora con su razón. Las pruebas ocultas las corre la persona. Después viene el codewalk con el compañero.</td></tr>
