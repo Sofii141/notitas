@@ -10,7 +10,7 @@ Ana Sofía Arango Yanza · Juan José Arias Chacua · Prof. César Pardo
 | `00 - Info inicial` | PDF del profe (no editar) |
 | `01 - Exposicion` | Fuentes, guion, diapositivas del tema |
 | `02 - Caso base` | Fichas de casos, 3 recibidos y 3 entregados |
-| `Repositorio/CAMEIA-lite` | Código del caso base (git) → https://github.com/Sofii141/CAMEIA-lite |
+| `Repositorio/CAMEIA-lite` | Código del caso base **Notitas** desde el 31/10 (git) → https://github.com/Sofii141/CAMEIA-lite. CAMEIA-lite quedó en el tag `congelado-v1` |
 | `03 - Linea base` | GQM, datos crudos y condiciones de medición |
 | `04 - Especificacion agentes` | Spec v1, v2… y prompts finales |
 | `05 - Ciclos y bitacora` | Bitácora xlsx + notas de ciclo 1 y 2 |
@@ -20,6 +20,8 @@ Ana Sofía Arango Yanza · Juan José Arias Chacua · Prof. César Pardo
 | `09 - Control de entrega` | Checklist, actas de la pareja, confirmaciones del profe por escrito |
 | `99 - Videos` | Video de respaldo de la demo (2 min) |
 | `_Estilo` | Paleta "Macarons", fuentes, `estilo.css`, plantilla HTML, `html_a_pdf.py` y `estilo_xlsx.py` (para Excel): **todo documento y las diapositivas siguen este estilo** |
+
+> **31/10:** el caso base cambió a **Notitas** (tablero kanban de notas), con aprobación del profe; plazo del caso base hasta el 3/11. Versiones vigentes: [GQM v3](03%20-%20Linea%20base/31102026_01_GQM_v3.md) y [bitácora v3](05%20-%20Ciclos%20y%20bitacora/31102026_01_Bitacora_v3.xlsx). `_Privado/` (soluciones de referencia) no se sube y no se abre antes de medir.
 
 ## Ramas del repositorio (https://github.com/Sofii141/CAMEIA-lite)
 - `main`: código del caso base (carpeta local `Repositorio/CAMEIA-lite`).

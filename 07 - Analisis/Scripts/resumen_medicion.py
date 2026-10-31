@@ -1,13 +1,13 @@
-"""Resume la hoja "Medicion por caso" de la bitácora: mediana y rango por condición y tamaño.
+"""Resume la bitácora: las 5 métricas del GQM v3 por condición y tamaño, más las decisiones sobre el agente.
 
 Uso:
-  python "07 - Analisis/Scripts/resumen_medicion.py" "05 - Ciclos y bitacora/29102026_01_Bitacora_v2.xlsx"
-  python "07 - Analisis/Scripts/resumen_medicion.py" <bitacora.xlsx> --html "09 - Control de entrega/29102026_02_Punto_Control_v2.html"
+  python "07 - Analisis/Scripts/resumen_medicion.py" "05 - Ciclos y bitacora/31102026_01_Bitacora_v3.xlsx"
+  python "07 - Analisis/Scripts/resumen_medicion.py" <bitacora.xlsx> --html "<documento>.html"
       → además reemplaza la sección de línea base del HTML (entre <!-- LB:INICIO --> y <!-- LB:FIN -->) y regenera el PDF.
 
-Calcula todo desde los datos crudos (inicio, fin, pausas…), no desde las fórmulas del Excel: así el resumen de la hoja
-y el de este script son dos cálculos independientes. Igual, una persona recalcula a mano al menos una cifra (regla de la E1).
-Por qué mediana y rango, y no promedio ni prueba de hipótesis: ver 01 - Exposicion/Fuentes/29102026_02_Como_Medir_y_Presentar_v2.md
+Métricas (GQM v3, todas directas): M1 minutos · M2 ocultas que fallan · M3 minutos de retrabajo · M4 codewalk 0–5 · M5 pronóstico.
+Calcula desde los datos crudos (inicio, fin, pausas…), no desde las fórmulas del Excel: así la hoja Resumen y este script son
+dos cálculos independientes. Igual, una persona recalcula a mano al menos una mediana (regla de la E1).
 """
 import datetime as dt
 import html
@@ -15,6 +15,7 @@ import re
 import statistics
 import subprocess
 import sys
+from collections import Counter
 from pathlib import Path
 
 from openpyxl import load_workbook
@@ -23,6 +24,8 @@ sys.stdout.reconfigure(encoding="utf-8")
 RAIZ = Path(__file__).resolve().parents[2]
 CONDICIONES = ("Línea base", "Ciclo 1", "Ciclo 2")
 TAMANOS = ("S", "M", "L")
+# Columnas de la hoja "Medicion por caso" (bitácora v3), contando desde 0
+PRON, INI, FIN, PAUSA, FALLA, TOTAL, RETR, CW_A, CW_C, MARCA = 7, 8, 9, 10, 12, 13, 14, 15, 16, 18
 
 
 def minutos(v):
@@ -48,15 +51,12 @@ def leer(xlsx):
     hoja = load_workbook(xlsx, data_only=True)["Medicion por caso"]
     filas = []
     for r in hoja.iter_rows(min_row=2, values_only=True):
-        caso, tarea, tam, dif, cond = r[0], r[1], r[2], r[3], r[4]
-        ini, fin = minutos(r[8]), minutos(r[9])
-        if not cond or ini is None or fin is None or (r[22] or "").strip() == "[C]":
+        ini, fin = minutos(r[INI]), minutos(r[FIN])
+        if not r[4] or ini is None or fin is None or (r[MARCA] or "").strip() == "[C]":
             continue
-        dur = fin - ini - (numero(r[10]) or 0)
-        personas = 2 if cond == "Línea base" else 1
-        filas.append(dict(caso=caso, tarea=tarea, tam=tam or "?", dif=dif == "Sí", cond=cond, quien=r[5] or "", pron=numero(r[7]),
-                          dur=dur, esf=dur * personas, falla=numero(r[14]), total=numero(r[15]), retr=numero(r[16]),
-                          cw_a=numero(r[18]), cw_c=numero(r[19]), ayuda=numero(r[20]), marca=r[22] or ""))
+        filas.append(dict(caso=r[0], tarea=r[1], tam=r[2] or "?", dif=r[3] == "Sí", cond=r[4], pron=numero(r[PRON]),
+                          dur=fin - ini - (numero(r[PAUSA]) or 0), falla=numero(r[FALLA]) or 0, total=numero(r[TOTAL]) or 0,
+                          retr=numero(r[RETR]) or 0, cw_a=numero(r[CW_A]), cw_c=numero(r[CW_C])))
     return filas
 
 
@@ -71,6 +71,11 @@ def leer_sesiones(xlsx, etapa="Línea base"):
     return filas
 
 
+def decisiones(xlsx):
+    hoja = load_workbook(xlsx, data_only=True)["Bitacora"]
+    return Counter(str(r[6]).strip().lower() for r in hoja.iter_rows(min_row=2, values_only=True) if r[6])
+
+
 def med(valores):
     v = [x for x in valores if x is not None]
     if not v:
@@ -80,77 +85,67 @@ def med(valores):
     return txt if len(v) == 1 else f"{txt} [{min(v):g}–{max(v):g}]"
 
 
-def a12(x, y):
-    """Vargha y Delaney (2000): probabilidad de que un valor de x sea mayor que uno de y (0,5 = sin diferencia)."""
-    if not x or not y:
-        return None
-    return sum((a > b) + 0.5 * (a == b) for a in x for b in y) / (len(x) * len(y))
-
-
 def resumen(filas):
     salida = []
     for cond in CONDICIONES:
         fc = [f for f in filas if f["cond"] == cond]
-        if not fc:
-            continue
         for tam in TAMANOS + ("Total",):
             g = fc if tam == "Total" else [f for f in fc if f["tam"] == tam]
             if not g:
                 continue
-            falla = sum(f["falla"] or 0 for f in g)
-            total = sum(f["total"] or 0 for f in g)
-            ratio = [f["dur"] / f["pron"] for f in g if f["pron"]]
-            salida.append(dict(cond=cond, tam=tam, n=len(g), dur=med(f["dur"] for f in g), esf=med(f["esf"] for f in g),
-                               ocultas=f"{falla:g}/{total:g} ({100 * falla / total:.0f} %)" if total else "—",
-                               retr=med(f["retr"] for f in g), cw_a=med(f["cw_a"] for f in g), cw_c=med(f["cw_c"] for f in g),
-                               ratio=med(round(x, 2) for x in ratio)))
+            con_retr = [f["retr"] for f in g if f["retr"] > 0]
+            con_pron = [f for f in g if f["pron"]]
+            salida.append(dict(
+                cond=cond, tam=tam, n=len(g),
+                m1=med(f["dur"] for f in g),
+                m2=f"{sum(f['falla'] for f in g):g} de {sum(f['total'] for f in g):g}",
+                m3=f"{len(con_retr)} de {len(g)}" + (f" ({med(con_retr)} min)" if con_retr else ""),
+                m4=f"{med(f['cw_a'] for f in g)} / {med(f['cw_c'] for f in g)}",
+                m5=f"{sum(f['dur'] > f['pron'] for f in con_pron)} de {len(con_pron)}" if con_pron else "—"))
     return salida
 
 
-def imprimir(filas, res):
+CAB = ("Condición", "Tam.", "n", "M1 minutos", "M2 ocultas que fallan", "M3 tareas con retrabajo", "M4 codewalk autor / comp.",
+       "M5 tardaron más de lo pronosticado")
+
+
+def imprimir(filas, res, dec):
     print(f"Tareas con datos válidos: {len(filas)}\n")
-    cab = ("Condición", "Tam.", "n", "Duración", "Esfuerzo", "Ocultas que fallan", "Retrabajo", "Codewalk autor", "Codewalk comp.", "Real/pronóstico")
-    print(" | ".join(cab))
+    print(" | ".join(CAB))
     for r in res:
-        print(" | ".join(str(r[k]) for k in ("cond", "tam", "n", "dur", "esf", "ocultas", "retr", "cw_a", "cw_c", "ratio")))
-    base = [f["dur"] for f in filas if f["cond"] == "Línea base"]
-    agente = [f["dur"] for f in filas if f["cond"] in ("Ciclo 1", "Ciclo 2")]
-    if base and agente:
-        print(f"\nA12 duración (agente > línea base): {a12(agente, base):.2f}  ·  0,5 = igual; descriptivo, no prueba causalidad.")
-    print("\nValores = mediana [mínimo–máximo]. Las tareas marcadas [C] no se cuentan.")
+        print(" | ".join(str(r[k]) for k in ("cond", "tam", "n", "m1", "m2", "m3", "m4", "m5")))
+    if dec:
+        print(f"\nDecisiones sobre el agente (bitácora): " + ", ".join(f"{k}: {v}" for k, v in sorted(dec.items())))
+    print("\nM1 y M4 = mediana [mínimo–máximo]. Las tareas marcadas [C] no se cuentan. Son tendencias, no causas.")
 
 
 def fragmento_html(filas, res, sesiones):
     e = html.escape
     base = [f for f in filas if f["cond"] == "Línea base"]
-    # Fecha, horas, participantes, lugar, herramientas, IA, semilla e interrupciones (las condiciones que pide el enunciado)
+    if not base:
+        return "<div class='caja alerta'><h4>Sin datos todavía</h4><p>La bitácora aún no tiene tareas de línea base con inicio y fin.</p></div>"
     claves = [k for i, k in enumerate(list(sesiones[0]) if sesiones else []) if i in (1, 3, 4, 5, 6, 7, 8, 9, 11)]
-    sesiones_html = "".join("<tr>" + "".join(f"<td>{e(s[k])}</td>" for k in claves) + "</tr>" for s in sesiones)
-    cab_sesiones = "".join(f"<th>{e(k)}</th>" for k in claves)
-    condiciones = (f"<h3>Condiciones de la medición</h3><table class='pequeno'><thead><tr>{cab_sesiones}</tr></thead><tbody>{sesiones_html}</tbody></table>"
+    condiciones = (f"<h3>Condiciones de la medición</h3><table class='pequeno'><thead><tr>{''.join(f'<th>{e(k)}</th>' for k in claves)}</tr></thead>"
+                   f"<tbody>{''.join('<tr>' + ''.join(f'<td>{e(s[k])}</td>' for k in claves) + '</tr>' for s in sesiones)}</tbody></table>"
                    if sesiones else "<div class='caja alerta'><h4>Faltan las condiciones</h4><p>La hoja Sesiones no tiene filas de línea base.</p></div>")
+
     def v(x):
         return "—" if x is None else f"{x:g}"
 
     dif = "<span class='chip dif'>Sí</span>"
-    filas_html = "".join(
+    por_tarea = "".join(
         f"<tr><td><code>{e(str(f['caso']))}</code> {e(str(f['tarea']))}</td><td class='c'><span class='chip {f['tam'].lower()}'>{e(f['tam'])}</span></td>"
-        f"<td class='c'>{dif if f['dif'] else ''}</td><td class='c'>{v(f['pron'])}</td><td class='c'>{v(f['dur'])}</td><td class='c'>{v(f['esf'])}</td>"
-        f"<td class='c'>{v(f['falla'] or 0)}/{v(f['total'] or 0)}</td><td class='c'>{v(f['retr'])}</td>"
-        f"<td class='c'>{v(f['cw_a'])} / {v(f['cw_c'])}</td></tr>"
+        f"<td class='c'>{dif if f['dif'] else ''}</td><td class='c'>{v(f['pron'])}</td><td class='c'>{v(f['dur'])}</td>"
+        f"<td class='c'>{v(f['falla'])}/{v(f['total'])}</td><td class='c'>{v(f['retr'])}</td><td class='c'>{v(f['cw_a'])} / {v(f['cw_c'])}</td></tr>"
         for f in base)
-    res_html = "".join(
-        f"<tr><td>{e(r['tam'])}</td><td class='c'>{r['n']}</td><td>{r['dur']}</td><td>{r['esf']}</td><td>{r['ocultas']}</td>"
-        f"<td>{r['retr']}</td><td>{r['cw_a']} / {r['cw_c']}</td><td>{r['ratio']}</td></tr>"
+    resumen_html = "".join(
+        f"<tr><td>{e(r['tam'])}</td><td class='c'>{r['n']}</td><td>{r['m1']}</td><td>{r['m2']}</td><td>{r['m3']}</td><td>{r['m4']}</td><td>{r['m5']}</td></tr>"
         for r in res if r["cond"] == "Línea base")
-    if not base:
-        return "<div class='caja alerta'><h4>Sin datos todavía</h4><p>La bitácora aún no tiene tareas de línea base con inicio y fin.</p></div>"
-    return (condiciones + f"<h3>Resultados por tarea (n = {len(base)})</h3><table><thead><tr><th>Tarea</th><th>Tam.</th><th>Difícil</th><th>Pronóstico</th>"
-            "<th>Duración (min)</th><th>Esfuerzo (min·pers.)</th><th>Ocultas que fallan</th><th>Retrabajo (min)</th><th>Codewalk autor / comp.</th></tr></thead>"
-            f"<tbody>{filas_html}</tbody></table>"
-            "<h3>Resumen por tamaño</h3><p class='pequeno'>Mediana [mínimo–máximo]. Real/pronóstico &gt; 1 = tardaron más de lo que creían.</p>"
-            "<table><thead><tr><th>Tamaño</th><th>n</th><th>Duración</th><th>Esfuerzo</th><th>Ocultas que fallan</th><th>Retrabajo</th>"
-            f"<th>Codewalk autor / comp.</th><th>Real/pronóstico</th></tr></thead><tbody>{res_html}</tbody></table>")
+    return (condiciones + f"<h3>Resultados por tarea (n = {len(base)})</h3><table><thead><tr><th>Tarea</th><th>Tam.</th><th>Difícil</th>"
+            "<th>M5 pronóstico</th><th>M1 minutos</th><th>M2 ocultas que fallan</th><th>M3 retrabajo (min)</th><th>M4 codewalk autor / comp.</th></tr></thead>"
+            f"<tbody>{por_tarea}</tbody></table><h3>Resumen por tamaño</h3><p class='pequeno'>M1 y M4: mediana [mínimo–máximo]. Son tendencias, no causas.</p>"
+            "<table><thead><tr><th>Tamaño</th><th>n</th><th>M1 minutos</th><th>M2 ocultas que fallan</th><th>M3 tareas con retrabajo</th>"
+            f"<th>M4 codewalk autor / comp.</th><th>M5 tardaron más de lo pronosticado</th></tr></thead><tbody>{resumen_html}</tbody></table>")
 
 
 if __name__ == "__main__":
@@ -158,10 +153,11 @@ if __name__ == "__main__":
         sys.exit(__doc__)
     filas = leer(sys.argv[1])
     res = resumen(filas)
-    imprimir(filas, res)
+    imprimir(filas, res, decisiones(sys.argv[1]))
     if "--html" in sys.argv:
         destino = Path(sys.argv[sys.argv.index("--html") + 1])
         texto = destino.read_text(encoding="utf-8")
-        nuevo = re.sub(r"(<!-- LB:INICIO -->).*?(<!-- LB:FIN -->)", lambda m: m[1] + fragmento_html(filas, res, leer_sesiones(sys.argv[1])) + m[2], texto, flags=re.S)
+        nuevo = re.sub(r"(<!-- LB:INICIO -->).*?(<!-- LB:FIN -->)",
+                       lambda m: m[1] + fragmento_html(filas, res, leer_sesiones(sys.argv[1])) + m[2], texto, flags=re.S)
         destino.write_text(nuevo, encoding="utf-8")
         subprocess.run([sys.executable, str(RAIZ / "_Estilo" / "html_a_pdf.py"), str(destino)], check=True)

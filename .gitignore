@@ -10,3 +10,5 @@ Repositorio/
 Thumbs.db
 _Estilo/paleta_macarons.jpg
 *.pdf.tmp
+# Soluciones de referencia del caso base: no se suben (la línea base debe ser a ciegas)
+_Privado/
