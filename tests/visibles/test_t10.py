@@ -1,4 +1,5 @@
-from cameia_lite.t10 import mensajes_por_campo, CATALOGO
-def test_un_campo():
-    p = {"errors": [{"field": "empresa", "code": "COMPANY_INVALID_CHARACTERS"}]}
-    assert mensajes_por_campo(p) == {"empresa": CATALOGO["COMPANY_INVALID_CHARACTERS"]}
+from datetime import date
+from notitas.t10 import notas_para_archivar
+def test_basico():
+    notas = [{"id": "1", "columna": "hecho", "fecha_hecho": "2026-10-01"}, {"id": "2", "columna": "hecho", "fecha_hecho": "2026-10-30"}]
+    assert notas_para_archivar(notas, date(2026, 11, 2)) == ["1"]

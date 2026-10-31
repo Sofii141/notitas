@@ -1,254 +1,321 @@
-# Tareas de CAMEIA-lite
+# Tareas de Notitas
 
-Cada tarea es una regla **real** del backlog de CAMEIA, aislada como función y sin infraestructura.
+Notitas es un tablero kanban de notas adhesivas (columnas **Por hacer · En curso · Hecho**). Cada tarea es **una regla del backend**, escrita como una función o clase pura de Python, con pruebas visibles y ocultas. El front (la página con animaciones) ya está hecho y **no se mide**: usa estas funciones a través de `demo/servidor.py`.
+
 Tamaño: S ≈ 15–25 min · M ≈ 25–45 min · L ≈ 45–70 min (estimado; lo real lo dirá el cronómetro).
+Columnas válidas en todas las tareas: `"por_hacer"`, `"en_curso"` y `"hecho"`.
 
-| ID | Tarea | Tamaño | Difícil | Origen en CAMEIA | Ya la implementó en CAMEIA |
-|---|---|---|---|---|---|
-| t01 | Normalizar texto | S |  | CM-36 |  |
-| t02 | Contar caracteres | S |  | CM-36 |  |
-| t03 | Validar nombre | M | ⚠️ sí | CM-36 |  |
-| t04 | Validar correo | S |  | CM-36 |  |
-| t05 | Validar celular | S |  | CM-36 |  |
-| t06 | Política de contraseñas | M |  | CM-36 |  |
-| t07 | Fecha de nacimiento | M | ⚠️ sí | CM-279 |  |
-| t08 | Cupo de perfiles por plan | M | ⚠️ sí | CM-271 |  |
-| t09 | Nivel de log por estado HTTP | S |  | CM-184 |  |
-| t10 | Mensajes de error por campo | M |  | CM-336 / CM-298 | Juan José |
-| t11 | Contador de reintentos | M |  | CM-217 | Juan José |
-| t12 | Crear una sola vez (doble clic) | L | ⚠️ sí | CM-270 | Juan José |
-| t13 | Eliminar rol objetivo | M | ⚠️ sí | CM-71 / CM-271 |  |
-| t14 | Sustituir rol conservando su lugar | S |  | CM-72 |  |
-| t15 | Catálogo de roles por idioma | S |  | CM-82 / CM-72 | Ana Sofía |
-| t16 | Fechas de formación | M |  | CM-271 |  |
-| t17 | Expectativa salarial | S |  | CM-271 |  |
-| t18 | Propagar X-Request-Id | M | ⚠️ sí | CM-279 / CM-104 |  |
-| t19 | Limpiar cabeceras de identidad | M | ⚠️ sí | CM-104 |  |
-| t20 | Origen permitido (CORS) | S | ⚠️ sí | CM-162 |  |
-| t21 | Perfil de arranque y emulador | M | ⚠️ sí | CM-190 / CM-191 / CM-175 |  |
-| t22 | Registro idempotente (Idempotency-Key) | L | ⚠️ sí | CM-340 |  |
-| t23 | Progreso de la entrevista | S |  | CM-217 | Juan José |
-| t24 | Enmascarar correo en logs | S |  | CM-271 (registro sin datos personales) |  |
+| ID | Tarea | Tamaño | Difícil |
+|---|---|---|---|
+| t01 | Validar el título de una nota | S |  |
+| t02 | Color de la nota | S |  |
+| t03 | Transiciones entre columnas | M | ⚠️ sí |
+| t04 | Límite WIP de "En curso" | M | ⚠️ sí |
+| t05 | Insertar en una posición | M |  |
+| t06 | Filtrar por etiquetas | S |  |
+| t07 | Buscar sin tildes ni mayúsculas | M | ⚠️ sí |
+| t08 | Estado de vencimiento | M | ⚠️ sí |
+| t09 | Normalizar etiquetas | S |  |
+| t10 | Qué notas se archivan | S |  |
+| t11 | Deshacer movimientos | M |  |
+| t12 | Dos personas mueven la misma nota | L | ⚠️ sí |
+| t13 | Exportar e importar el tablero | M |  |
+| t14 | Contenido seguro (sin inyectar HTML) | M | ⚠️ sí |
+| t15 | Resumen por columna | S |  |
+| t16 | Ordenar por prioridad y fecha | S |  |
+| t17 | Paginar el listado | S |  |
+| t18 | Iniciales del responsable | S |  |
+| t19 | Progreso de la checklist | M |  |
+| t20 | Duplicar una nota | S | ⚠️ sí |
+| t21 | Fusionar cambios de dos dispositivos | L | ⚠️ sí |
+| t22 | Notas bloqueadas | M |  |
+| t23 | Tiempo de ciclo | M | ⚠️ sí |
+| t24 | Límite de notas por minuto | M | ⚠️ sí |
 
-## t01 · Normalizar texto (S)
+## t01 · Validar el título de una nota (S)
 
-Archivo: `src/cameia_lite/t01.py` · Firma: `def normalizar_texto(s: str) -> str`
+Archivo: `src/notitas/t01.py`
 
-Quitar espacios al inicio y al final (incluye tabulaciones, saltos de línea y el espacio duro `\u00a0`) y devolver el texto en forma Unicode **NFC**.
-- CA1: `"  Ana  "` → `"Ana"`.
-- CA2: `"e\u0301"` (e + tilde combinante) → `"é"` (un solo carácter).
-- CA3: los espacios internos no se tocan.
+Firma: `def validar_titulo(s: str) -> str`
 
-## t02 · Contar caracteres (S)
+Devuelve el título limpio o lanza `ValueError`.
+- CA1: se quitan los espacios al inicio y al final (incluye tabulaciones, saltos de línea y el espacio duro ` `).
+- CA2: los espacios internos repetidos se dejan en uno solo (`"Comprar   pan"` → `"Comprar pan"`).
+- CA3: el texto se normaliza a Unicode **NFC**.
+- CA4: si queda vacío o tiene **más de 80 caracteres** (puntos de código, después de normalizar), `ValueError`.
 
-Archivo: `src/cameia_lite/t02.py` · Firma: `def contar_caracteres(s: str) -> int`
+## t02 · Color de la nota (S)
 
-Contar los caracteres como los ve una persona: **puntos de código después de normalizar a NFC** (no bytes).
-- CA1: `"Ana"` → 3.
-- CA2: `"Jose\u0301"` → 4.
-- CA3: un emoji simple como `"😀"` cuenta 1.
+Archivo: `src/notitas/t02.py`
 
-## t03 · Validar nombre (M)
+Firma: `def normalizar_color(c: str) -> str`
 
-Archivo: `src/cameia_lite/t03.py` · Firma: `def validar_nombre(s: str) -> bool`
+Las notitas solo pueden tener un color de la paleta del tablero:
 
-Un nombre o apellido es válido si, **después de normalizar (recortar + NFC)**:
-- CA1: no queda vacío y tiene **al menos una letra**;
-- CA2: solo contiene letras de cualquier idioma, marcas combinantes, espacio, apóstrofo recto `'`, apóstrofo tipográfico `’` y guion `-`;
-- CA3: números, `@`, `_` y emojis lo hacen inválido.
-- Ejemplos válidos: `"José"`, `"O’Connor"`, `"Ana-María"`, `"Zoë"`. Inválidos: `"---"`, `"Ana3"`, `""`.
+| Nombre | Hex |
+|---|---|
+| matcha | `#BCC86F` |
+| semolina | `#F5CB99` |
+| fresa | `#FFABA9` |
+| rosa | `#F68578` |
+| mani | `#B9794A` |
+| chocolate | `#79371D` |
 
-## t04 · Validar correo (S)
+- CA1: se acepta el **nombre** (sin importar mayúsculas ni espacios alrededor) o el **hex** de 6 dígitos, con o sin `#`, en mayúsculas o minúsculas.
+- CA2: devuelve siempre el hex canónico: `#` + 6 dígitos en mayúsculas.
+- CA3: cualquier otro valor (otro color, formato inválido) → `ValueError`.
 
-Archivo: `src/cameia_lite/t04.py` · Firma: `def validar_correo(s: str) -> bool`
+## t03 · Transiciones entre columnas (M) ⚠️
 
-Validación básica de correo:
-- CA1: exactamente una `@`, con texto antes y después;
-- CA2: el dominio tiene al menos un punto, y no empieza ni termina con punto;
-- CA3: sin espacios y con máximo **254** caracteres.
+Archivo: `src/notitas/t03.py`
 
-## t05 · Validar celular (S)
+Firma: `def puede_mover(origen: str, destino: str) -> bool`
 
-Archivo: `src/cameia_lite/t05.py` · Firma: `def validar_celular(s: str) -> bool`
+Las columnas son `"por_hacer"`, `"en_curso"` y `"hecho"`.
+- CA1: permitido: `por_hacer → en_curso`, `en_curso → hecho`, `en_curso → por_hacer` (devolver) y `hecho → en_curso` (reabrir).
+- CA2: **no** permitido: `por_hacer → hecho` (no se salta "En curso") ni `hecho → por_hacer`.
+- CA3: mover dentro de la misma columna (reordenar) siempre es permitido.
+- CA4: si alguna columna no existe (los nombres son exactos, en minúscula), `ValueError`.
 
-Formato E.164 simplificado:
-- CA1: empieza con `+`, seguido **solo de dígitos**;
-- CA2: entre **6 y 15** dígitos;
-- CA3: el primer dígito no puede ser `0`.
+## t04 · Límite WIP de "En curso" (M) ⚠️
 
-## t06 · Política de contraseñas (M)
+Archivo: `src/notitas/t04.py`
 
-Archivo: `src/cameia_lite/t06.py` · Firma: `def validar_contrasena(pwd: str, comunes: list[str]) -> list[str]`
+Firma: `def validar_wip(notas: list[dict], nota_id: str, destino: str, limite: int = 3) -> None`
 
-Devolver la lista de códigos de error (vacía si es válida), **en este orden**:
-- CA1: `"TOO_SHORT"` si tiene menos de 8 caracteres (puntos de código NFC);
-- CA2: `"TOO_LONG"` si tiene más de 64;
-- CA3: `"COMMON"` si, recortada, en minúsculas y en NFC, está en la lista `comunes` (que también se compara normalizada).
+Cada nota es un diccionario con al menos `"id"` y `"columna"`. El módulo ya define la excepción `WipExcedido`.
+- CA1: si mover la nota a `"en_curso"` dejaría **más de `limite`** notas en esa columna, se lanza `WipExcedido`. Si no, no devuelve nada.
+- CA2: el límite solo aplica a `"en_curso"`; las otras columnas no tienen tope.
+- CA3: si la nota **ya está** en `"en_curso"` (solo se reordena), no cuenta como una nota más.
+- CA4: si `nota_id` no existe, `KeyError`.
 
-## t07 · Fecha de nacimiento (M)
+## t05 · Insertar en una posición (M)
 
-Archivo: `src/cameia_lite/t07.py` · Firma: `def validar_nacimiento(nacimiento: date, hoy: date) -> str`
+Archivo: `src/notitas/t05.py`
 
-Devolver `"FUTURE"` si la fecha es posterior a `hoy`, `"OUT_OF_RANGE"` si la persona tiene **más de 110 años cumplidos**, y `"OK"` en otro caso.
-- CA1: los años cumplidos se cuentan por cumpleaños (no por año calendario).
-- CA2: quien nació un **29 de febrero** cumple años el **1 de marzo** en los años no bisiestos.
-- CA3: exactamente 110 años cumplidos es `"OK"`.
+Firma: `def insertar_en_posicion(ids: list[str], nota_id: str, posicion: int) -> list[str]`
 
-## t08 · Cupo de perfiles por plan (M)
+`ids` es el orden de las notas de una columna, de arriba a abajo.
+- CA1: devuelve una **lista nueva** con `nota_id` en `posicion` (contando desde 0 en la lista resultante). **No** modifica `ids`.
+- CA2: si `nota_id` ya estaba en la lista, primero se quita de donde estaba (no queda repetida).
+- CA3: si `posicion` es mayor que el largo, la nota va al final; si es negativa, `ValueError`.
 
-Archivo: `src/cameia_lite/t08.py` · Firma: `def puede_crear_perfil(plan: str, vence: date | None, hoy: date, perfiles_actuales: int) -> tuple[int, str | None]`
+## t06 · Filtrar por etiquetas (S)
 
-Decidir si se puede crear un perfil más:
-- CA1: plan `"FREE"` permite 1 perfil; `"PREMIUM"` permite 3.
-- CA2: un PREMIUM **vencido** (`vence` anterior a `hoy`) se comporta como FREE. El día del vencimiento todavía es válido.
-- CA3: si se puede → `(201, None)`; si el cupo está agotado → `(403, "PLAN_LIMIT")`.
-- CA4: un plan desconocido lanza `ValueError`.
+Archivo: `src/notitas/t06.py`
 
-## t09 · Nivel de log por estado HTTP (S)
+Firma: `def filtrar_por_etiquetas(notas: list[dict], etiquetas: list[str], modo: str = "todas") -> list[dict]`
 
-Archivo: `src/cameia_lite/t09.py` · Firma: `def nivel_log(status: int) -> str | None`
+Cada nota tiene `"etiquetas"` (lista de textos).
+- CA1: `modo="todas"`: quedan las notas que tienen **todas** las etiquetas pedidas. `modo="alguna"`: las que tienen **al menos una**.
+- CA2: la comparación no distingue mayúsculas.
+- CA3: si `etiquetas` está vacía, se devuelven todas las notas. Se conserva el orden original.
+- CA4: otro `modo` → `ValueError`.
 
-- CA1: 5xx → `"ERROR"`.
-- CA2: 404 → `"INFO"`; cualquier otro 4xx → `"WARN"`.
-- CA3: el resto (1xx, 2xx, 3xx) → `None`.
+## t07 · Buscar sin tildes ni mayúsculas (M) ⚠️
 
-## t10 · Mensajes de error por campo (M)
+Archivo: `src/notitas/t07.py`
 
-Archivo: `src/cameia_lite/t10.py` · Firma: `def mensajes_por_campo(problem: dict) -> dict[str, str]`
+Firma: `def buscar(notas: list[dict], texto: str) -> list[str]`
 
-Recibe un ProblemDetail del backend, como `{"detail": "...", "errors": [{"field": "empresa", "code": "COMPANY_INVALID_CHARACTERS"}]}`, y devuelve `{campo: mensaje}` usando el diccionario `CATALOGO` del archivo.
-- CA1: cada error con un código del catálogo produce su mensaje bajo su campo.
-- CA2: si algún código no está en el catálogo, o no hay `errors`, se devuelve `{"_general": MENSAJE_GENERICO}` (y solo eso).
-- CA3: **nunca** se muestra el texto `detail` del servidor.
+Cada nota tiene `"id"`, `"titulo"` y `"contenido"`. Devuelve los `id` de las notas que coinciden, en el orden original.
+- CA1: coincide si `texto` aparece en el título **o** en el contenido.
+- CA2: no importan las mayúsculas ni las marcas diacríticas: `"CANCIÓN"` encuentra `"cancion"`, y `"nino"` encuentra `"niño"`.
+- CA3: se usa *case folding* completo de Unicode: `"strasse"` encuentra `"Straße"`.
+- CA4: si `texto` está vacío o solo tiene espacios, se devuelven todos los `id`.
 
-## t11 · Contador de reintentos (M)
+## t08 · Estado de vencimiento (M) ⚠️
 
-Archivo: `src/cameia_lite/t11.py` · Firma: `class ContadorReintentos`
+Archivo: `src/notitas/t08.py`
 
-Clase con tres métodos:
-- `registrar_fallo(tipo: str)` con `tipo` en `{"IA", "RED", "VALIDACION"}`; otro tipo lanza `ValueError`.
-- `puede_reintentar() -> bool`.
-- `reiniciar()`.
-- CA1: **solo los fallos `"IA"`** cuentan para el tope.
-- CA2: se puede reintentar mientras haya menos de 3 fallos de IA.
-- CA3: `reiniciar()` vuelve el contador a cero.
+Firma: `def estado_vencimiento(vence: str | None, ahora: datetime) -> str`
 
-## t12 · Crear una sola vez (doble clic) (L)
+`vence` es una fecha `"AAAA-MM-DD"` o `None`. `ahora` es un `datetime` **con zona horaria** (puede venir en UTC u otra).
+- CA1: "hoy" es la fecha de `ahora` **en Bogotá** (UTC−5 fijo, sin horario de verano).
+- CA2: devuelve `"sin_fecha"` si `vence` es `None`; `"vencida"` si `vence` es anterior a hoy; `"hoy"` si es hoy; `"pronto"` si faltan de 1 a 3 días; `"a_tiempo"` si faltan más de 3.
+- CA3: si `ahora` no tiene zona horaria (*naive*), `ValueError`.
 
-Archivo: `src/cameia_lite/t12.py` · Firma: `class CreadorUnaVez`
+## t09 · Normalizar etiquetas (S)
 
-Evita la doble creación de un perfil por doble clic. `CreadorUnaVez(fn)` envuelve una función sin argumentos.
-- CA1: `crear()` llama a `fn` y devuelve su resultado.
-- CA2: si varios hilos llaman a `crear()` **mientras una creación está en curso**, `fn` se ejecuta **una sola vez** y todos reciben el mismo resultado.
-- CA3: cuando la creación termina, una llamada posterior vuelve a ejecutar `fn`.
-- CA4: si `fn` lanza una excepción, quienes esperaban reciben la misma excepción y la siguiente llamada puede reintentar.
+Archivo: `src/notitas/t09.py`
 
-## t13 · Eliminar rol objetivo (M)
+Firma: `def normalizar_etiquetas(etiquetas: list[str]) -> list[str]`
 
-Archivo: `src/cameia_lite/t13.py` · Firma: `def eliminar_rol(perfil: dict, rol_id: str) -> int`
+- CA1: cada etiqueta se recorta, se pasa a minúsculas y sus espacios internos repetidos quedan en uno.
+- CA2: se descartan las vacías y las repetidas, conservando el orden de la **primera** aparición.
+- CA3: si quedan **más de 5** etiquetas, o alguna tiene **más de 20** caracteres, `ValueError`.
 
-`perfil = {"estado": "DRAFT" | "COMPLETED", "roles": [ids]}`. Devuelve un código HTTP y modifica `perfil["roles"]` solo si elimina.
-- CA1: si el rol no está en el perfil → `404` (**esta regla se evalúa primero**).
-- CA2: eliminar el **último** rol de un perfil `COMPLETED` → `409`, sin cambiar nada.
-- CA3: en `DRAFT` sí se puede eliminar el último rol.
-- CA4: si elimina → `204`.
+## t10 · Qué notas se archivan (S)
 
-## t14 · Sustituir rol conservando su lugar (S)
+Archivo: `src/notitas/t10.py`
 
-Archivo: `src/cameia_lite/t14.py` · Firma: `def sustituir_rol(roles: list[str], viejo: str, nuevo: str) -> list[str]`
+Firma: `def notas_para_archivar(notas: list[dict], hoy: date) -> list[str]`
 
-Devolver una **nueva** lista donde `nuevo` ocupa la posición de `viejo`.
-- CA1: el orden de los demás se conserva.
-- CA2: si `viejo` no está, o `nuevo` ya está en la lista → `ValueError`.
-- CA3: la lista original no se modifica.
+Cada nota tiene `"id"`, `"columna"` y, si está hecha, `"fecha_hecho"` (`"AAAA-MM-DD"`).
+- CA1: se archivan las notas de `"hecho"` que llevan **más de 7 días** hechas (8 o más; con 7 exactos todavía no).
+- CA2: las notas sin `"fecha_hecho"` o de otras columnas no se archivan.
+- CA3: devuelve los `id` en el orden original.
 
-## t15 · Catálogo de roles por idioma (S)
+## t11 · Deshacer movimientos (M)
 
-Archivo: `src/cameia_lite/t15.py` · Firma: `def catalogo_roles(roles: list[dict], lang: str | None) -> list[dict]`
+Archivo: `src/notitas/t11.py`
 
-Cada rol es `{"id": ..., "activo": bool, "es": "...", "en": "..."}`. Devolver `[{"id": ..., "nombre": ...}]`.
-- CA1: solo los roles **activos**, en el orden recibido.
-- CA2: `lang` puede ser `"es"` o `"en"`; `None` equivale a `"es"`.
-- CA3: cualquier otro idioma → `ValueError`.
+Clase: `Historial` con `registrar(movimiento: dict) -> None` y `deshacer() -> dict | None`
 
-## t16 · Fechas de formación (M)
+Un movimiento es `{"nota_id": ..., "desde": ..., "hacia": ...}`.
+- CA1: `deshacer()` devuelve el movimiento **inverso** del último registrado (`desde` y `hacia` intercambiados) y lo saca del historial.
+- CA2: si no hay nada que deshacer, devuelve `None`.
+- CA3: solo se guardan los **últimos 20** movimientos; los más viejos se descartan.
 
-Archivo: `src/cameia_lite/t16.py` · Firma: `def validar_formacion(inicio: str, fin: str | None) -> list[str]`
+## t12 · Dos personas mueven la misma nota (L) ⚠️
 
-Las fechas vienen como `"AAAA-MM"`; `fin = None` significa "en curso". Devolver la lista de errores (vacía si todo está bien):
-- CA1: `"INVALID_FORMAT"` si alguna fecha no es exactamente 4 dígitos, guion y mes `01`–`12`.
-- CA2: `"YEAR_ZERO"` si algún año es `0000`.
-- CA3: `"END_BEFORE_START"` si `fin` es anterior a `inicio` (solo se revisa si ambas tienen formato válido).
-- Cada código aparece como máximo una vez.
+Archivo: `src/notitas/t12.py`
 
-## t17 · Expectativa salarial (S)
+Clase: `Tablero(notas: list[dict])` con `mover(nota_id: str, destino: str, version: int) -> dict`. El módulo ya define la excepción `Conflicto`.
 
-Archivo: `src/cameia_lite/t17.py` · Firma: `def validar_salario(valor: str) -> bool`
+Cada nota tiene `"id"`, `"columna"` y `"version"` (entero). Es **bloqueo optimista**: el cliente manda la versión que vio.
+- CA1: si `version` coincide con la de la nota, la nota pasa a `destino`, su versión sube en 1 y se devuelve **una copia** de la nota actualizada.
+- CA2: si no coincide (alguien la movió antes), `Conflicto`, y la nota no cambia.
+- CA3: si `nota_id` no existe, `KeyError`.
+- CA4: es seguro con **hilos**: si varias llamadas llegan al mismo tiempo con la misma versión, exactamente **una** gana y las demás reciben `Conflicto`.
+- CA5: el `Tablero` no comparte las notas con la lista que recibió (modificar la lista original después no lo afecta).
 
-El salario llega como texto.
-- CA1: solo dígitos, con parte decimal opcional de 1 o 2 dígitos separada por punto (`"2500000.50"`).
-- CA2: la parte entera tiene como máximo **13** dígitos.
-- CA3: no se admiten negativos, signo `+`, comas ni espacios.
+## t13 · Exportar e importar el tablero (M)
 
-## t18 · Propagar X-Request-Id (M)
+Archivo: `src/notitas/t13.py`
 
-Archivo: `src/cameia_lite/t18.py` · Firma: `def request_id(entrante: str | None) -> str`
+Firmas: `def exportar(tablero: dict) -> str` y `def importar(texto: str) -> dict`
 
-Decidir qué identificador de petición usar:
-- CA1: si `entrante` es un UUID canónico (36 caracteres `8-4-4-4-12` hexadecimales), devolverlo en **minúsculas**.
-- CA2: si no viene, está vacío o no es válido, generar un `uuid4` nuevo.
-- CA3: nunca devolver un valor que contenga saltos de línea u otro texto añadido (evita la inyección en los logs).
+Un tablero es `{"notas": [ {...}, ... ]}`.
+- CA1: `exportar` produce JSON **estable**: claves ordenadas, sangría de 2 espacios y sin escapar tildes (`ensure_ascii=False`). Dos tableros iguales dan exactamente el mismo texto.
+- CA2: `importar(exportar(t)) == t`.
+- CA3: `importar` valida y lanza `ValueError` si: el texto no es JSON; no hay una lista `"notas"`; alguna nota no tiene `"id"` y `"titulo"` como texto; su `"columna"` no es `por_hacer`, `en_curso` o `hecho`; o hay `id` repetidos.
 
-## t19 · Limpiar cabeceras de identidad (M)
+## t14 · Contenido seguro (sin inyectar HTML) (M) ⚠️
 
-Archivo: `src/cameia_lite/t19.py` · Firma: `def limpiar_cabeceras(headers: dict[str, str], identidad: dict[str, str]) -> dict[str, str]`
+Archivo: `src/notitas/t14.py`
 
-El gateway debe ser la **única** fuente de identidad hacia los microservicios.
-- CA1: eliminar toda cabecera entrante cuyo nombre empiece por `x-user-`, **sin importar mayúsculas** (`X-User-Id`, `x-USER-roles`…).
-- CA2: luego agregar `X-User-Id` y `X-User-Email` con los valores de `identidad["id"]` e `identidad["email"]`.
-- CA3: las demás cabeceras se conservan tal cual, y no se modifica el diccionario recibido.
+Firma: `def limpiar_contenido(texto: str) -> str`
 
-## t20 · Origen permitido (CORS) (S)
+El contenido de una nota se muestra como HTML en el tablero. No se puede permitir que alguien inyecte HTML o JavaScript (XSS).
+- CA1: se escapan `&`, `<`, `>`, `"` y `'` exactamente como lo hace `html.escape(texto, quote=True)` (el apóstrofo queda `&#x27;`).
+- CA2: se permite una sola marca de formato: `**texto**` → `<strong>texto</strong>` (sin anidar; un `**` sin pareja se deja tal cual).
+- CA3: los saltos de línea `\n` se convierten en `<br>`.
+- CA4: el formato no debe abrir la puerta: `**<b>**` da `<strong>&lt;b&gt;</strong>`.
 
-Archivo: `src/cameia_lite/t20.py` · Firma: `def origen_permitido(origen: str | None, permitidos: list[str]) -> bool`
+## t15 · Resumen por columna (S)
 
-- CA1: solo se permite un origen que esté **exactamente** en la lista (sin comodines ni coincidencias parciales).
-- CA2: `None` o vacío → `False`.
-- CA3: la comparación del esquema y el host no distingue mayúsculas (`HTTPS://Cameia.App` equivale a `https://cameia.app`), pero una barra final o un puerto distinto lo hacen otro origen.
+Archivo: `src/notitas/t15.py`
 
-## t21 · Perfil de arranque y emulador (M)
+Firma: `def resumen_columnas(notas: list[dict]) -> dict`
 
-Archivo: `src/cameia_lite/t21.py` · Firma: `def perfil_activo(env: dict[str, str]) -> str`
+- CA1: devuelve `{"por_hacer": n, "en_curso": n, "hecho": n, "total": n, "porcentaje_hecho": p}`.
+- CA2: las notas con `"archivada": True` no cuentan.
+- CA3: `porcentaje_hecho` es un entero redondeado al más cercano, y los empates (.5) suben (`1 de 8` = 12,5 % → 13). Si no hay notas, es 0.
 
-Decidir con qué perfil arranca un servicio, según las variables de entorno:
-- CA1: es un **despliegue** si existe la variable `K_SERVICE` (**aunque esté vacía**) o si `PERFIL == "production"`.
-- CA2: en un despliegue, si existe `FIREBASE_AUTH_EMULATOR_HOST` (**aunque esté vacía**), lanzar `RuntimeError` (el servicio se niega a arrancar); si no existe, devolver `"production"`.
-- CA3: fuera de un despliegue, si `FIREBASE_AUTH_EMULATOR_HOST` tiene un valor no vacío → `"local-emulador"`; si no → `"local"`.
-- Ojo: el perfil se llama `"production"`, no `"prod"`. `PERFIL == "prod"` **no** es un despliegue.
+## t16 · Ordenar por prioridad y fecha (S)
 
-## t22 · Registro idempotente (Idempotency-Key) (L)
+Archivo: `src/notitas/t16.py`
 
-Archivo: `src/cameia_lite/t22.py` · Firma: `class RegistroIdempotente`
+Firma: `def ordenar(notas: list[dict]) -> list[dict]`
 
-Registrar respuestas de entrevista sin duplicarlas cuando el navegador reintenta. Método `registrar(clave: str, cuerpo: dict) -> tuple[int, dict | None]`:
-- CA1: clave vacía o en blanco → `(400, None)`.
-- CA2: primera vez con esa clave → guarda y devuelve `(201, {"id": n})`, con `n` consecutivo desde 1.
-- CA3: misma clave y **mismo** cuerpo → `(200, <la misma respuesta de antes>)`, sin crear otro registro.
-- CA4: misma clave con un cuerpo **distinto** → `(422, None)`.
-- `total()` devuelve cuántos registros reales se crearon.
+Cada nota tiene `"prioridad"` (1 baja, 2 media, 3 alta) y `"vence"` (`"AAAA-MM-DD"` o `None`).
+- CA1: primero la prioridad más alta; entre iguales, la fecha de vencimiento más cercana; las que no tienen fecha van al final de su grupo.
+- CA2: si todo empata, se conserva el orden original (orden estable).
+- CA3: devuelve una lista nueva; no modifica `notas`.
 
-## t23 · Progreso de la entrevista (S)
+## t17 · Paginar el listado (S)
 
-Archivo: `src/cameia_lite/t23.py` · Firma: `def progreso(k: int, total: int) -> str`
+Archivo: `src/notitas/t17.py`
 
-- CA1: devuelve `"Pregunta k de total"`, por ejemplo `"Pregunta 2 de 5"` (con "P" mayúscula y el resto en minúscula).
-- CA2: si `total < 1`, o `k` está fuera de `1..total` → `ValueError`.
+Firma: `def paginar(items: list, pagina: int, tamano: int = 10) -> dict`
 
-## t24 · Enmascarar correo en logs (S)
+- CA1: devuelve `{"items": [...], "pagina": pagina, "total_paginas": n, "hay_siguiente": bool}`. Las páginas empiezan en **1**.
+- CA2: `total_paginas` es el techo de `len(items) / tamano` (0 si no hay items).
+- CA3: una página más allá del final devuelve `items` vacío y `hay_siguiente` en `False`.
+- CA4: `pagina < 1` o `tamano < 1` → `ValueError`.
 
-Archivo: `src/cameia_lite/t24.py` · Firma: `def enmascarar_correo(correo: str) -> str`
+## t18 · Iniciales del responsable (S)
 
-Para no escribir datos personales en los logs:
-- CA1: conservar la primera letra de la parte local y reemplazar el resto por `*` (misma longitud). El dominio se conserva: `"ana@cameia.co"` → `"a**@cameia.co"`.
-- CA2: una parte local de 1 carácter queda como `"*"`: `"a@c.co"` → `"*@c.co"`.
-- CA3: si no tiene exactamente una `@` o la parte local está vacía → `"***"`.
+Archivo: `src/notitas/t18.py`
+
+Firma: `def iniciales(nombre: str) -> str`
+
+Para el circulito del responsable en cada nota.
+- CA1: la inicial de la **primera** y de la **última** palabra, en mayúsculas (`"juan josé arias"` → `"JA"`).
+- CA2: se ignoran las partículas `de`, `del`, `la`, `las`, `los` e `y` (en cualquier mayúscula), salvo que sean la única palabra.
+- CA3: una sola palabra da una sola inicial. Respeta las tildes y la ñ (`"ñandú"` → `"Ñ"`).
+- CA4: si el nombre está vacío o solo tiene espacios, `"?"`.
+
+## t19 · Progreso de la checklist (M)
+
+Archivo: `src/notitas/t19.py`
+
+Firma: `def progreso_checklist(items: list[dict]) -> dict`
+
+Cada ítem es `{"texto": str, "hecho": bool}`.
+- CA1: devuelve `{"hechos": k, "total": n, "porcentaje": p, "texto": "k de n"}`; `porcentaje` es entero, redondeado **hacia abajo**.
+- CA2: los ítems cuyo texto queda vacío al recortar no cuentan.
+- CA3: si `"hecho"` no es `True` ni `False` (por ejemplo `"sí"` o `1`), `ValueError`.
+- CA4: sin ítems: `{"hechos": 0, "total": 0, "porcentaje": 0, "texto": "0 de 0"}`.
+
+## t20 · Duplicar una nota (S) ⚠️
+
+Archivo: `src/notitas/t20.py`
+
+Firma: `def duplicar(nota: dict, nuevo_id: str) -> dict`
+
+- CA1: devuelve una nota nueva igual a la original, pero con `"id": nuevo_id`, `"version": 1` y `"columna": "por_hacer"`.
+- CA2: el título lleva el sufijo ` (copia)`. Si ya terminaba en ` (copia)`, pasa a ` (copia 2)`; si terminaba en ` (copia N)`, pasa a ` (copia N+1)`.
+- CA3: la copia **no comparte** listas ni diccionarios con la original (etiquetas, checklist…): cambiar una no cambia la otra. La original no se modifica.
+
+## t21 · Fusionar cambios de dos dispositivos (L) ⚠️
+
+Archivo: `src/notitas/t21.py`
+
+Firma: `def fusionar(base: dict, a: dict, b: dict) -> dict`
+
+Una nota se editó sin conexión en dos dispositivos. `base` es la versión común; `a` y `b` son las dos versiones editadas. Cada una de `a` y `b` trae además:
+- `"modificado"`: un diccionario `campo → fecha ISO 8601 con zona horaria` de cuándo se cambió cada campo;
+- `"dispositivo"`: un texto con el nombre del dispositivo.
+
+Reglas, **campo por campo** (todos los campos de `base`, `a` y `b`, menos `"modificado"` y `"dispositivo"`; un campo que falta cuenta como `None`):
+- CA1: si solo cambió uno de los dos respecto a `base`, gana ese cambio. Si ninguno cambió, queda el de `base`.
+- CA2: si los dos cambiaron al mismo valor, ese valor (no es conflicto).
+- CA3: si cambiaron a valores distintos, es **conflicto**: gana el cambio con la fecha `"modificado"` **más reciente**, comparando instantes reales (`"2026-11-02T10:00:00-05:00"` es **posterior** a `"2026-11-02T14:00:00+00:00"`). Si las fechas son el mismo instante, gana el dispositivo cuyo nombre va **primero** en orden alfabético.
+- CA4: el resultado incluye `"conflictos"`: la lista ordenada alfabéticamente de los campos que tuvieron conflicto. Los campos que quedan en `None` no se incluyen en el resultado.
+
+## t22 · Notas bloqueadas (M)
+
+Archivo: `src/notitas/t22.py`
+
+Firma: `def mover_bloqueada(nota: dict, destino: str, motivo: str | None = None) -> dict`. El módulo ya define la excepción `NotaBloqueada`.
+
+Una nota puede estar bloqueada (`"bloqueada": True`), por ejemplo porque espera a alguien.
+- CA1: si **no** está bloqueada, devuelve una copia con `"columna": destino` (el motivo se ignora).
+- CA2: si está bloqueada, solo se mueve con un `motivo` que no quede vacío al recortar; si no, `NotaBloqueada`.
+- CA3: al moverla con motivo, la copia queda con `"bloqueada": False` y agrega al final de `"historial"` (que se crea si no existe) `{"accion": "desbloqueo", "motivo": <motivo recortado>}`.
+- CA4: nunca modifica la nota original (tampoco su historial).
+
+## t23 · Tiempo de ciclo (M) ⚠️
+
+Archivo: `src/notitas/t23.py`
+
+Firma: `def tiempo_ciclo(eventos: list[dict]) -> float | None`
+
+Cada evento es `{"hacia": columna, "en": fecha ISO 8601 con zona horaria}`: el momento en que la nota llegó a esa columna.
+- CA1: el tiempo de ciclo es el total de **horas** que la nota pasó en `"en_curso"`, sumando todas las veces que estuvo ahí, hasta su **última** llegada a `"hecho"`.
+- CA2: los eventos pueden venir desordenados: se ordenan por fecha (instante real).
+- CA3: si la nota nunca llegó a `"hecho"`, `None`.
+- CA4: el resultado se redondea a 2 decimales.
+
+## t24 · Límite de notas por minuto (M) ⚠️
+
+Archivo: `src/notitas/t24.py`
+
+Clase: `LimiteCreacion(max_por_minuto: int = 5)` con `permitir(usuario: str, ahora: float) -> bool`
+
+`ahora` es el tiempo en segundos (un número que solo crece). Evita que alguien llene el tablero de notas sin querer.
+- CA1: cada usuario puede crear como máximo `max_por_minuto` notas en cualquier ventana de 60 segundos: se cuentan las creaciones con tiempo `t` tal que `ahora - 60 < t <= ahora`.
+- CA2: si se permite, la creación se registra y devuelve `True`; si no, devuelve `False` y el intento **no** cuenta.
+- CA3: cada usuario tiene su propio límite.

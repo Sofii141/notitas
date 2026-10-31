@@ -1,5 +1,5 @@
-from cameia_lite.t16 import validar_formacion
-def test_ok():
-    assert validar_formacion("2020-02", "2024-11") == []
-def test_al_reves():
-    assert validar_formacion("2024-01", "2020-01") == ["END_BEFORE_START"]
+from notitas.t16 import ordenar
+def test_prioridad_y_fecha():
+    n = [{"id": "a", "prioridad": 1, "vence": None}, {"id": "b", "prioridad": 3, "vence": "2026-11-09"},
+         {"id": "c", "prioridad": 3, "vence": "2026-11-03"}]
+    assert [x["id"] for x in ordenar(n)] == ["c", "b", "a"]

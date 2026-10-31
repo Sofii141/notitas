@@ -1,5 +1,7 @@
-from cameia_lite.t22 import RegistroIdempotente
-def test_primera_y_repetida():
-    r = RegistroIdempotente()
-    assert r.registrar("k1", {"texto": "hola"}) == (201, {"id": 1})
-    assert r.registrar("k1", {"texto": "hola"}) == (200, {"id": 1})
+import pytest
+from notitas.t22 import mover_bloqueada, NotaBloqueada
+def test_libre():
+    assert mover_bloqueada({"id": "1", "columna": "por_hacer"}, "en_curso")["columna"] == "en_curso"
+def test_bloqueada_sin_motivo():
+    with pytest.raises(NotaBloqueada):
+        mover_bloqueada({"id": "1", "columna": "por_hacer", "bloqueada": True}, "en_curso")

@@ -1,50 +1,49 @@
-# CAMEIA-lite
+# Notitas · caso base del proyecto final
 
-Este es el caso base del proyecto final de Ágiles 2026-2 (tema 3, pair programming). Contiene **24 tareas pequeñas**, cada una basada en una regla real del backlog de CAMEIA. No necesita Docker, Firebase ni base de datos: solo Python 3.10+ y pytest.
+Este es el caso base del proyecto final de Ágiles 2026-2 (tema 3, pair programming). **Notitas** es un tablero kanban de notas adhesivas (*Por hacer · En curso · Hecho*), con un front animado y un backend sencillo en Python.
+
+- **Lo que se mide:** 24 tareas del backend (10 S · 12 M · 2 L, de las cuales 10 son difíciles). Cada una es una regla del tablero escrita como función o clase pura, con **pruebas visibles** (41) y **pruebas ocultas** (72). Enunciados: [`TAREAS.md`](TAREAS.md).
+- **Lo que no se mide:** el front (`demo/`). Ya está hecho, solo muestra lo que responde el backend y se va "encendiendo" a medida que se implementan las tareas.
+
+> Este repositorio antes tenía CAMEIA-lite. Se reemplazó el 31/10/2026 con aprobación del profesor (plazo del caso base ampliado al 3/11). La versión anterior sigue en el historial y en el tag `congelado-v1`.
+
+Solo necesita Python 3.10+ y pytest.
 
 ## Uso
 ```bash
 pip install pytest
-python -m pytest tests/visibles -k t05        # pruebas visibles de una tarea
-python -m pytest tests/ocultas -k t05         # pruebas ocultas: SOLO después de declarar "terminado"
+python -m pytest -k t05                    # pruebas visibles de una tarea (por defecto NO corre las ocultas)
+python -m pytest tests/ocultas -k t05      # pruebas ocultas: SOLO después de declarar "terminado"
+python demo/servidor.py                    # el tablero en http://localhost:8000
 ```
 
 ## Reglas de cada tarea (son las que hacen válida la medición)
 1. **Antes de empezar:** anotar cuántos minutos creen que les tomará (pronóstico).
-2. **Arrancar el cronómetro** al abrir el enunciado en `TAREAS.md`.
-3. **Trabajar** solo con las pruebas de `tests/visibles`.
+2. **Arrancar el cronómetro** al abrir el enunciado en `TAREAS.md` y hacer el commit `tNN: inicio`.
+3. **Trabajar** solo con las pruebas visibles.
    - **Línea base:** pareja humana sin IA; uno conduce, el otro navega, y cambian cada 15 min.
    - **Ciclos:** una persona con el agente copiloto, y una fila de bitácora por cada uso.
-4. **Declarar "terminado"** cuando pasan las visibles. Parar el cronómetro y hacer commit `tNN: terminado`.
-5. **Correr `tests/ocultas`.** Cada prueba que falle es un **error escapado**. Si lo corrigen, el cronómetro sigue aparte como **retrabajo**, con commit `tNN: retrabajo`.
-6. **Codewalk de 5 min:** 5 preguntas sin mirar el código, puntuadas de 0 a 5, al autor y al compañero.
+4. **Declarar "terminado"** cuando pasan las visibles. Parar el cronómetro y hacer el commit `tNN: terminado`.
+5. **Correr las ocultas.** Cada prueba que falle es un **error escapado**. Si lo corrigen, el tiempo cuenta aparte como **retrabajo**, con el commit `tNN: retrabajo`.
+6. **Codewalk:** 5 preguntas sin mirar el código, de 0 a 5, al autor y al compañero.
 7. Llenar la hoja *Medicion por caso* de la bitácora.
 
-> **No abrir `tests/ocultas` antes de terminar.** Ahí está la medición de errores escapados; si se miran antes, el dato no vale. Si alguien las abre por error, se anota con la marca `[C]` y la tarea se descarta.
-
-## Tareas que ya implementó uno de ustedes en CAMEIA
-- t10, t11, t12 y t23: las hizo **Juan José**.
-- t15: la hizo **Ana Sofía**.
-
-Estas solo se asignan a la condición *con agente* y las hace la **otra persona**, para no medir memoria.
+> **No abrir `tests/ocultas` antes de terminar.** Si alguien las abre por error, la tarea se marca `[C]` y se reemplaza por una de repuesto.
+> **La demo no se toca durante una sesión cronometrada.** Los datos de la demo se guardan en `demo/datos.json` (no se sube); para empezar de cero, se borra ese archivo.
 
 ## Asignación por sorteo
 ```bash
-python sorteo.py 30102026
+python sorteo.py <semilla> > registro/sorteo_<semilla>.txt
 ```
-El número es la semilla. Anoten en un acta cuál usaron, así cualquiera puede repetir el sorteo y obtener lo mismo.
-Guarden la salida en `registro/sorteo_<semilla>.txt` (`python sorteo.py 30102026 > registro/sorteo_30102026.txt`).
+Cupos fijos por tamaño: la línea base recibe 5 S · 4 M · 1 L, la condición con agente 5 S · 6 M · 1 L, y quedan 2 M de repuesto. Las tareas difíciles se reparten alternando entre condiciones, el orden de las tareas se sortea y, con agente, cada persona conduce 6 tareas. Anoten la semilla en un acta: cualquiera puede repetir el sorteo y obtener lo mismo.
 
-El sorteo usa **cupos fijos por tamaño**: la línea base recibe 1 L, 4 M y 5 S, y la condición con agente (ciclos 1 y 2) 1 L, 6 M y 5 S, contando las 5 tareas forzadas. Así las dos condiciones tienen casi la misma mezcla. El número de tareas difíciles por condición varía con la semilla: lo imprime el sorteo y se reporta.
+## Estructura
+| Carpeta | Qué hay |
+|---|---|
+| `src/notitas/tNN.py` | Los esqueletos de las 24 tareas (lanzan `NotImplementedError` hasta que se implementen) |
+| `tests/visibles`, `tests/ocultas` | Las pruebas de cada tarea |
+| `demo/` | `servidor.py` (backend, solo librería estándar), `index.html`, `estilo.css` y `app.js` (front con animaciones, paleta Macarons), y los datos de ejemplo |
+| `registro/` | La salida del sorteo y las notas de cada sesión |
 
-## Demo (frontend + backend), para la presentación
-```bash
-python demo/servidor.py        # luego abrir http://localhost:8000
-```
-- `demo/index.html` **no valida nada**: envía los datos y muestra lo que responde el backend.
-- `demo/servidor.py` (solo librería estándar) valida usando las funciones de las tareas: t01, t03–t07, t16 y t17 para los formularios; t09 (nivel de log), t18 (X-Request-Id) y t24 (correo enmascarado) para el log.
-- Si una tarea todavía no está hecha, su campo muestra "tarea tNN pendiente". Así, a medida que avanzan, la demo se va "encendiendo" sola.
-- La demo **no se mide**: lo que se mide son las tareas. No hay que tocarla durante una sesión cronometrada.
-
-## De dónde salen las tareas
-Cada tarea viene de un ítem real de Jira y de un PR de CAMEIA. La trazabilidad completa está en la rama `documentacion`, archivo `02 - Caso base/26102026_01_Backlog_Origen_CAMEIA-lite_v1.md`.
+## Validación del caso
+Las 113 pruebas **fallan** con los esqueletos y **pasan** con las soluciones de referencia, comprobado el 31/10/2026. Las soluciones de referencia **no** están en el repositorio: si estuvieran, la línea base no sería a ciegas.

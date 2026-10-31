@@ -1,7 +1,11 @@
-from cameia_lite.t05 import validar_celular
-def test_limites():
-    assert validar_celular("+123456") and not validar_celular("+12345") and not validar_celular("+1" + "2" * 15)
-def test_cero_y_espacios():
-    assert not validar_celular("+0573001") and not validar_celular("+57 300 123")
-def test_digitos_no_ascii():
-    assert not validar_celular("+\u0665\u0665\u0665\u0665\u0665\u0665")
+import pytest
+from notitas.t05 import insertar_en_posicion
+def test_no_modifica_la_original():
+    ids = ["a", "b", "c"]
+    insertar_en_posicion(ids, "c", 0)
+    assert ids == ["a", "b", "c"]
+def test_mas_alla_del_final():
+    assert insertar_en_posicion(["a", "b"], "a", 99) == ["b", "a"]
+def test_negativa():
+    with pytest.raises(ValueError):
+        insertar_en_posicion(["a"], "b", -1)

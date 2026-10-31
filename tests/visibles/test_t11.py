@@ -1,6 +1,7 @@
-from cameia_lite.t11 import ContadorReintentos
-def test_tope_ia():
-    c = ContadorReintentos()
-    for _ in range(3):
-        c.registrar_fallo("IA")
-    assert not c.puede_reintentar()
+from notitas.t11 import Historial
+def test_deshacer():
+    h = Historial()
+    h.registrar({"nota_id": "a", "desde": "por_hacer", "hacia": "en_curso"})
+    assert h.deshacer() == {"nota_id": "a", "desde": "en_curso", "hacia": "por_hacer"}
+def test_vacio():
+    assert Historial().deshacer() is None

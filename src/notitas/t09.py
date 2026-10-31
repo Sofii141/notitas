@@ -1,3 +1,3 @@
-def nivel_log(status: int) -> str | None:
+def normalizar_etiquetas(etiquetas: list[str]) -> list[str]:
     """Ver TAREAS.md, tarea t09."""
     raise NotImplementedError

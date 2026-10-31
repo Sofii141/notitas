@@ -1,3 +1,5 @@
-from cameia_lite.t14 import sustituir_rol
-def test_lugar():
-    assert sustituir_rol(["a", "b", "c"], "b", "x") == ["a", "x", "c"]
+from notitas.t14 import limpiar_contenido
+def test_negrita():
+    assert limpiar_contenido("**hola** mundo") == "<strong>hola</strong> mundo"
+def test_salto():
+    assert limpiar_contenido("a\nb") == "a<br>b"

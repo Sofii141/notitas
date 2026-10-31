@@ -5,19 +5,18 @@ Uso: python sorteo.py <semilla>   (registrar la semilla en un acta: el sorteo es
 import random
 import sys
 
-TAMANO = {"t01": "S", "t02": "S", "t03": "M", "t04": "S", "t05": "S", "t06": "M", "t07": "M", "t08": "M",
-          "t09": "S", "t10": "M", "t11": "M", "t12": "L", "t13": "M", "t14": "S", "t15": "S", "t16": "M",
-          "t17": "S", "t18": "M", "t19": "M", "t20": "S", "t21": "M", "t22": "L", "t23": "S", "t24": "S"}
-DIFICIL = {"t03", "t07", "t08", "t12", "t13", "t18", "t19", "t20", "t21", "t22"}
-# Tareas que alguno ya implementó en CAMEIA: van con agente y las hace la otra persona.
-AUTOR = {"t10": "Juan José", "t11": "Juan José", "t12": "Juan José", "t23": "Juan José", "t15": "Ana Sofía"}
+TAMANO = {"t01": "S", "t02": "S", "t03": "M", "t04": "M", "t05": "M", "t06": "S", "t07": "M", "t08": "M",
+          "t09": "S", "t10": "S", "t11": "M", "t12": "L", "t13": "M", "t14": "M", "t15": "S", "t16": "S",
+          "t17": "S", "t18": "S", "t19": "M", "t20": "S", "t21": "L", "t22": "M", "t23": "M", "t24": "M"}
+DIFICIL = {"t03", "t04", "t07", "t08", "t12", "t14", "t20", "t21", "t23", "t24"}
+# Tareas que alguno ya implementó antes: van con agente y las hace la otra persona. En Notitas no hay ninguna.
+AUTOR = {}
 OTRA = {"Juan José": "Ana Sofía", "Ana Sofía": "Juan José"}
-# Cupos fijos por tamaño (incluyen las tareas forzadas): así la línea base (10) y la condición con
-# agente (12) reciben casi la misma mezcla. Línea base: 1 L, 4 M, 5 S · Agente: 1 L, 6 M, 5 S.
-# (v1 repartía en ronda y, al llenarse primero los ciclos, la línea base se quedaba con casi todas las S.)
+# Cupos fijos por tamaño: así la línea base (10) y la condición con agente (12) reciben casi la misma
+# mezcla. Notitas tiene 10 S, 12 M y 2 L. Línea base: 5 S, 4 M, 1 L · Agente: 5 S, 6 M, 1 L · Repuesto: 2 M.
 CUPOS = {"L": {"Línea base": 1, "Agente": 1, "Repuesto": 0},
-         "M": {"Línea base": 4, "Agente": 6, "Repuesto": 1},
-         "S": {"Línea base": 5, "Agente": 5, "Repuesto": 1}}
+         "M": {"Línea base": 4, "Agente": 6, "Repuesto": 2},
+         "S": {"Línea base": 5, "Agente": 5, "Repuesto": 0}}
 
 sys.stdout.reconfigure(encoding="utf-8")
 semilla = int(sys.argv[1]) if len(sys.argv) > 1 else sys.exit("Falta la semilla: python sorteo.py 30102026")

@@ -1,10 +1,10 @@
-from datetime import date
-from cameia_lite.t07 import validar_nacimiento
-def test_limite_110():
-    assert validar_nacimiento(date(1916, 10, 26), date(2026, 10, 26)) == "OK"
-    assert validar_nacimiento(date(1915, 10, 26), date(2026, 10, 26)) == "OUT_OF_RANGE"
-def test_antes_del_cumple():
-    assert validar_nacimiento(date(1915, 10, 27), date(2026, 10, 26)) == "OK"
-def test_29_febrero():
-    assert validar_nacimiento(date(1916, 2, 29), date(2027, 2, 28)) == "OK"
-    assert validar_nacimiento(date(1916, 2, 29), date(2027, 3, 1)) == "OUT_OF_RANGE"
+from notitas.t07 import buscar
+N = [{"id": "1", "titulo": "Regalo del niño", "contenido": ""}, {"id": "2", "titulo": "Viaje", "contenido": "Hotel en la Straße"},
+     {"id": "3", "titulo": "cancion", "contenido": ""}]
+def test_enie():
+    assert buscar(N, "nino") == ["1"]
+def test_casefold_completo():
+    assert buscar(N, "strasse") == ["2"]
+def test_vacio_y_busqueda_con_tilde():
+    assert buscar(N, "   ") == ["1", "2", "3"]
+    assert buscar(N, "canción") == ["3"]

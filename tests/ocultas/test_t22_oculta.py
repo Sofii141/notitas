@@ -1,12 +1,13 @@
-from cameia_lite.t22 import RegistroIdempotente
-def test_cuerpo_distinto():
-    r = RegistroIdempotente(); r.registrar("k1", {"texto": "hola"})
-    assert r.registrar("k1", {"texto": "chao"}) == (422, None) and r.total() == 1
-def test_clave_vacia():
-    r = RegistroIdempotente()
-    assert r.registrar("", {}) == (400, None) and r.registrar("  ", {}) == (400, None) and r.total() == 0
-def test_mutar_cuerpo_despues_no_engana():
-    r = RegistroIdempotente(); c = {"texto": "hola"}; r.registrar("k", c)
-    c["texto"] = "cambiado"
-    assert r.registrar("k", {"texto": "hola"}) == (200, {"id": 1})
-    assert r.registrar("k2", {"x": 1}) == (201, {"id": 2})
+import pytest
+from notitas.t22 import mover_bloqueada, NotaBloqueada
+def test_motivo_en_blanco():
+    with pytest.raises(NotaBloqueada):
+        mover_bloqueada({"id": "1", "columna": "por_hacer", "bloqueada": True}, "en_curso", "   ")
+def test_desbloqueo_con_historial():
+    r = mover_bloqueada({"id": "1", "columna": "por_hacer", "bloqueada": True}, "en_curso", "  ya respondió ")
+    assert r["bloqueada"] is False and r["columna"] == "en_curso"
+    assert r["historial"] == [{"accion": "desbloqueo", "motivo": "ya respondió"}]
+def test_no_modifica_original():
+    nota = {"id": "1", "columna": "por_hacer", "bloqueada": True, "historial": [{"accion": "creada"}]}
+    r = mover_bloqueada(nota, "en_curso", "ok")
+    assert len(r["historial"]) == 2 and nota["historial"] == [{"accion": "creada"}] and nota["bloqueada"] is True

@@ -1,5 +1,4 @@
-from cameia_lite.t17 import validar_salario
-def test_ok():
-    assert validar_salario("2500000") and validar_salario("2500000.50")
-def test_negativo():
-    assert not validar_salario("-100")
+from notitas.t17 import paginar
+def test_primera():
+    r = paginar(list(range(25)), 1)
+    assert r["items"] == list(range(10)) and r["total_paginas"] == 3 and r["hay_siguiente"] is True

@@ -1,6 +1,5 @@
-from cameia_lite.t20 import origen_permitido
-P = ["https://cameia.app", "http://localhost:5173"]
-def test_ok():
-    assert origen_permitido("https://cameia.app", P)
-def test_otro():
-    assert not origen_permitido("https://otro.com", P)
+from notitas.t20 import duplicar
+NOTA = {"id": "1", "titulo": "Pan", "columna": "hecho", "version": 4, "etiquetas": ["casa"]}
+def test_basico():
+    d = duplicar(NOTA, "2")
+    assert d["id"] == "2" and d["titulo"] == "Pan (copia)" and d["version"] == 1 and d["columna"] == "por_hacer"

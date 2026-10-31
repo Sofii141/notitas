@@ -1,11 +1,7 @@
-import pytest
-from cameia_lite.t14 import sustituir_rol
-def test_no_muta():
-    r = ["a", "b"]; sustituir_rol(r, "a", "z")
-    assert r == ["a", "b"]
-def test_viejo_ausente():
-    with pytest.raises(ValueError):
-        sustituir_rol(["a"], "q", "z")
-def test_nuevo_duplicado():
-    with pytest.raises(ValueError):
-        sustituir_rol(["a", "b"], "a", "b")
+from notitas.t14 import limpiar_contenido
+def test_script():
+    assert limpiar_contenido("<script>alert(1)</script>") == "&lt;script&gt;alert(1)&lt;/script&gt;"
+def test_formato_no_abre_la_puerta():
+    assert limpiar_contenido("**<b>**") == "<strong>&lt;b&gt;</strong>"
+def test_comillas_ampersand_y_sin_pareja():
+    assert limpiar_contenido("a & b \"c\" 'd' **x") == "a &amp; b &quot;c&quot; &#x27;d&#x27; **x"

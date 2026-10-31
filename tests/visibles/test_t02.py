@@ -1,5 +1,7 @@
-from cameia_lite.t02 import contar_caracteres
-def test_simple():
-    assert contar_caracteres("Ana") == 3
-def test_combinante():
-    assert contar_caracteres("Jose\u0301") == 4
+import pytest
+from notitas.t02 import normalizar_color
+def test_nombre():
+    assert normalizar_color("matcha") == "#BCC86F"
+def test_otro_color():
+    with pytest.raises(ValueError):
+        normalizar_color("#123456")

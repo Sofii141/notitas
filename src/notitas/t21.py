@@ -1,3 +1,3 @@
-def perfil_activo(env: dict[str, str]) -> str:
+def fusionar(base: dict, a: dict, b: dict) -> dict:
     """Ver TAREAS.md, tarea t21."""
     raise NotImplementedError

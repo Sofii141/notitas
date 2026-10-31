@@ -3,75 +3,63 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CAMEIA-lite demo</title>
-<style>
-  :root { --bg:#f6f7f9; --card:#fff; --text:#1d2433; --muted:#5b6475; --line:#d9dde5; --err:#b42318; --ok:#067647; --acc:#1f4e78; }
-  @media (prefers-color-scheme: dark) { :root { --bg:#12151b; --card:#1b2029; --text:#e6e9ef; --muted:#9aa3b5; --line:#2e3542; --err:#f97066; --ok:#47cd89; --acc:#7cb4e8; } }
-  * { box-sizing: border-box; }
-  body { margin:0; background:var(--bg); color:var(--text); font:15px/1.5 system-ui, sans-serif; }
-  main { max-width: 760px; margin: 0 auto; padding: 24px 16px; }
-  h1 { font-size: 22px; margin: 0 0 4px; } p.nota { color: var(--muted); margin: 0 0 20px; }
-  form { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 18px; margin-bottom: 20px; }
-  h2 { font-size: 17px; margin: 0 0 12px; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
-  label { display: block; font-weight: 600; font-size: 13px; }
-  input { width: 100%; margin-top: 4px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 6px; background: transparent; color: var(--text); font: inherit; }
-  .err { color: var(--err); font-size: 13px; min-height: 1em; margin-top: 3px; }
-  button { margin-top: 14px; padding: 9px 16px; border: 0; border-radius: 6px; background: var(--acc); color: #fff; font-weight: 600; cursor: pointer; }
-  .estado { margin-top: 10px; font-size: 13px; color: var(--muted); } .estado.ok { color: var(--ok); }
-</style>
+<title>Notitas</title>
+<link rel="stylesheet" href="estilo.css">
 </head>
 <body>
-<main>
-  <h1>CAMEIA-lite · demo</h1>
-  <p class="nota">Esta página <strong>no valida nada</strong>: envía lo que escribas y muestra lo que responde el backend (las funciones de las tareas). Un campo que dice "tarea tNN pendiente" significa que esa tarea todavía no se implementó.</p>
+<header class="barra">
+  <div class="marca"><span class="logo">✿</span><h1>Notitas</h1></div>
+  <div class="buscador"><input id="q" type="search" placeholder="Buscar (sin importar tildes)…" aria-label="Buscar notas"></div>
+  <div class="acciones">
+    <button id="btn-orden" class="boton suave" title="Ordenar por prioridad y fecha">↕ Prioridad</button>
+    <button id="btn-deshacer" class="boton suave" title="Deshacer (Ctrl+Z)">↶ Deshacer</button>
+    <button id="btn-mas" class="boton suave" title="Más opciones">⋯</button>
+    <button id="btn-nueva" class="boton principal">+ Nueva notita</button>
+  </div>
+  <div id="menu-mas" class="menu" hidden>
+    <button data-accion="archivar">🗄 Archivar hechas (+7 días)</button>
+    <button data-accion="archivadas">📦 Ver archivadas</button>
+    <button data-accion="exportar">⬇ Exportar tablero</button>
+    <label class="como-boton">⬆ Importar tablero<input id="importar" type="file" accept=".json" hidden></label>
+  </div>
+</header>
 
-  <form id="registro" novalidate data-url="/api/registro">
-    <h2>Registro</h2>
-    <div class="grid">
-      <label>Nombre<input name="nombre"><div class="err" data-campo="nombre"></div></label>
-      <label>Apellido<input name="apellido"><div class="err" data-campo="apellido"></div></label>
-      <label>Correo<input name="correo"><div class="err" data-campo="correo"></div></label>
-      <label>Celular<input name="celular" placeholder="+573001234567"><div class="err" data-campo="celular"></div></label>
-      <label>Contraseña<input name="contrasena" type="password"><div class="err" data-campo="contrasena"></div></label>
-      <label>Fecha de nacimiento<input name="nacimiento" placeholder="AAAA-MM-DD"><div class="err" data-campo="nacimiento"></div></label>
-    </div>
-    <button>Registrarme</button><div class="estado"></div>
-  </form>
+<section class="resumen">
+  <div class="progreso"><div id="progreso-barra"></div></div>
+  <span id="resumen-texto">—</span>
+  <div id="filtros" class="filtros"></div>
+  <span id="reglas" class="reglas" title="Reglas del backend ya implementadas (tareas t01–t24)"></span>
+</section>
 
-  <form id="perfil" novalidate data-url="/api/perfil">
-    <h2>Perfil profesional</h2>
-    <div class="grid">
-      <label>Expectativa salarial<input name="salario"><div class="err" data-campo="salario"></div></label>
-      <label>Formación: inicio<input name="inicio" placeholder="AAAA-MM"></label>
-      <label>Formación: fin (vacío = en curso)<input name="fin" placeholder="AAAA-MM"><div class="err" data-campo="formacion"></div></label>
-    </div>
-    <button>Guardar perfil</button><div class="estado"></div>
-  </form>
+<main class="tablero">
+  <section class="columna" data-columna="por_hacer"><h2>Por hacer <span class="cuenta"></span></h2><div class="notas"></div></section>
+  <section class="columna" data-columna="en_curso"><h2>En curso <span class="cuenta"></span><small>WIP 3</small></h2><div class="notas"></div></section>
+  <section class="columna" data-columna="hecho"><h2>Hecho <span class="cuenta"></span></h2><div class="notas"></div></section>
 </main>
-<script>
-  document.querySelectorAll("form").forEach(form => {
-    form.addEventListener("submit", async ev => {
-      ev.preventDefault();
-      form.querySelectorAll(".err").forEach(e => e.textContent = "");
-      const estado = form.querySelector(".estado");
-      estado.className = "estado"; estado.textContent = "Enviando…";
-      const datos = Object.fromEntries(new FormData(form));
-      try {
-        const r = await fetch(form.dataset.url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(datos) });
-        const cuerpo = await r.json();
-        const rid = r.headers.get("X-Request-Id");
-        if (r.ok) { estado.className = "estado ok"; estado.textContent = `Guardado (${r.status}) · X-Request-Id ${rid}`; return; }
-        for (const [campo, msgs] of Object.entries(cuerpo.errors || {})) {
-          const el = form.querySelector(`[data-campo="${campo}"]`);
-          if (el) el.textContent = msgs.join(" ");
-        }
-        estado.textContent = `El backend rechazó la solicitud (${r.status} ${cuerpo.code}) · X-Request-Id ${rid}`;
-      } catch (e) {
-        estado.textContent = "No se pudo contactar al backend. ¿Está corriendo python demo/servidor.py?";
-      }
-    });
-  });
-</script>
+
+<dialog id="dlg-nueva" class="dialogo">
+  <form method="dialog" id="form-nueva">
+    <h3>Nueva notita</h3>
+    <label>Título <input name="titulo" maxlength="120" required></label>
+    <label>Contenido <textarea name="contenido" rows="3" placeholder="Usa **negrita** si quieres"></textarea></label>
+    <div class="fila">
+      <label>Prioridad <select name="prioridad"><option value="1">Baja</option><option value="2" selected>Media</option><option value="3">Alta</option></select></label>
+      <label>Vence <input type="date" name="vence"></label>
+    </div>
+    <label>Responsable <input name="responsable" placeholder="Nombre y apellido"></label>
+    <label>Etiquetas <input name="etiquetas" placeholder="separadas por coma"></label>
+    <label>Checklist <input name="checklist" placeholder="pasos separados por coma"></label>
+    <fieldset class="colores"><legend>Color</legend></fieldset>
+    <div class="botones"><button value="cancelar" class="boton suave">Cancelar</button><button value="ok" class="boton principal">Pegar en el tablero</button></div>
+  </form>
+</dialog>
+
+<dialog id="dlg-archivadas" class="dialogo">
+  <h3>Archivadas</h3><ul id="lista-archivadas"></ul>
+  <div class="botones"><button id="pag-ant" class="boton suave">‹</button><span id="pag-txt"></span><button id="pag-sig" class="boton suave">›</button><button id="cerrar-arch" class="boton principal">Cerrar</button></div>
+</dialog>
+
+<div id="toasts" aria-live="polite"></div>
+<script src="app.js"></script>
 </body>
 </html>

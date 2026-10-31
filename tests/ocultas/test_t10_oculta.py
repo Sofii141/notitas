@@ -1,10 +1,10 @@
-from cameia_lite.t10 import mensajes_por_campo, MENSAJE_GENERICO
-def test_desconocido():
-    p = {"errors": [{"field": "empresa", "code": "COMPANY_INVALID_CHARACTERS"}, {"field": "x", "code": "RARO"}]}
-    assert mensajes_por_campo(p) == {"_general": MENSAJE_GENERICO}
-def test_sin_errors_no_filtra_detail():
-    r = mensajes_por_campo({"detail": "SQL error at line 3"})
-    assert r == {"_general": MENSAJE_GENERICO}
-def test_varios():
-    p = {"errors": [{"field": "cargo", "code": "POSITION_INVALID_CHARACTERS"}, {"field": "titulo", "code": "DEGREE_INVALID_CHARACTERS"}]}
-    assert set(mensajes_por_campo(p)) == {"cargo", "titulo"}
+from datetime import date
+from notitas.t10 import notas_para_archivar
+HOY = date(2026, 11, 10)
+def test_siete_exactos_no():
+    assert notas_para_archivar([{"id": "1", "columna": "hecho", "fecha_hecho": "2026-11-03"}], HOY) == []
+def test_ocho_si():
+    assert notas_para_archivar([{"id": "1", "columna": "hecho", "fecha_hecho": "2026-11-02"}], HOY) == ["1"]
+def test_otras_columnas_y_sin_fecha():
+    notas = [{"id": "1", "columna": "en_curso", "fecha_hecho": "2026-01-01"}, {"id": "2", "columna": "hecho"}]
+    assert notas_para_archivar(notas, HOY) == []

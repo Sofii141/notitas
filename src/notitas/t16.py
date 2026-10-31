@@ -1,3 +1,3 @@
-def validar_formacion(inicio: str, fin: str | None) -> list[str]:
+def ordenar(notas: list[dict]) -> list[dict]:
     """Ver TAREAS.md, tarea t16."""
     raise NotImplementedError

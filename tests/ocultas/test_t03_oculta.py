@@ -1,7 +1,10 @@
-from cameia_lite.t03 import validar_nombre
-def test_apostrofos():
-    assert validar_nombre("O'Brien") and validar_nombre("O\u2019Connor")
-def test_solo_simbolos():
-    assert not validar_nombre("---") and not validar_nombre("   ")
-def test_unicode_y_combinante():
-    assert validar_nombre("Zoe\u0308") and validar_nombre("Łukasz") and not validar_nombre("Ana😀")
+import pytest
+from notitas.t03 import puede_mover
+def test_no_se_salta_en_curso():
+    assert puede_mover("por_hacer", "hecho") is False
+    assert puede_mover("hecho", "por_hacer") is False
+def test_misma_columna():
+    assert puede_mover("hecho", "hecho") is True
+def test_columna_desconocida_exacta():
+    with pytest.raises(ValueError):
+        puede_mover("Hecho", "en_curso")

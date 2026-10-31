@@ -1,0 +1,132 @@
+{
+  "notas": [
+    {
+      "id": "n1",
+      "titulo": "Comprar harina de almendra",
+      "contenido": "Para los **macarons** del sábado",
+      "columna": "por_hacer",
+      "color": "#F5CB99",
+      "etiquetas": [
+        "casa",
+        "postres"
+      ],
+      "prioridad": 2,
+      "vence": "2026-11-07",
+      "responsable": "Ana Sofía Arango",
+      "checklist": [],
+      "bloqueada": false,
+      "version": 1
+    },
+    {
+      "id": "n2",
+      "titulo": "Preparar diapositivas del tema",
+      "contenido": "Crítica explícita: qué **no** resuelve",
+      "columna": "por_hacer",
+      "color": "#FFABA9",
+      "etiquetas": [
+        "ágiles",
+        "urgente"
+      ],
+      "prioridad": 3,
+      "vence": "2026-11-16",
+      "responsable": "Juan José Arias",
+      "checklist": [
+        {
+          "texto": "Problema y contexto",
+          "hecho": false
+        },
+        {
+          "texto": "Cómo funciona",
+          "hecho": false
+        },
+        {
+          "texto": "Crítica",
+          "hecho": false
+        }
+      ],
+      "bloqueada": false,
+      "version": 1
+    },
+    {
+      "id": "n3",
+      "titulo": "Grabar video de la demo",
+      "contenido": "2 minutos, de respaldo",
+      "columna": "por_hacer",
+      "color": "#BCC86F",
+      "etiquetas": [
+        "ágiles"
+      ],
+      "prioridad": 1,
+      "vence": null,
+      "responsable": "",
+      "checklist": [],
+      "bloqueada": true,
+      "version": 1
+    },
+    {
+      "id": "n4",
+      "titulo": "Ciclo 1 con el agente",
+      "contenido": "Una fila de bitácora por **cada** uso",
+      "columna": "en_curso",
+      "color": "#F68578",
+      "etiquetas": [
+        "ágiles"
+      ],
+      "prioridad": 3,
+      "vence": "2026-11-06",
+      "responsable": "Ana Sofía Arango",
+      "checklist": [
+        {
+          "texto": "t01",
+          "hecho": true
+        },
+        {
+          "texto": "t02",
+          "hecho": false
+        }
+      ],
+      "bloqueada": false,
+      "version": 1
+    },
+    {
+      "id": "n5",
+      "titulo": "Leer Welter 2025",
+      "contenido": "Transferencia de conocimiento",
+      "columna": "hecho",
+      "color": "#B9794A",
+      "etiquetas": [
+        "lectura"
+      ],
+      "prioridad": 2,
+      "vence": null,
+      "responsable": "Juan José Arias",
+      "checklist": [],
+      "bloqueada": false,
+      "version": 2,
+      "fecha_hecho": "2026-10-30",
+      "eventos": [
+        {
+          "hacia": "en_curso",
+          "en": "2026-10-30T14:00:00-05:00"
+        },
+        {
+          "hacia": "hecho",
+          "en": "2026-10-30T16:30:00-05:00"
+        }
+      ]
+    }
+  ],
+  "orden": {
+    "por_hacer": [
+      "n2",
+      "n1",
+      "n3"
+    ],
+    "en_curso": [
+      "n4"
+    ],
+    "hecho": [
+      "n5"
+    ]
+  }
+}

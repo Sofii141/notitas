@@ -1,11 +1,15 @@
-from cameia_lite.t13 import eliminar_rol
-def test_404_antes_que_409():
-    p = {"estado": "COMPLETED", "roles": ["a"]}
-    assert eliminar_rol(p, "z") == 404
-def test_draft_ultimo():
-    p = {"estado": "DRAFT", "roles": ["a"]}
-    assert eliminar_rol(p, "a") == 204 and p["roles"] == []
-def test_404_no_modifica():
-    p = {"estado": "DRAFT", "roles": ["a", "b"]}
-    eliminar_rol(p, "c")
-    assert p["roles"] == ["a", "b"]
+import pytest
+from notitas.t13 import exportar, importar
+def test_estable():
+    a = {"notas": [{"titulo": "x", "id": "1", "columna": "hecho"}]}
+    b = {"notas": [{"columna": "hecho", "id": "1", "titulo": "x"}]}
+    assert exportar(a) == exportar(b)
+def test_ids_repetidos_y_columna():
+    with pytest.raises(ValueError):
+        importar('{"notas": [{"id": "1", "titulo": "a", "columna": "hecho"}, {"id": "1", "titulo": "b", "columna": "hecho"}]}')
+    with pytest.raises(ValueError):
+        importar('{"notas": [{"id": "1", "titulo": "a", "columna": "Hecho"}]}')
+def test_json_invalido_y_campos():
+    for malo in ["no es json", '{"notas": {}}', '{"notas": [{"id": 1, "titulo": "a", "columna": "hecho"}]}']:
+        with pytest.raises(ValueError):
+            importar(malo)

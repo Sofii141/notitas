@@ -1,12 +1,13 @@
-from datetime import date
+from datetime import datetime, timedelta, timezone
 import pytest
-from cameia_lite.t08 import puede_crear_perfil
-HOY = date(2026, 10, 26)
-def test_vencido_es_free():
-    assert puede_crear_perfil("PREMIUM", date(2026, 10, 25), HOY, 1) == (403, "PLAN_LIMIT")
-def test_vence_hoy_vale():
-    assert puede_crear_perfil("PREMIUM", HOY, HOY, 2) == (201, None)
-def test_desconocido_y_tope():
-    assert puede_crear_perfil("PREMIUM", None, HOY, 3) == (403, "PLAN_LIMIT")
+from notitas.t08 import estado_vencimiento
+def test_noche_en_bogota_es_otro_dia_en_utc():
+    ahora = datetime(2026, 11, 1, 3, 0, tzinfo=timezone.utc)
+    assert estado_vencimiento("2026-10-31", ahora) == "hoy"
+def test_limite_pronto_a_tiempo():
+    ahora = datetime(2026, 11, 2, 12, 0, tzinfo=timezone.utc)
+    assert estado_vencimiento("2026-11-05", ahora) == "pronto"
+    assert estado_vencimiento("2026-11-06", ahora) == "a_tiempo"
+def test_naive():
     with pytest.raises(ValueError):
-        puede_crear_perfil("GOLD", None, HOY, 0)
+        estado_vencimiento("2026-11-02", datetime(2026, 11, 2, 9, 0))

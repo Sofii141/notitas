@@ -1,7 +1,13 @@
-from cameia_lite.t17 import validar_salario
-def test_14_digitos():
-    assert validar_salario("9" * 13) and not validar_salario("9" * 14)
-def test_formatos_raros():
-    assert not validar_salario("1,000") and not validar_salario("+5") and not validar_salario(" 5") and not validar_salario("5.")
-def test_decimales():
-    assert not validar_salario("10.123") and validar_salario("10.1")
+import pytest
+from notitas.t17 import paginar
+def test_ultima_y_mas_alla():
+    assert paginar(list(range(25)), 3)["items"] == [20, 21, 22, 23, 24]
+    r = paginar(list(range(25)), 4)
+    assert r["items"] == [] and r["hay_siguiente"] is False
+def test_vacia():
+    assert paginar([], 1)["total_paginas"] == 0
+def test_invalidos():
+    with pytest.raises(ValueError):
+        paginar([1], 0)
+    with pytest.raises(ValueError):
+        paginar([1], 1, 0)

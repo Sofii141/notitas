@@ -1,26 +1,33 @@
-import threading, time
+import threading
 import pytest
-from cameia_lite.t12 import CreadorUnaVez
-def test_concurrente_una_vez():
-    llamadas = []
-    def fn():
-        llamadas.append(1); time.sleep(0.2); return "perfil-1"
-    c = CreadorUnaVez(fn); res = []
-    hs = [threading.Thread(target=lambda: res.append(c.crear())) for _ in range(5)]
-    [h.start() for h in hs]; [h.join() for h in hs]
-    assert len(llamadas) == 1 and res == ["perfil-1"] * 5
-def test_secuencial_vuelve_a_ejecutar():
-    n = []
-    c = CreadorUnaVez(lambda: n.append(1) or len(n))
-    assert c.crear() == 1 and c.crear() == 2
-def test_error_y_reintento():
-    estado = {"fallar": True}
-    def fn():
-        if estado["fallar"]:
-            raise RuntimeError("caido")
-        return "ok"
-    c = CreadorUnaVez(fn)
-    with pytest.raises(RuntimeError):
-        c.crear()
-    estado["fallar"] = False
-    assert c.crear() == "ok"
+from notitas.t12 import Tablero, Conflicto
+def test_concurrencia_un_solo_ganador():
+    for _ in range(20):
+        t = Tablero([{"id": "a", "columna": "por_hacer", "version": 1}])
+        barrera = threading.Barrier(8)
+        ganadores, conflictos = [], []
+        def intento(destino):
+            barrera.wait()
+            try:
+                ganadores.append(t.mover("a", destino, 1))
+            except Conflicto:
+                conflictos.append(destino)
+        hilos = [threading.Thread(target=intento, args=("en_curso",)) for _ in range(8)]
+        [h.start() for h in hilos]
+        [h.join() for h in hilos]
+        assert len(ganadores) == 1 and len(conflictos) == 7
+        assert t.mover("a", "hecho", 2)["version"] == 3
+def test_copias_independientes():
+    original = [{"id": "a", "columna": "por_hacer", "version": 1}]
+    t = Tablero(original)
+    original[0]["version"] = 99
+    devuelta = t.mover("a", "en_curso", 1)
+    devuelta["columna"] = "hecho"
+    assert t.mover("a", "por_hacer", 2)["version"] == 3
+def test_desconocida_y_conflicto_no_cambia():
+    t = Tablero([{"id": "a", "columna": "por_hacer", "version": 5}])
+    with pytest.raises(KeyError):
+        t.mover("zz", "hecho", 1)
+    with pytest.raises(Conflicto):
+        t.mover("a", "hecho", 4)
+    assert t.mover("a", "en_curso", 5)["version"] == 6
