@@ -1,0 +1,53 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Guía de navegación para medir</title>
+<link rel="stylesheet" href="../../_Estilo/estilo.css">
+<style>.campo td{height:30px} .campo td:first-child{width:42%} .chk{font-size:15px} table{width:100%}</style></head><body>
+<div class="portada">
+  <div class="franjas"><span style="background:#BCC86F"></span><span style="background:#F5CB99"></span><span style="background:#FFABA9"></span><span style="background:#F68578"></span><span style="background:#B9794A"></span></div>
+  <div class="etiqueta">Taller de Metodologías Ágiles · 2026-2</div>
+  <h1>Guía de navegación para medir</h1><div class="sub">Dónde arrancar, qué abrir y qué anotar en cada tarea</div>
+  <dl class="meta"><dt>Pareja</dt><dd>Ana Sofía Arango Yanza · Juan José Arias Chacua</dd><dt>Fecha y versión</dt><dd>01/11/2026 · v1</dd></dl>
+</div>
+
+<section><h2><span class="num">1</span>Dónde está cada cosa en su PC</h2>
+<p class="lead">Todo vive dentro de <code>Documentos/UNI/E2 AGILES/EntregaFinal-AGILES/</code>.</p>
+<table><tr><th>Qué</th><th>Dónde</th></tr>
+<tr><td>El código (aquí se programa)</td><td><code>Repositorio/CAMEIA-lite/</code> (en GitHub: Sofii141/notitas)</td></tr>
+<tr><td>Enunciados de las 24 tareas</td><td><code>Repositorio/CAMEIA-lite/TAREAS.md</code></td></tr>
+<tr><td>Donde se escribe cada tarea</td><td><code>Repositorio/CAMEIA-lite/backend/notitas/tNN.py</code></td></tr>
+<tr><td>Pruebas visibles / ocultas</td><td><code>backend/tests/visibles/</code> · <code>backend/tests/ocultas/</code> (no abrir antes)</td></tr>
+<tr><td>Resultado del sorteo</td><td><code>Repositorio/CAMEIA-lite/registro/sorteo_&lt;semilla&gt;.txt</code></td></tr>
+<tr><td>Esta guía y las 24 fichas</td><td><code>02 - Caso base/Guia_Medicion/</code></td></tr>
+<tr><td>Preguntas del codewalk (solo quien evalúa)</td><td><code>03 - Linea base/31102026_02_Codewalk_Preguntas_v1.md</code></td></tr>
+<tr><td>Bitácora (aquí se pasan los datos)</td><td><code>05 - Ciclos y bitacora/31102026_01_Bitacora_v3.xlsx</code></td></tr>
+<tr><td>PDF que se le envía al profe</td><td><code>09 - Control de entrega/31102026_01_Punto_Control_v3.pdf</code></td></tr>
+</table></section>
+
+<section><h2><span class="num">2</span>Una sola vez, antes de la primera sesión</h2>
+<ol>
+<li>Abrir una terminal en <code>Repositorio/CAMEIA-lite</code> y traer lo último: <code>git pull</code>.</li>
+<li>Instalar pytest: <code>pip install pytest</code>. Comprobar: <code>python -m pytest -k t01</code> (debe fallar: la función está vacía).</li>
+<li>Leer las 24 tareas de <code>TAREAS.md</code> una vez, solo para revisar que se entienden.</li>
+<li>Congelar: <code>git tag congelado-notitas-v1</code> y <code>git push origin congelado-notitas-v1</code>.</li>
+<li>Sortear: <code>python sorteo.py &lt;semilla&gt; &gt; registro/sorteo_&lt;semilla&gt;.txt</code>. Anotar la semilla en la hoja <i>Sesiones</i>.</li>
+<li>Imprimir (o tener abiertas) las fichas de las tareas que el sorteo dejó en <b>línea base</b>.</li>
+</ol></section>
+
+<section><h2><span class="num">3</span>Cada tarea, en orden</h2>
+<ol>
+<li>Tomar la siguiente tarea de la lista de línea base del sorteo y abrir <b>su ficha</b>.</li>
+<li>Llenar la parte 1 de la ficha (incluido el pronóstico).</li>
+<li>Abrir el enunciado en <code>TAREAS.md</code>, arrancar el cronómetro, commit <code>tNN: inicio</code>.</li>
+<li>Programar en pareja en <code>backend/notitas/tNN.py</code>, sin IA, cambiando de rol cada 15 min.</li>
+<li>Cuando pasan las visibles: parar, commit <code>tNN: terminado</code>, llenar la parte 2.</li>
+<li>Correr las ocultas, retrabajo si aplica, codewalk: llenar la parte 3.</li>
+<li>Pasar los números a <i>Medicion por caso</i> en la bitácora.</li>
+</ol>
+<div class="caja nota"><h4>Al terminar todas</h4><p><code>python "07 - Analisis/Scripts/resumen_medicion.py" --html</code> llena la sección 6 del PDF de entrega.</p></div>
+</section>
+
+<section><h2><span class="num">4</span>Las 24 fichas</h2>
+<p>Usen solo las que el sorteo asigne; las demás quedan para los ciclos con el agente (la ficha sirve igual).</p>
+<table><tr><th>Tarea</th><th>Nombre</th><th>Tamaño</th><th>Ficha</th></tr><tr><td>t01</td><td>Validar el título de una nota</td><td>S</td><td><code>Fichas/01112026_Ficha_t01_v1.pdf</code></td></tr><tr><td>t02</td><td>Color de la nota</td><td>S</td><td><code>Fichas/01112026_Ficha_t02_v1.pdf</code></td></tr><tr><td>t03</td><td>Transiciones entre columnas</td><td>M</td><td><code>Fichas/01112026_Ficha_t03_v1.pdf</code></td></tr><tr><td>t04</td><td>Límite WIP de "En curso"</td><td>M</td><td><code>Fichas/01112026_Ficha_t04_v1.pdf</code></td></tr><tr><td>t05</td><td>Insertar en una posición</td><td>M</td><td><code>Fichas/01112026_Ficha_t05_v1.pdf</code></td></tr><tr><td>t06</td><td>Filtrar por etiquetas</td><td>S</td><td><code>Fichas/01112026_Ficha_t06_v1.pdf</code></td></tr><tr><td>t07</td><td>Buscar sin tildes ni mayúsculas</td><td>M</td><td><code>Fichas/01112026_Ficha_t07_v1.pdf</code></td></tr><tr><td>t08</td><td>Estado de vencimiento</td><td>M</td><td><code>Fichas/01112026_Ficha_t08_v1.pdf</code></td></tr><tr><td>t09</td><td>Normalizar etiquetas</td><td>S</td><td><code>Fichas/01112026_Ficha_t09_v1.pdf</code></td></tr><tr><td>t10</td><td>Qué notas se archivan</td><td>S</td><td><code>Fichas/01112026_Ficha_t10_v1.pdf</code></td></tr><tr><td>t11</td><td>Deshacer movimientos</td><td>M</td><td><code>Fichas/01112026_Ficha_t11_v1.pdf</code></td></tr><tr><td>t12</td><td>Dos personas mueven la misma nota</td><td>L</td><td><code>Fichas/01112026_Ficha_t12_v1.pdf</code></td></tr><tr><td>t13</td><td>Exportar e importar el tablero</td><td>M</td><td><code>Fichas/01112026_Ficha_t13_v1.pdf</code></td></tr><tr><td>t14</td><td>Contenido seguro (sin inyectar HTML)</td><td>M</td><td><code>Fichas/01112026_Ficha_t14_v1.pdf</code></td></tr><tr><td>t15</td><td>Resumen por columna</td><td>S</td><td><code>Fichas/01112026_Ficha_t15_v1.pdf</code></td></tr><tr><td>t16</td><td>Ordenar por prioridad y fecha</td><td>S</td><td><code>Fichas/01112026_Ficha_t16_v1.pdf</code></td></tr><tr><td>t17</td><td>Paginar el listado</td><td>S</td><td><code>Fichas/01112026_Ficha_t17_v1.pdf</code></td></tr><tr><td>t18</td><td>Iniciales del responsable</td><td>S</td><td><code>Fichas/01112026_Ficha_t18_v1.pdf</code></td></tr><tr><td>t19</td><td>Progreso de la checklist</td><td>M</td><td><code>Fichas/01112026_Ficha_t19_v1.pdf</code></td></tr><tr><td>t20</td><td>Duplicar una nota</td><td>S</td><td><code>Fichas/01112026_Ficha_t20_v1.pdf</code></td></tr><tr><td>t21</td><td>Fusionar cambios de dos dispositivos</td><td>L</td><td><code>Fichas/01112026_Ficha_t21_v1.pdf</code></td></tr><tr><td>t22</td><td>Notas bloqueadas</td><td>M</td><td><code>Fichas/01112026_Ficha_t22_v1.pdf</code></td></tr><tr><td>t23</td><td>Tiempo de ciclo</td><td>M</td><td><code>Fichas/01112026_Ficha_t23_v1.pdf</code></td></tr><tr><td>t24</td><td>Límite de notas por minuto</td><td>M</td><td><code>Fichas/01112026_Ficha_t24_v1.pdf</code></td></tr></table>
+</section>
+<div class="pie"><span>Ana Sofía Arango · Juan José Arias</span><span>Ágiles 2026-2 · Unicauca</span></div>
+</body></html>

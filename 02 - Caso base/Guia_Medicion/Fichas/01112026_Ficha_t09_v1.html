@@ -1,0 +1,44 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Ficha t09 · Normalizar etiquetas</title>
+<link rel="stylesheet" href="../../../_Estilo/estilo.css">
+<style>@page{margin:12mm} body{font-size:12px} section{margin:0 0 8px} h2{margin:6px 0} .campo td{height:24px;padding:3px 8px} .campo td:first-child{width:46%} table{width:100%} p{margin:4px 0} .caja{margin:6px 0;padding:6px 12px}
+.cab{border-bottom:6px solid;border-image:linear-gradient(90deg,#BCC86F 20%,#F5CB99 20% 40%,#FFABA9 40% 60%,#F68578 60% 80%,#B9794A 80%) 1;padding-bottom:6px;margin-bottom:8px} .cab h1{color:#79371D;margin:0;font-size:24px} .cab small{color:#B9794A}</style></head><body>
+<div class="cab"><small>Ágiles 2026-2 · Ana Sofía Arango Yanza · Juan José Arias Chacua · 01/11/2026 · v1</small><h1>Ficha t09 · Normalizar etiquetas</h1><small>Tamaño S (pequeña · 15–25 min) · hoja para anotar mientras miden</small></div>
+
+<section><h2><span class="num">1</span>Antes de empezar</h2>
+<table class="campo">
+<tr><td>Condición (marque una)</td><td>☐ Línea base (pareja, sin IA) &nbsp; ☐ Agente (OpenCode)</td></tr>
+<tr><td>Fecha y sesión</td><td></td></tr>
+<tr><td>Quién conduce / quién navega o evalúa</td><td></td></tr>
+<tr><td><b>M5 · Pronóstico</b> (minutos que creen que tomará)</td><td></td></tr>
+</table>
+<div class="caja nota"><h4>Archivos de esta tarea</h4><p>
+Enunciado: <code>TAREAS.md</code>, sección <b>t09</b> (ábranlo <b>después</b> de anotar el pronóstico: el cronómetro arranca al abrirlo).<br>
+Código: <code>backend/notitas/t09.py</code> · Pruebas visibles: <code>backend/tests/visibles/test_t09.py</code></p></div>
+</section>
+
+<section><h2><span class="num">2</span>Durante</h2>
+<p class="chk">☐ Commit <code>t09: inicio</code> &nbsp; ☐ Cronómetro en marcha</p>
+<p>Probar con <code>python -m pytest -k t09</code>. Línea base: cambien de rol cada 15 min. Agente: conduce una sola persona.</p>
+<table class="campo">
+<tr><td>Hora de inicio</td><td></td></tr>
+<tr><td>Pausas (minutos y motivo)</td><td></td></tr>
+<tr><td>Hora de fin (pasan todas las visibles)</td><td></td></tr>
+<tr><td><b>M1 · Minutos</b> (fin − inicio − pausas)</td><td></td></tr>
+</table>
+<p class="chk">☐ Commit <code>t09: terminado</code></p>
+<p class="pequeno">Solo con agente: cada vez que lo usen, una fila en la hoja <i>Bitacora</i> (qué pidieron, qué propuso, aceptar / corregir / rechazar y por qué).</p>
+</section>
+
+<section><h2><span class="num">3</span>Después de "terminado"</h2>
+<p>Correr las ocultas: <code>python -m pytest backend/tests/ocultas -k t09</code></p>
+<table class="campo">
+<tr><td><b>M2 · Ocultas que fallan</b></td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; de 3</td></tr>
+<tr><td><b>M3 · Minutos de retrabajo</b> (0 si no corrigen; commit <code>t09: retrabajo</code>)</td><td></td></tr>
+<tr><td><b>M4 · Codewalk autor</b> (0–5)</td><td></td></tr>
+<tr><td><b>M4 · Codewalk compañero</b> (0–5)</td><td></td></tr>
+<tr><td>¿Alguien vio las ocultas antes? (si sí: marca <b>[C]</b> y se usa una de repuesto)</td><td>☐ No &nbsp; ☐ Sí</td></tr>
+<tr><td>Observaciones</td><td style="height:60px"></td></tr>
+</table>
+<p class="pequeno">El codewalk lo hace quien evalúa con <code>03 - Linea base/31102026_02_Codewalk_Preguntas_v1.md</code> (fila t09); quien responde no mira el código. Al final, pasen estos datos a la hoja <i>Medicion por caso</i> de la bitácora.</p>
+</section>
+</body></html>
