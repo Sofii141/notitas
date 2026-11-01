@@ -6,7 +6,7 @@ La spec v1 dice que el agente trabaja en una **copia del repo sin `backend/tests
 
 1. Crear la copia de trabajo, fuera de esta carpeta:
    ```bash
-   git clone https://github.com/Sofii141/CAMEIA-lite.git notitas-agente
+   git clone https://github.com/Sofii141/notitas.git notitas-agente
    cd notitas-agente
    rm -rf backend/tests/ocultas
    cp agente/opencode.json opencode.json
