@@ -10,7 +10,7 @@ Ana Sofía Arango Yanza · Juan José Arias Chacua · Prof. César Pardo
 | `00 - Info inicial` | PDF del profe (no editar) |
 | `01 - Exposicion` | Fuentes, guion, diapositivas del tema |
 | `02 - Caso base` | Fichas de casos, 3 recibidos y 3 entregados |
-| `Repositorio/CAMEIA-lite` | Código del caso base **Notitas** desde el 31/10 (git) → https://github.com/Sofii141/CAMEIA-lite. CAMEIA-lite quedó en el tag `congelado-v1` |
+| `Repositorio/CAMEIA-lite` | Código del caso base **Notitas** desde el 31/10 (git) → https://github.com/Sofii141/notitas. CAMEIA-lite quedó en el tag `congelado-v1` |
 | `03 - Linea base` | GQM, datos crudos y condiciones de medición |
 | `04 - Especificacion agentes` | Spec v1, v2… y prompts finales |
 | `05 - Ciclos y bitacora` | Bitácora xlsx + notas de ciclo 1 y 2 |
@@ -23,7 +23,7 @@ Ana Sofía Arango Yanza · Juan José Arias Chacua · Prof. César Pardo
 
 > **31/10:** el caso base cambió a **Notitas** (tablero kanban de notas), con aprobación del profe; plazo del caso base hasta el 3/11. **Lo que se entrega el 3/11:** [31102026_01_Punto_Control_v3.pdf](09%20-%20Control%20de%20entrega/31102026_01_Punto_Control_v3.pdf). **Paso a paso:** [31102026_02_Guia_Entrega_y_Medicion_v2.pdf](09%20-%20Control%20de%20entrega/31102026_02_Guia_Entrega_y_Medicion_v2.pdf). Versiones vigentes: [spec v1](04%20-%20Especificacion%20agentes/31102026_01_Spec_Copiloto_v1.md), [GQM v3](03%20-%20Linea%20base/31102026_01_GQM_v3.md) y [bitácora v3](05%20-%20Ciclos%20y%20bitacora/31102026_01_Bitacora_v3.xlsx). `_Privado/` (soluciones de referencia) no se sube y no se abre antes de medir.
 
-## Ramas del repositorio (https://github.com/Sofii141/CAMEIA-lite)
+## Ramas del repositorio (https://github.com/Sofii141/notitas)
 - `main`: código del caso base (carpeta local `Repositorio/CAMEIA-lite`).
 - `documentacion`: esta carpeta (guía, GQM, spec, bitácora, fuentes, reporte…). Para editar: `git pull`, hacer los cambios, `git commit` y `git push`.
 - No se suben (ver `.gitignore`): los PDF del profe, los artículos descargados y los videos. El repo es público; esos archivos se comparten por Drive.
