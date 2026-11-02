@@ -15,3 +15,4 @@ El profe pide, en el reporte y en la última diapositiva: qué herramientas usar
 | 31/10/2026 | Claude Code | Cambiar el agente a OpenCode + DeepSeek V4.1 Flash en la spec, el PDF, la guía y los permisos | [P] Hacer el piloto con una tarea de repuesto del sorteo y comprobar que el agente no puede leer tests/ocultas | Ana Sofía |
 | 02/11/2026 | Claude Code | Agregar la regla de corrección a guías, fichas y punto de control (v5) | [P] Confirmar la regla al medir y leer el PDF v5 antes de enviarlo | Ana Sofía |
 | 02/11/2026 | Claude Code | Cambiar el orden de lectura y pronóstico en guías, fichas y punto de control (v6) | [P] Leer el PDF v6 antes de enviarlo | Ana Sofía |
+| 02/11/2026 | Claude Code | Rediseñar el procedimiento del codewalk y generar sus PDF; actualizar guías, fichas y punto de control (v7) | [P] Confirmar el procedimiento al medir y leer el PDF v7 antes de enviarlo | Ana Sofía |

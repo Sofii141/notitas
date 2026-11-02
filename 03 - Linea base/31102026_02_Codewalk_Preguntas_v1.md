@@ -1,4 +1,5 @@
 # Codewalk: las 5 preguntas y la X y la Y de cada tarea — v1 (31/10/2026)
+n> **Para quienes miden: no abrir este archivo.** Trae la X y la Y de todas las tareas. Procedimiento vigente y un PDF por tarea en `02 - Caso base/Guia_Medicion/Codewalk/`.
 
 **Para qué:** el codewalk (métrica M4 del GQM v3) mide si quien programó la tarea, y su compañero, **entienden** el código. Las 5 preguntas son **siempre las mismas** y sirven para cualquier tarea, porque preguntan por comprensión (qué hace, casos borde, por qué, cómo depurar, cómo cambiar) y no por una tarea en particular.
 
