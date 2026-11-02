@@ -16,7 +16,19 @@ Código: <code>backend/notitas/t10.py</code> · Pruebas visibles: <code>backend/
 <tr><td>Pausas (minutos y motivo)</td><td></td></tr>
 <tr><td>Hora de fin (pasan todas las visibles)</td><td></td></tr>
 <tr><td><b>M1 · Minutos</b> (fin − inicio − pausas)</td><td></td></tr></table>
-<p>Pegar el <b>prompt fijo</b> de la guía, cambiando tNN por <b>t10</b>. Cada propuesta del agente es una fila:</p>
+<p>En <b>la copia</b> (<code>notitas-agente</code>): <code>git checkout -- .</code>, <code>git pull</code>, <code>opencode</code>, <code>/new</code>. Pegar este prompt, reemplazando el corchete por la sección t10 de <code>TAREAS.md</code>:</p>
+<pre style="white-space:pre-wrap;background:#FBEDDC;padding:6px 10px;border-radius:6px;font-size:10.5px;margin:3px 0">Actúa como navegante de pair programming (spec Copiloto v1). Tarea: t10.
+Este es el enunciado de la tarea:
+[PEGAR AQUÍ la sección t10 de TAREAS.md: desde la línea "## t10 ·" hasta antes del siguiente "## t"]
+
+Archivos: @backend/notitas/t10.py @backend/tests/visibles/test_t10.py
+No leas otros archivos ni pidas las pruebas ocultas. No hagas commit. No edites pruebas. No inventes requisitos que no estén en el enunciado.
+Responde en markdown con estas 4 partes:
+1. Plan de 3 a 6 pasos.
+2. Cambio propuesto, solo en backend/notitas/t10.py.
+3. Supuestos que hiciste.
+4. Casos borde que crees que faltan (como texto, no como pruebas).</pre>
+<p>Cada propuesta del agente es una fila:</p>
 <table class="uso"><tr><th style="width:6%">#</th><th style="width:40%">Qué le pidió / qué propuso</th><th style="width:16%">Decisión (A / C / R)</th><th>Razón</th></tr>
 <tr><td>1</td><td></td><td></td><td></td></tr><tr><td>2</td><td></td><td></td><td></td></tr><tr><td>3</td><td></td><td></td><td></td></tr><tr><td>4</td><td></td><td></td><td></td></tr><tr><td>5</td><td></td><td></td><td></td></tr></table>
 <p class="pequeno">A = aceptar · C = corregir · R = rechazar. Luego cada fila pasa a la hoja <i>Bitacora</i>. Si son más de 5, sigan al respaldo.</p><p>☐ Copiar <code>t10.py</code> al repo original &nbsp; ☐ Commit <code>t10: terminado</code> (lo hace la persona)</p></section>

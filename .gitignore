@@ -12,3 +12,6 @@ _Estilo/paleta_macarons.jpg
 *.pdf.tmp
 # Soluciones de referencia del caso base: no se suben (la línea base debe ser a ciegas)
 _Privado/
+99 - Videos/**/*.mp4
+99 - Videos/**/*.mkv
+99 - Videos/**/*.mov

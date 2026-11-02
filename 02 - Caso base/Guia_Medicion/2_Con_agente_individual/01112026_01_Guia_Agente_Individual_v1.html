@@ -4,27 +4,52 @@
 <dl class="meta"><dt>Pareja</dt><dd>Ana Sofía Arango Yanza · Juan José Arias Chacua</dd><dt>Fecha y versión</dt><dd>01/11/2026 · v1</dd></dl></div>
 <section><h2><span class="num">1</span>Qué es</h2>
 <p class="lead">El "después": cada uno, <b>solo</b>, programa con OpenCode (DeepSeek V4.1 Flash) las tareas que el sorteo dejó en <b>agente</b>; cada persona conduce 6. El compañero no ayuda durante la tarea; solo hace el codewalk al final.</p>
-<div class="caja nota"><h4>Reglas</h4><p>El agente trabaja en una copia del repo <b>sin</b> las pruebas ocultas. Cada propuesta del agente se decide (aceptar, corregir o rechazar) y se anota con su razón: esa es la evidencia de gobernanza. El commit y las pruebas ocultas los hace la persona, nunca el agente.</p></div></section>
-<section><h2><span class="num">2</span>Preparar OpenCode (una vez por persona)</h2><ol>
-<li>Fuera de la carpeta del proyecto: <code>git clone https://github.com/Sofii141/notitas.git notitas-agente</code></li>
-<li>Dentro de <code>notitas-agente</code>: borrar <code>backend/tests/ocultas</code> y copiar <code>agente/opencode.json</code> a la raíz como <code>opencode.json</code>.</li>
-<li>Abrir <code>opencode</code> en esa carpeta, escribir <code>/models</code> y elegir <b>DeepSeek V4.1 Flash</b>.</li>
-<li>Anotar en la hoja <i>Sesiones</i> el modelo tal como aparece y <code>opencode --version</code>.</li>
-<li>Primera vez: piloto con t04 o t06 (repuesto). Pídanle leer <code>backend/tests/ocultas</code>: debe negarse. El piloto no se mide.</li></ol></section>
-<section><h2><span class="num">3</span>Prompt fijo (pegar al inicio de cada tarea)</h2>
-<p>Iguales para los dos, para que la condición sea la misma. Solo se cambia <b>tNN</b>.</p><pre>Actúa como navegante de pair programming (spec Copiloto v1). Tarea: tNN.
-Lee SOLO: la sección tNN de TAREAS.md, backend/notitas/tNN.py y backend/tests/visibles/test_tNN.py.
+<div class="caja nota"><h4>Dos carpetas, dos usos</h4><p>
+<b>Su repo</b> (el que ya clonaron, p. ej. <code>Repositorio/CAMEIA-lite</code> o <code>notitas</code>): ahí se hacen los commits y se corren las pruebas ocultas. El agente <b>nunca</b> se abre aquí.<br>
+<b>La copia del agente</b> (<code>notitas-agente</code>): igual pero <b>sin</b> las pruebas ocultas. Solo aquí se abre OpenCode.</p></div></section>
+
+<section><h2><span class="num">2</span>Preparar la copia del agente (una sola vez por persona)</h2>
+<p>En PowerShell, parados en la carpeta que <b>contiene</b> su repo (no dentro de él):</p>
+<pre>git clone https://github.com/Sofii141/notitas.git notitas-agente
+cd notitas-agente
+Remove-Item -Recurse -Force backend/tests/ocultas
+Copy-Item agente/opencode.json opencode.json
+opencode --version
+opencode</pre>
+<ol>
+<li>Ya dentro de OpenCode, escribir <code>/models</code> y elegir <b>DeepSeek V4.1 Flash</b>.</li>
+<li>Anotar en la hoja <i>Sesiones</i>: el nombre del modelo tal como aparece y el número que dio <code>opencode --version</code>.</li>
+<li><b>Prueba de permisos</b> (no se mide): escribirle <code>lee backend/tests/ocultas/test_t04.py</code>. Debe decir que no existe o que no tiene permiso. Si lo lee, paren y avísenme.</li>
+<li>Piloto corto con t04 o t06 (son de repuesto) siguiendo la sección 4, para practicar. No se anota en la medición.</li></ol>
+<p class="pequeno">Al empezar cada tarea nueva: en la copia, <code>git checkout -- .</code> y <code>git pull</code> para partir limpios, y en OpenCode <code>/new</code> para una conversación nueva (que no arrastre la tarea anterior).</p></section>
+
+<section><h2><span class="num">3</span>Qué se le pasa al agente, exactamente</h2>
+<table><tr><th>Qué</th><th>De dónde sale</th><th>Cómo se le pasa</th></tr>
+<tr><td>El enunciado y los criterios de aceptación</td><td><code>TAREAS.md</code>, solo la sección de la tarea (desde <code>## tNN ·</code> hasta antes del siguiente <code>## t</code>)</td><td>Copiar ese texto y pegarlo dentro del prompt</td></tr>
+<tr><td>El esqueleto de la función</td><td><code>backend/notitas/tNN.py</code></td><td>Escribir <code>@backend/notitas/tNN.py</code> en el prompt (OpenCode adjunta el archivo)</td></tr>
+<tr><td>Las pruebas visibles</td><td><code>backend/tests/visibles/test_tNN.py</code></td><td>Escribir <code>@backend/tests/visibles/test_tNN.py</code></td></tr>
+<tr><td><b>Nada más</b></td><td colspan="2">Ni otras tareas, ni el servidor, ni el frontend, ni las ocultas. Es lo mismo que tiene la pareja en la línea base.</td></tr></table>
+<p><b>Prompt fijo</b> (cada ficha de agente ya lo trae con el número de su tarea puesto; solo falta pegar el enunciado):</p><pre>Actúa como navegante de pair programming (spec Copiloto v1). Tarea: tNN.
+Este es el enunciado de la tarea:
+[PEGAR AQUÍ la sección tNN de TAREAS.md: desde la línea "## tNN ·" hasta antes del siguiente "## t"]
+
+Archivos: @backend/notitas/tNN.py @backend/tests/visibles/test_tNN.py
 No leas otros archivos ni pidas las pruebas ocultas. No hagas commit. No edites pruebas. No inventes requisitos que no estén en el enunciado.
 Responde en markdown con estas 4 partes:
 1. Plan de 3 a 6 pasos.
 2. Cambio propuesto, solo en backend/notitas/tNN.py.
 3. Supuestos que hiciste.
-4. Casos borde que crees que faltan (como texto, no como pruebas).</pre></section>
-<section><h2><span class="num">4</span>Cada tarea</h2><ol>
-<li>Tomar la siguiente tarea de la lista de <b>agente</b> del sorteo (la que le toque conducir) y abrir su ficha en <code>Fichas/</code>.</li>
-<li>Parte 1: pronóstico. Luego abrir el enunciado, arrancar cronómetro y commit <code>tNN: inicio</code> en el repo original.</li>
-<li>En OpenCode, pegar el prompt fijo. Por cada propuesta: decidir A, C o R y anotarla en la ficha con su razón.</li>
-<li>Cuando pasan las visibles en la copia: copiar <code>tNN.py</code> al repo original, parar cronómetro, commit <code>tNN: terminado</code>.</li>
+4. Casos borde que crees que faltan (como texto, no como pruebas).</pre>
+<p class="pequeno">Si después necesitan pedirle algo más (por ejemplo, "una prueba visible falla con este error: …"), está bien: cada pedido y su respuesta es una fila más en la tabla de la ficha.</p></section>
+
+<section><h2><span class="num">4</span>Cada tarea, paso a paso</h2><ol>
+<li>Tomar la siguiente tarea de la lista de <b>agente</b> del sorteo que le toque conducir y abrir su ficha en <code>Fichas/</code>.</li>
+<li>Parte 1 de la ficha: pronóstico.</li>
+<li>En <b>su repo</b>: abrir <code>TAREAS.md</code> en la sección de la tarea, arrancar cronómetro, commit <code>tNN: inicio</code>.</li>
+<li>En <b>la copia</b>: <code>git checkout -- .</code>, <code>git pull</code>, <code>opencode</code>, <code>/new</code>, y pegar el prompt de la ficha con el enunciado.</li>
+<li>Por cada propuesta del agente: decidir A, C o R y anotarla en la ficha con su razón. OpenCode pide permiso antes de editar o correr algo: ese es el momento de decidir.</li>
+<li>En la copia, correr <code>python -m pytest -k tNN</code> hasta que pasen las visibles.</li>
+<li>Copiar <code>backend/notitas/tNN.py</code> de la copia a <b>su repo</b> (mismo lugar), parar cronómetro y commit <code>tNN: terminado</code>.</li>
 <li>Correr las ocultas, retrabajo si aplica y codewalk: parte 3 de la ficha.</li>
 <li>Pasar los números a <i>Medicion por caso</i> en <code>05 - Ciclos y bitacora/31102026_01_Bitacora_v3.xlsx</code>.</li>
 <li>Pasar las filas de decisiones a la hoja <i>Bitacora</i>.</li></ol></section>
