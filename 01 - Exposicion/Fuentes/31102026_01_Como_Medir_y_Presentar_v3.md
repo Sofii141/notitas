@@ -9,7 +9,7 @@ Reemplaza a `29102026_02_Como_Medir_y_Presentar_v2.md` (se conserva). **Qué cam
 | Métrica (GQM v3) | Definición operacional | Respaldo revisado por pares |
 |---|---|---|
 | **M1 Minutos** | Desde que se abre el enunciado hasta que pasan las pruebas visibles, menos las pausas | Hannay 2009 (A1); Arisholm 2007 (A2); Shihab 2025 (B3) |
-| **M2 Ocultas que fallan** | Pruebas ocultas que fallan al declarar "terminado" (de 3 por tarea; t23 tiene 2) | Arisholm 2007 (A2): corrección medida con pruebas que el desarrollador no ve; Dakhel 2023 (B8) |
+| **M2 Ocultas que fallan** | Pruebas ocultas que fallan al declarar "terminado" (de 3 por tarea) | Arisholm 2007 (A2): corrección medida con pruebas que el desarrollador no ve; Dakhel 2023 (B8) |
 | **M3 Minutos de retrabajo** | Minutos de corrección después del primer "terminado" (0 si no hubo) | Enunciado del curso ("retrabajo") |
 | **M4 Codewalk 0–5** | 5 preguntas al autor y al compañero, sin mirar el código | Plonka 2015 (A5) y Welter 2025 (B1): transferencia de conocimiento; Shihab 2025 (B3) |
 | **M5 Pronóstico** | Minutos que creen que tardarán, anotados antes de empezar; se compara con M1 | Perry 2023 (B5); Lee 2025 (B6). METR 2025 solo como contexto (es un preprint) |
