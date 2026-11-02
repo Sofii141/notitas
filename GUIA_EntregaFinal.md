@@ -116,6 +116,6 @@ El codewalk es lo que conecta todo con el tema. La literatura revisada por pares
 - `04 - Especificacion agentes/31102026_01_Spec_Copiloto_v1.md` — spec v1 (OpenCode + DeepSeek V4.1 Flash).
 - `03 - Linea base/31102026_01_GQM_v3.md` — GQM con 5 métricas directas.
 - `01 - Exposicion/Fuentes/29102026_01_Fuentes_v2.md` y `31102026_01_Como_Medir_y_Presentar_v3.md` — fuentes revisadas por pares y cómo presentar los resultados.
-- `09 - Control de entrega/02112026_01_Punto_Control_v4.pdf` — lo que se envía el 3/11; `31102026_02_Guia_Entrega_y_Medicion_v2.pdf` — el paso a paso.
-- `02 - Caso base/Guia_Medicion/02112026_01_Guia_General_v4.pdf`: **empiecen aquí para medir**; de ahí pasan a la guía y a las fichas de cada condición.
+- `09 - Control de entrega/02112026_01_Punto_Control_v5.pdf` — lo que se envía el 3/11; `31102026_02_Guia_Entrega_y_Medicion_v2.pdf` — el paso a paso.
+- `02 - Caso base/Guia_Medicion/02112026_01_Guia_General_v5.pdf`: **empiecen aquí para medir**; de ahí pasan a la guía y a las fichas de cada condición.
 - `02 - Caso base/Plantilla_Ficha_Caso.md` — ficha de cada caso.
