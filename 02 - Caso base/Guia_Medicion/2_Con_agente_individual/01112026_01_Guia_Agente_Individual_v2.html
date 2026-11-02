@@ -10,7 +10,7 @@
 
 <section><h2><span class="num">2</span>Preparar la copia del agente (una sola vez por persona)</h2>
 <p>En PowerShell, parados en la carpeta que <b>contiene</b> su repo (no dentro de él):</p>
-<pre>git clone https://github.com/Sofii141/notitas.git notitas-agente
+<pre>git clone --single-branch -b main https://github.com/Sofii141/notitas.git notitas-agente
 cd notitas-agente
 Remove-Item -Recurse -Force backend/tests/ocultas
 Copy-Item agente/opencode.json opencode.json
