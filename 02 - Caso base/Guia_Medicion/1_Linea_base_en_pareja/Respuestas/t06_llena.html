@@ -10,9 +10,9 @@
 <p>Con el pronóstico anotado, arranca el cronómetro y corre:</p>
 <pre>git commit --allow-empty -m "t06: inicio"</pre>
 <p>Sin IA. Conduce la misma persona toda la tarea; quien navega revisa y propone. Escriban solo en <code>backend/notitas/t06.py</code> y prueben con <code>python -m pytest -k t06</code>.</p>
-<table class="campo"><tr><td>Hora de inicio</td><td><b>14:42 aprox.</b></td></tr>
+<table class="campo"><tr><td>Hora de inicio</td><td><b>14:42 (referencia)</b></td></tr>
 <tr><td>Pausas (minutos y motivo)</td><td><b>0</b></td></tr>
-<tr><td>Hora de fin (pasan las visibles y ya creen que cumplen los criterios)</td><td><b>15:29 aprox.</b></td></tr>
+<tr><td>Hora de fin (pasan las visibles y ya creen que cumplen los criterios)</td><td><b>15:29 (referencia)</b></td></tr>
 <tr><td><b>M1 · Minutos</b> (fin − inicio − pausas)</td><td><b>47 (cronómetro 47:01)</b></td></tr></table>
 <p>Al llegar al fin, para el cronómetro y guarda:</p>
 <pre>git add backend/notitas/t06.py
@@ -24,7 +24,7 @@ git commit -m "t06: terminado"</pre></section>
 <tr><td><b>M4 · Codewalk autor</b> (0–5)</td><td><b>5 (Juan José)</b></td></tr>
 <tr><td><b>M4 · Codewalk compañero</b> (0–5)</td><td><b>5 (Ana Sofía)</b></td></tr>
 <tr><td>¿Abrieron las ocultas antes? Si sí: <b>[C]</b> y usen una de repuesto</td><td><b>☒ No</b> &nbsp; ☐ Sí</td></tr>
-<tr><td>Observaciones y nombre del video</td><td style="font-size:10.5px">Hecha primero, sin seguir el Orden del sorteo (era la novena). Horas aproximadas: inicio según el video; fin = inicio + cronómetro. Pronósticos: Juan José 25, Sofía 45; acordado 35. M4: cada uno calificó al otro.<br><b>02112026_S01_t06_JuanJose.mkv</b></td></tr></table>
+<tr><td>Observaciones y nombre del video</td><td style="font-size:10.5px">M1 = 47:01 por cronómetro; las horas de reloj son solo referencia (14:42 = inicio del video; fin = 14:42 + 47 min). El video incluye todo, también lo previo al cronómetro (preguntas y lectura del enunciado). Por tiempo, se priorizó hacer primero una tarea de cada tamaño y luego las que alcancen, por eso t06 se hizo antes de su turno en el sorteo (era la novena); no se leyeron enunciados antes de elegirla. Pronósticos: Juan José 25, Sofía 45; acordado 35. M4: cada uno calificó al otro.<br><b>Video:</b> 02112026_S01_t06_JuanJose.mkv<br><b>Commit:</b> <a href="https://github.com/Sofii141/notitas/commit/db52993515c419f8b5167b6d549c7d8f1d31961a">db52993 en Sofii141/notitas</a></td></tr></table>
 <p><b>Si falló alguna:</b> anoten M2 primero. Luego arranquen otro cronómetro y corrijan hasta que pasen todas, sin límite de tiempo, con <code>python -m pytest -k t06</code> las veces que necesiten. Ese tiempo es M3; M1 y M2 no cambian. Después, el codewalk. Al final de la tarea, siempre suban:</p>
 <pre>git add backend/notitas/t06.py
 git commit -m "t06: retrabajo"     (solo si corrigieron)
