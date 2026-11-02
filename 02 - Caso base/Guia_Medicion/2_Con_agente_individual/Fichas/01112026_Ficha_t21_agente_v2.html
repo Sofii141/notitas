@@ -1,0 +1,45 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Ficha t21 · Fusionar cambios de dos dispositivos</title><link rel="stylesheet" href="../../../../_Estilo/estilo.css">
+<style>@page{margin:11mm} body{font-size:12px} section{margin:0 0 6px} h2{margin:3px 0;font-size:19px} h2 .num{transform:scale(.75)} .uso td{height:19px} .campo td,.uso td{height:22px;padding:3px 8px} .campo td:first-child{width:46%} table{width:100%} p{margin:3px 0} .caja{margin:5px 0;padding:5px 12px} .uso th{font-size:11px}
+.cab{border-bottom:6px solid;border-image:linear-gradient(90deg,#BCC86F 20%,#F5CB99 20% 40%,#FFABA9 40% 60%,#F68578 60% 80%,#B9794A 80%) 1;padding-bottom:5px;margin-bottom:6px} .cab h1{color:#79371D;margin:0;font-size:22px} .cab small{color:#B9794A}</style></head><body>
+<div class="cab"><small>Ágiles 2026-2 · Ana Sofía Arango Yanza · Juan José Arias Chacua · 01/11/2026 · v2</small><h1>Ficha t21 · Fusionar cambios de dos dispositivos</h1><small>Con agente, individual · tamaño L (grande · 45–70 min)</small></div>
+<section><h2><span class="num">1</span>Antes de empezar</h2><table class="campo">
+<tr><td>Fecha y sesión</td><td></td></tr>
+<tr><td>Quién conduce (solo, con el agente)</td><td></td></tr>
+<tr><td>Copia sin ocultas lista (<code>notitas-agente</code>) y modelo DeepSeek V4.1 Flash elegido</td><td>☐ Sí</td></tr>
+<tr><td><b>M5 · Pronóstico</b> (minutos que cree que tomará)</td><td></td></tr></table><div class="caja nota"><h4>Archivos de esta tarea</h4><p>
+Enunciado: <code>TAREAS.md</code>, sección <b>t21</b> (ábranlo <b>después</b> de anotar el pronóstico: el cronómetro arranca al abrirlo).<br>
+Código: <code>backend/notitas/t21.py</code> · Pruebas visibles: <code>backend/tests/visibles/test_t21.py</code></p></div></section>
+<section><h2><span class="num">2</span>Durante</h2>
+<p>☐ <code>git commit --allow-empty -m "t21: inicio"</code> &nbsp; ☐ Cronómetro en marcha &nbsp;·&nbsp; Trabaja una sola persona con el agente; el compañero no ayuda. Probar con <code>python -m pytest -k t21</code>.</p>
+<table class="campo">
+<tr><td>Hora de inicio</td><td></td></tr>
+<tr><td>Pausas (minutos y motivo)</td><td></td></tr>
+<tr><td>Hora de fin (pasan todas las visibles)</td><td></td></tr>
+<tr><td><b>M1 · Minutos</b> (fin − inicio − pausas)</td><td></td></tr></table>
+<p>En <b>la copia</b> (<code>notitas-agente</code>): <code>git checkout -- backend/notitas</code>, <code>opencode</code>, <code>/new</code>. Pegar este prompt, reemplazando el corchete por la sección t21 de <code>TAREAS.md</code>:</p>
+<pre style="white-space:pre-wrap;background:#FBEDDC;padding:6px 10px;border-radius:6px;font-size:10.5px;margin:3px 0">Actúa como navegante de pair programming (spec Copiloto v1). Tarea: t21.
+Este es el enunciado de la tarea:
+[PEGAR AQUÍ la sección t21 de TAREAS.md: desde la línea "## t21 ·" hasta antes del siguiente "## t"]
+
+Archivos: @backend/notitas/t21.py @backend/tests/visibles/test_t21.py
+No leas otros archivos ni pidas las pruebas ocultas. No hagas commit. No edites pruebas. No inventes requisitos que no estén en el enunciado.
+Responde en markdown con estas 4 partes:
+1. Plan de 3 a 6 pasos.
+2. Cambio propuesto, solo en backend/notitas/t21.py.
+3. Supuestos que hiciste.
+4. Casos borde que crees que faltan (como texto, no como pruebas).</pre>
+<p>Cada propuesta del agente es una fila:</p>
+<table class="uso"><tr><th style="width:6%">#</th><th style="width:40%">Qué le pidió / qué propuso</th><th style="width:16%">Decisión (A / C / R)</th><th>Razón</th></tr>
+<tr><td>1</td><td></td><td></td><td></td></tr><tr><td>2</td><td></td><td></td><td></td></tr><tr><td>3</td><td></td><td></td><td></td></tr><tr><td>4</td><td></td><td></td><td></td></tr><tr><td>5</td><td></td><td></td><td></td></tr></table>
+<p class="pequeno">A = aceptar · C = corregir · R = rechazar. Luego cada fila pasa a la hoja <i>Bitacora</i>. Si son más de 5, sigan al respaldo.</p><p>☐ Copiar <code>t21.py</code> al repo original &nbsp; ☐ Commit <code>t21: terminado</code> (lo hace la persona)</p></section>
+<section><h2><span class="num">3</span>Después de "terminado"</h2>
+<p>Correr las ocultas en el repo original (no en la copia del agente), después de copiar ahí <code>t21.py</code>: <code>python -m pytest backend/tests/ocultas -k t21</code></p>
+<table class="campo">
+<tr><td><b>M2 · Ocultas que fallan</b></td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; de 3</td></tr>
+<tr><td><b>M3 · Minutos de retrabajo</b> (0 si no corrigen; commit <code>t21: retrabajo</code>)</td><td></td></tr>
+<tr><td><b>M4 · Codewalk autor</b> (0–5)</td><td></td></tr>
+<tr><td><b>M4 · Codewalk compañero</b> (0–5)</td><td></td></tr>
+<tr><td>¿Alguien vio las ocultas antes? (si sí: marca <b>[C]</b> y se usa una de repuesto)</td><td>☐ No &nbsp; ☐ Sí</td></tr>
+<tr><td>Observaciones</td><td style="height:40px"></td></tr>
+</table>
+<p class="pequeno">Codewalk: Autor: lo evalúa el compañero. Compañero: lo evalúa el autor. Quien evalúa usa <code>03 - Linea base/31102026_02_Codewalk_Preguntas_v1.md</code> (fila t21); quien responde no mira el código ni al agente. Al final, pasen todo a la hoja <i>Medicion por caso</i> de la bitácora.</p></section></body></html>

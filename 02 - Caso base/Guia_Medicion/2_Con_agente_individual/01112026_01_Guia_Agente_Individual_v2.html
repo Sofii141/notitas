@@ -1,0 +1,57 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Tareas con el agente</title><link rel="stylesheet" href="../../../_Estilo/estilo.css">
+<style>table{width:100%} pre{white-space:pre-wrap;background:#FBEDDC;padding:10px 14px;border-radius:8px;font-size:12px}</style></head><body>
+<div class="portada"><div class="franjas"><span style="background:#BCC86F"></span><span style="background:#F5CB99"></span><span style="background:#FFABA9"></span><span style="background:#F68578"></span><span style="background:#B9794A"></span></div><div class="etiqueta">Taller de Metodologías Ágiles · 2026-2</div><h1>Tareas con el agente</h1><div class="sub">Cómo preparar OpenCode, qué pedirle y qué anotar</div>
+<dl class="meta"><dt>Pareja</dt><dd>Ana Sofía Arango Yanza · Juan José Arias Chacua</dd><dt>Fecha y versión</dt><dd>01/11/2026 · v2</dd></dl></div>
+<section><h2><span class="num">1</span>Qué es</h2>
+<p class="lead">El "después": cada uno, <b>solo</b>, programa con OpenCode (DeepSeek V4.1 Flash) las tareas que el sorteo dejó en <b>agente</b>; cada persona conduce 6. El compañero no ayuda durante la tarea; solo hace el codewalk al final.</p>
+<div class="caja nota"><h4>Dos carpetas, dos usos</h4><p>
+<b>Su repo</b> (el que ya clonaron, p. ej. <code>Repositorio/CAMEIA-lite</code> o <code>notitas</code>): ahí se hacen los commits y se corren las pruebas ocultas. El agente <b>nunca</b> se abre aquí.<br>
+<b>La copia del agente</b> (<code>notitas-agente</code>): igual pero <b>sin</b> las pruebas ocultas. Solo aquí se abre OpenCode.</p></div></section>
+
+<section><h2><span class="num">2</span>Preparar la copia del agente (una sola vez por persona)</h2>
+<p>En PowerShell, parados en la carpeta que <b>contiene</b> su repo (no dentro de él):</p>
+<pre>git clone https://github.com/Sofii141/notitas.git notitas-agente
+cd notitas-agente
+Remove-Item -Recurse -Force backend/tests/ocultas
+Copy-Item agente/opencode.json opencode.json
+opencode --version
+opencode</pre>
+<ol>
+<li>Ya dentro de OpenCode, escribir <code>/models</code> y elegir <b>DeepSeek V4.1 Flash</b>.</li>
+<li>Anotar en la hoja <i>Sesiones</i>: el nombre del modelo tal como aparece y el número que dio <code>opencode --version</code>.</li>
+<li><b>Prueba de permisos</b> (no se mide): escribirle <code>lee backend/tests/ocultas/test_t04.py</code>. Debe decir que no existe o que no tiene permiso. Si lo lee, paren y avísenme.</li>
+<li>Piloto corto con <b>una de las 2 tareas de repuesto que dio el sorteo</b>, para practicar; la otra queda de reserva. No se anota en la medición. Nunca usen de piloto una tarea asignada.</li></ol>
+<p class="pequeno">Al empezar cada tarea nueva: en la copia, <code>git checkout -- backend/notitas</code> para partir limpios (<b>no</b> usen <code>git checkout -- .</code>: devolvería las pruebas ocultas a la copia), y en OpenCode <code>/new</code> para una conversación nueva (que no arrastre la tarea anterior).</p></section>
+
+<section><h2><span class="num">3</span>Qué se le pasa al agente, exactamente</h2>
+<table><tr><th>Qué</th><th>De dónde sale</th><th>Cómo se le pasa</th></tr>
+<tr><td>El enunciado y los criterios de aceptación</td><td><code>TAREAS.md</code>, solo la sección de la tarea (desde <code>## tNN ·</code> hasta antes del siguiente <code>## t</code>)</td><td>Copiar ese texto y pegarlo dentro del prompt</td></tr>
+<tr><td>El esqueleto de la función</td><td><code>backend/notitas/tNN.py</code></td><td>Escribir <code>@backend/notitas/tNN.py</code> en el prompt (OpenCode adjunta el archivo)</td></tr>
+<tr><td>Las pruebas visibles</td><td><code>backend/tests/visibles/test_tNN.py</code></td><td>Escribir <code>@backend/tests/visibles/test_tNN.py</code></td></tr>
+<tr><td><b>Nada más</b></td><td colspan="2">Ni otras tareas, ni el servidor, ni el frontend, ni las ocultas. Es lo mismo que tiene la pareja en la línea base.</td></tr></table>
+<p><b>Prompt fijo</b> (cada ficha de agente ya lo trae con el número de su tarea puesto; solo falta pegar el enunciado):</p><pre>Actúa como navegante de pair programming (spec Copiloto v1). Tarea: tNN.
+Este es el enunciado de la tarea:
+[PEGAR AQUÍ la sección tNN de TAREAS.md: desde la línea "## tNN ·" hasta antes del siguiente "## t"]
+
+Archivos: @backend/notitas/tNN.py @backend/tests/visibles/test_tNN.py
+No leas otros archivos ni pidas las pruebas ocultas. No hagas commit. No edites pruebas. No inventes requisitos que no estén en el enunciado.
+Responde en markdown con estas 4 partes:
+1. Plan de 3 a 6 pasos.
+2. Cambio propuesto, solo en backend/notitas/tNN.py.
+3. Supuestos que hiciste.
+4. Casos borde que crees que faltan (como texto, no como pruebas).</pre>
+<p class="pequeno">Si después necesitan pedirle algo más (por ejemplo, "una prueba visible falla con este error: …"), está bien: cada pedido y su respuesta es una fila más en la tabla de la ficha.</p></section>
+
+<section><h2><span class="num">4</span>Cada tarea, paso a paso</h2><ol>
+<li>Seguir la línea <i>Orden para hacerlas</i> del ciclo en el sorteo (primero Ciclo 1, luego Ciclo 2); el campo <i>quién</i> dice quién conduce. Abrir su ficha en <code>Fichas/</code>.</li>
+<li>Parte 1 de la ficha: pronóstico.</li>
+<li>En <b>su repo</b>: abrir <code>TAREAS.md</code> en la sección de la tarea, arrancar cronómetro, <code>git commit --allow-empty -m "tNN: inicio"</code>.</li>
+<li>En <b>la copia</b>: <code>git checkout -- backend/notitas</code>, <code>opencode</code>, <code>/new</code>, y pegar el prompt de la ficha con el enunciado.</li>
+<li>Por cada propuesta del agente: decidir A, C o R y anotarla en la ficha con su razón. OpenCode pide permiso antes de editar o correr algo: ese es el momento de decidir.</li>
+<li>En la copia, correr <code>python -m pytest -k tNN</code> hasta que pasen las visibles.</li>
+<li>Copiar <code>backend/notitas/tNN.py</code> de la copia a <b>su repo</b> (mismo lugar), parar cronómetro y commit <code>tNN: terminado</code>.</li>
+<li>Correr las ocultas, retrabajo si aplica y codewalk: parte 3 de la ficha.</li>
+<li>Pasar los números a <i>Medicion por caso</i> (columna <i>Condición</i>: exactamente <b>Línea base</b>, <b>Ciclo 1</b> o <b>Ciclo 2</b>) en <code>05 - Ciclos y bitacora/31102026_01_Bitacora_v3.xlsx</code>.</li>
+<li>Pasar las filas de decisiones a la hoja <i>Bitacora</i>.</li></ol></section>
+<section><h2><span class="num">5</span>Fichas (versión agente)</h2><p>Usen solo las 12 de Ciclo 1 y Ciclo 2 del sorteo.</p><table><tr><th>Tarea</th><th>Nombre</th><th>Tam.</th><th>Ficha</th></tr><tr><td>t01</td><td>Validar el título de una nota</td><td>S</td><td><code>Fichas/01112026_Ficha_t01_agente_v2.pdf</code></td></tr><tr><td>t02</td><td>Color de la nota</td><td>S</td><td><code>Fichas/01112026_Ficha_t02_agente_v2.pdf</code></td></tr><tr><td>t03</td><td>Transiciones entre columnas</td><td>M</td><td><code>Fichas/01112026_Ficha_t03_agente_v2.pdf</code></td></tr><tr><td>t04</td><td>Límite WIP de "En curso"</td><td>M</td><td><code>Fichas/01112026_Ficha_t04_agente_v2.pdf</code></td></tr><tr><td>t05</td><td>Insertar en una posición</td><td>M</td><td><code>Fichas/01112026_Ficha_t05_agente_v2.pdf</code></td></tr><tr><td>t06</td><td>Filtrar por etiquetas</td><td>S</td><td><code>Fichas/01112026_Ficha_t06_agente_v2.pdf</code></td></tr><tr><td>t07</td><td>Buscar sin tildes ni mayúsculas</td><td>M</td><td><code>Fichas/01112026_Ficha_t07_agente_v2.pdf</code></td></tr><tr><td>t08</td><td>Estado de vencimiento</td><td>M</td><td><code>Fichas/01112026_Ficha_t08_agente_v2.pdf</code></td></tr><tr><td>t09</td><td>Normalizar etiquetas</td><td>S</td><td><code>Fichas/01112026_Ficha_t09_agente_v2.pdf</code></td></tr><tr><td>t10</td><td>Qué notas se archivan</td><td>S</td><td><code>Fichas/01112026_Ficha_t10_agente_v2.pdf</code></td></tr><tr><td>t11</td><td>Deshacer movimientos</td><td>M</td><td><code>Fichas/01112026_Ficha_t11_agente_v2.pdf</code></td></tr><tr><td>t12</td><td>Dos personas mueven la misma nota</td><td>L</td><td><code>Fichas/01112026_Ficha_t12_agente_v2.pdf</code></td></tr><tr><td>t13</td><td>Exportar e importar el tablero</td><td>M</td><td><code>Fichas/01112026_Ficha_t13_agente_v2.pdf</code></td></tr><tr><td>t14</td><td>Contenido seguro (sin inyectar HTML)</td><td>M</td><td><code>Fichas/01112026_Ficha_t14_agente_v2.pdf</code></td></tr><tr><td>t15</td><td>Resumen por columna</td><td>S</td><td><code>Fichas/01112026_Ficha_t15_agente_v2.pdf</code></td></tr><tr><td>t16</td><td>Ordenar por prioridad y fecha</td><td>S</td><td><code>Fichas/01112026_Ficha_t16_agente_v2.pdf</code></td></tr><tr><td>t17</td><td>Paginar el listado</td><td>S</td><td><code>Fichas/01112026_Ficha_t17_agente_v2.pdf</code></td></tr><tr><td>t18</td><td>Iniciales del responsable</td><td>S</td><td><code>Fichas/01112026_Ficha_t18_agente_v2.pdf</code></td></tr><tr><td>t19</td><td>Progreso de la checklist</td><td>M</td><td><code>Fichas/01112026_Ficha_t19_agente_v2.pdf</code></td></tr><tr><td>t20</td><td>Duplicar una nota</td><td>S</td><td><code>Fichas/01112026_Ficha_t20_agente_v2.pdf</code></td></tr><tr><td>t21</td><td>Fusionar cambios de dos dispositivos</td><td>L</td><td><code>Fichas/01112026_Ficha_t21_agente_v2.pdf</code></td></tr><tr><td>t22</td><td>Notas bloqueadas</td><td>M</td><td><code>Fichas/01112026_Ficha_t22_agente_v2.pdf</code></td></tr><tr><td>t23</td><td>Tiempo de ciclo</td><td>M</td><td><code>Fichas/01112026_Ficha_t23_agente_v2.pdf</code></td></tr><tr><td>t24</td><td>Límite de notas por minuto</td><td>M</td><td><code>Fichas/01112026_Ficha_t24_agente_v2.pdf</code></td></tr></table></section>
+<div class="pie"><span>Ana Sofía Arango · Juan José Arias</span><span>Ágiles 2026-2 · Unicauca</span></div></body></html>
