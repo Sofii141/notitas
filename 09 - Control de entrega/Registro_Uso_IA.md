@@ -19,3 +19,4 @@ El profe pide, en el reporte y en la última diapositiva: qué herramientas usar
 | 02/11/2026 | Claude Code | Agregar guardado de respuestas y revisión final con IA en codewalk, guías, fichas y punto de control (v8) | [P] Guardar las respuestas al medir, revisar a mano las diferencias con la IA y leer el PDF v8 antes de enviarlo | Ana Sofía |
 | 02/11/2026 | Claude Code | Transcribir ficha t06 a ficha, bitácora y respuestas; reorganizar codewalk y versiones | [P] Confirmar los datos de t06, las horas aproximadas y el orden de tareas | Ana Sofía |
 | 02/11/2026 | Claude Code | Agregar a ficha t06 y bitácora el commit, la nota de prioridad por tamaño y el alcance del video | [P] Revisar la redacción de Observaciones y confirmar la hora de fin de sesión | Ana Sofía |
+| 02/11/2026 | Claude Code | Revisar y reorganizar carpetas, guías y versiones | [P] Revisar que encuentren todo en su sitio | Ana Sofía |

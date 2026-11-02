@@ -34,4 +34,4 @@ Aplica a los artefactos que evolucionan (spec, GQM, bitácora, propuestas, plan,
 Nunca sobrescribir una versión entregada o revisada: se copia con fecha nueva y se anota en [CHANGELOG.md](CHANGELOG.md).
 
 ## Cómo encontrar los documentos
-En cada carpeta, el archivo vigente queda a la vista. Las versiones anteriores están en `Versiones anteriores/v1`, `v2`, etc.
+En cada carpeta, el archivo vigente queda a la vista. Las versiones anteriores están en `Versiones anteriores/v1`, `v2`, etc. Las respuestas de cada tarea van en `Respuestas/tNN/`, y los HTML de los que salen los PDF de plantillas y codewalk están en `Fuente_html/`.
