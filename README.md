@@ -44,7 +44,7 @@ Es una **estimación por juicio** de quien diseñó las tareas, revisada por la 
 1. **Antes de empezar:** anotar cuántos minutos creen que les tomará (pronóstico).
 2. **Arrancar el cronómetro** al abrir el enunciado en `TAREAS.md` y hacer el commit vacío: `git commit --allow-empty -m "tNN: inicio"`.
 3. **Trabajar** solo con las pruebas visibles.
-   - **Línea base:** pareja humana sin IA; uno escribe el código (conductor) y el otro revisa y guía (navegante), y cambian cada 15 min.
+   - **Línea base:** pareja humana en llamada, sin IA; en cada tarea uno escribe en su computador (conductor) y el otro revisa y guía (navegante). El conductor se alterna por tarea, mitad y mitad. Solo se permite documentación y búsquedas puntuales en la web; ninguna IA.
    - **Ciclos:** una persona sola con el agente, y una fila de bitácora por cada uso.
 4. **Declarar "terminado"** cuando pasan las visibles. Parar el cronómetro y hacer el commit `tNN: terminado`.
 5. **Correr las ocultas.** Cada prueba que falle es un **error escapado**. Si lo corrigen, el tiempo cuenta aparte como **retrabajo**, con el commit `tNN: retrabajo`.
