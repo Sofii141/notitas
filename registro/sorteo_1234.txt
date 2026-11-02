@@ -1,0 +1,33 @@
+Semilla: 1234
+
+Línea base (10: 5 S · 4 M · 1 L · 6 difíciles):
+  t03 [M] ⚠️  quién: Pareja humana
+  t04 [M] ⚠️  quién: Pareja humana
+  t06 [S]  quién: Pareja humana
+  t07 [M] ⚠️  quién: Pareja humana
+  t10 [S]  quién: Pareja humana
+  t12 [L] ⚠️  quién: Pareja humana
+  t14 [M] ⚠️  quién: Pareja humana
+  t15 [S]  quién: Pareja humana
+  t16 [S]  quién: Pareja humana
+  t20 [S] ⚠️  quién: Pareja humana
+  Orden para hacerlas: t15 → t12 → t16 → t03 → t07 → t04 → t14 → t20 → t06 → t10
+Ciclo 1 (6: 2 S · 3 M · 1 L · 2 difíciles):
+  t01 [S]  quién: Ana Sofía
+  t02 [S]  quién: Ana Sofía
+  t19 [M]  quién: Juan José
+  t21 [L] ⚠️  quién: Juan José
+  t22 [M]  quién: Juan José
+  t23 [M] ⚠️  quién: Ana Sofía
+  Orden para hacerlas: t01 → t02 → t22 → t23 → t21 → t19
+Ciclo 2 (6: 3 S · 3 M · 0 L · 2 difíciles):
+  t08 [M] ⚠️  quién: Juan José
+  t09 [S]  quién: Juan José
+  t11 [M]  quién: Ana Sofía
+  t17 [S]  quién: Ana Sofía
+  t18 [S]  quién: Juan José
+  t24 [M] ⚠️  quién: Ana Sofía
+  Orden para hacerlas: t09 → t18 → t11 → t24 → t08 → t17
+Repuesto (2: 0 S · 2 M · 0 L · 0 difíciles):
+  t05 [M]  quién: —
+  t13 [M]  quién: —
