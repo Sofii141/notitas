@@ -42,7 +42,7 @@ Es una **estimación por juicio** de quien diseñó las tareas, revisada por la 
 
 ## Reglas de cada tarea (son las que hacen válida la medición)
 1. **Antes de empezar:** anotar cuántos minutos creen que les tomará (pronóstico).
-2. **Arrancar el cronómetro** al abrir el enunciado en `TAREAS.md` y hacer el commit `tNN: inicio`.
+2. **Arrancar el cronómetro** al abrir el enunciado en `TAREAS.md` y hacer el commit vacío: `git commit --allow-empty -m "tNN: inicio"`.
 3. **Trabajar** solo con las pruebas visibles.
    - **Línea base:** pareja humana sin IA; uno escribe el código (conductor) y el otro revisa y guía (navegante), y cambian cada 15 min.
    - **Ciclos:** una persona sola con el agente, y una fila de bitácora por cada uso.

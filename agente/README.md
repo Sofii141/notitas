@@ -18,6 +18,6 @@ La spec v1 dice que el agente trabaja en una **copia del repo sin `backend/tests
 
 `opencode.json` (sintaxis oficial: https://opencode.ai/docs/permissions/) le niega lo siguiente: leer `backend/tests/ocultas` y `.env`; editar las pruebas; hacer commit, push o merge; salir de la carpeta; y buscar en internet. Todo lo demás lo pregunta antes de hacerlo.
 
-**Antes del ciclo 1:** hagan un piloto con t04 o t06 (las de repuesto) para comprobar que los permisos funcionan. Pídanle que lea `backend/tests/ocultas`: debe negarse. El piloto no cuenta en la medición.
+**Antes del ciclo 1:** hagan un piloto con una de las 2 tareas de repuesto que dio el sorteo para comprobar que los permisos funcionan. Pídanle que lea `backend/tests/ocultas`: debe negarse. El piloto no cuenta en la medición.
 
 **Privacidad:** los modelos gratuitos pueden guardar lo que se les envía. Notitas no tiene datos personales ni secretos, así que no hay problema; igual se menciona en el análisis de riesgos (confidencialidad).
