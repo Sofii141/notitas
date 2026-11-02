@@ -1,0 +1,43 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Tareas con el agente</title><link rel="stylesheet" href="../../../_Estilo/estilo.css">
+<style>table{width:100%} pre{white-space:pre-wrap;background:#FBEDDC;padding:10px 14px;border-radius:8px;font-size:12px}</style></head><body>
+<div class="portada"><div class="franjas"><span style="background:#BCC86F"></span><span style="background:#F5CB99"></span><span style="background:#FFABA9"></span><span style="background:#F68578"></span><span style="background:#B9794A"></span></div><div class="etiqueta">Taller de Metodologías Ágiles · 2026-2</div><h1>Tareas con el agente</h1><div class="sub">Cómo preparar OpenCode y qué hacer en cada tarea</div>
+<dl class="meta"><dt>Pareja</dt><dd>Ana Sofía Arango Yanza · Juan José Arias Chacua</dd><dt>Fecha y versión</dt><dd>02/11/2026 · v8</dd></dl></div>
+<section><h2><span class="num">1</span>Cómo se trabaja</h2>
+<p class="lead">Cada uno solo, con OpenCode y el modelo DeepSeek V4.1 Flash. El compañero no ayuda en la tarea; solo hace el codewalk al final.</p>
+<p>Van a usar <b>dos carpetas</b>, y es importante no confundirlas:</p>
+<table><tr><th>Carpeta</th><th>Para qué</th></tr>
+<tr><td><b>Su repo</b> (el que ya clonaron)</td><td>Commits y pruebas ocultas. El agente <b>nunca</b> se abre aquí.</td></tr>
+<tr><td><b>La copia</b> (<code>notitas-agente</code>)</td><td>Igual, pero sin las ocultas. <b>Solo aquí</b> se abre OpenCode.</td></tr></table>
+<h3>Qué pueden usar</h3><table><tr><th>Sí se puede</th><th>No se puede</th></tr>
+<tr><td>Documentación oficial de Python y de pytest. Google y Stack Overflow para dudas puntuales (por ejemplo, "cómo quitar tildes en Python"). Sus apuntes.</td>
+<td>ChatGPT, Gemini, Copilot, ni el resumen con IA que a veces muestra Google (ignórenlo). Buscar la solución completa de la tarea. Pedir ayuda a otra persona. Abrir <code>backend/tests/ocultas</code>, <code>_Privado/</code> o el codewalk de una tarea antes de terminarla.</td></tr></table>
+<p class="pequeno">Es la misma regla en todas las tareas. La única diferencia con agente: se permite OpenCode, y solo OpenCode. Si una búsqueda fue clave, anótenla en Observaciones.</p></section>
+<section><h2><span class="num">2</span>Preparar la copia (una vez por persona)</h2>
+<p>En PowerShell, parados en la carpeta que <b>contiene</b> su repo (no adentro), para que queden una al lado de la otra:</p>
+<pre>git clone --single-branch -b main https://github.com/Sofii141/notitas.git notitas-agente
+cd notitas-agente
+Remove-Item -Recurse -Force backend/tests/ocultas
+Copy-Item agente/opencode.json opencode.json
+opencode --version
+opencode</pre>
+<ol><li>Dentro de OpenCode, escriban <code>/models</code> y elijan <b>DeepSeek V4.1 Flash</b>.</li>
+<li>Anoten en la hoja <i>Sesiones</i> el modelo y la versión que salió.</li>
+<li><b>Prueba:</b> pídanle <code>lee backend/tests/ocultas/test_t04.py</code>. Debe decir que no existe o que no tiene permiso. Si lo lee, paren y escríbanme.</li>
+<li><b>Piloto para practicar</b> (no se mide): usen <b>una de las 2 tareas de repuesto</b> del sorteo. Nunca una tarea asignada.</li></ol>
+<div class="caja nota"><h4>Cuidado</h4><p>Para limpiar la copia usen <code>git checkout -- backend/notitas</code>. <b>No</b> usen <code>git checkout -- .</code>, porque devuelve las pruebas ocultas a la copia.</p></div></section>
+<section><h2><span class="num">3</span>Qué se le pasa al agente</h2>
+<table><tr><th>Qué</th><th>Cómo</th></tr>
+<tr><td>Enunciado: la sección de la tarea en <code>TAREAS.md</code></td><td>Se copia y se pega en el prompt</td></tr>
+<tr><td><code>backend/notitas/tNN.py</code></td><td>Con <code>@</code>, ya está en el prompt de la ficha</td></tr>
+<tr><td><code>backend/tests/visibles/test_tNN.py</code></td><td>Con <code>@</code>, ya está en el prompt de la ficha</td></tr>
+<tr><td><b>Nada más</b></td><td>Ni otras tareas, ni el servidor, ni el frontend, ni las ocultas</td></tr></table>
+<p>Pueden seguirle pidiendo cosas ("esta prueba falla con este error…"). Cada pedido es una fila más en la ficha.</p></section>
+<section><h2><span class="num">4</span>El ciclo de una tarea</h2>
+<ol><li><b>Busquen la tarea:</b> en el sorteo, siguiendo <i>Orden para hacerlas</i> (Ciclo 1 y luego Ciclo 2). <i>quién</i> dice quién conduce.</li>
+<li><b>Abran su ficha</b> en <code>Plantillas/</code> y empiecen a grabar.</li>
+<li><b>Sigan la ficha de arriba abajo.</b> Trae el prompt y cada comando de git.</li>
+<li><b>Decidan cada propuesta:</b> aceptar, corregir o rechazar, y por qué. Esa razón es lo que más cuenta para la nota de gobernanza. OpenCode pide permiso antes de editar: ahí es donde deciden.</li>
+<li><b>Hagan el codewalk</b> con el PDF de esa tarea, en <code>Codewalk/Por_tarea/</code>.</li>
+<li><b>Guarden la ficha llena y las respuestas</b> en <code>Respuestas/Ciclo N/</code>, o mándenme los datos. Las decisiones también van a la hoja <i>Bitacora</i>.</li></ol></section>
+<section><h2><span class="num">5</span>Plantillas</h2><table><tr><th>Tarea</th><th>Nombre</th><th>Tam.</th><th>Plantilla</th></tr><tr><td>t01</td><td>Validar el título de una nota</td><td>S</td><td><code>Plantillas/02112026_Ficha_t01_agente_v8.pdf</code></td></tr><tr><td>t02</td><td>Color de la nota</td><td>S</td><td><code>Plantillas/02112026_Ficha_t02_agente_v8.pdf</code></td></tr><tr><td>t03</td><td>Transiciones entre columnas</td><td>M</td><td><code>Plantillas/02112026_Ficha_t03_agente_v8.pdf</code></td></tr><tr><td>t04</td><td>Límite WIP de "En curso"</td><td>M</td><td><code>Plantillas/02112026_Ficha_t04_agente_v8.pdf</code></td></tr><tr><td>t05</td><td>Insertar en una posición</td><td>M</td><td><code>Plantillas/02112026_Ficha_t05_agente_v8.pdf</code></td></tr><tr><td>t06</td><td>Filtrar por etiquetas</td><td>S</td><td><code>Plantillas/02112026_Ficha_t06_agente_v8.pdf</code></td></tr><tr><td>t07</td><td>Buscar sin tildes ni mayúsculas</td><td>M</td><td><code>Plantillas/02112026_Ficha_t07_agente_v8.pdf</code></td></tr><tr><td>t08</td><td>Estado de vencimiento</td><td>M</td><td><code>Plantillas/02112026_Ficha_t08_agente_v8.pdf</code></td></tr><tr><td>t09</td><td>Normalizar etiquetas</td><td>S</td><td><code>Plantillas/02112026_Ficha_t09_agente_v8.pdf</code></td></tr><tr><td>t10</td><td>Qué notas se archivan</td><td>S</td><td><code>Plantillas/02112026_Ficha_t10_agente_v8.pdf</code></td></tr><tr><td>t11</td><td>Deshacer movimientos</td><td>M</td><td><code>Plantillas/02112026_Ficha_t11_agente_v8.pdf</code></td></tr><tr><td>t12</td><td>Dos personas mueven la misma nota</td><td>L</td><td><code>Plantillas/02112026_Ficha_t12_agente_v8.pdf</code></td></tr><tr><td>t13</td><td>Exportar e importar el tablero</td><td>M</td><td><code>Plantillas/02112026_Ficha_t13_agente_v8.pdf</code></td></tr><tr><td>t14</td><td>Contenido seguro (sin inyectar HTML)</td><td>M</td><td><code>Plantillas/02112026_Ficha_t14_agente_v8.pdf</code></td></tr><tr><td>t15</td><td>Resumen por columna</td><td>S</td><td><code>Plantillas/02112026_Ficha_t15_agente_v8.pdf</code></td></tr><tr><td>t16</td><td>Ordenar por prioridad y fecha</td><td>S</td><td><code>Plantillas/02112026_Ficha_t16_agente_v8.pdf</code></td></tr><tr><td>t17</td><td>Paginar el listado</td><td>S</td><td><code>Plantillas/02112026_Ficha_t17_agente_v8.pdf</code></td></tr><tr><td>t18</td><td>Iniciales del responsable</td><td>S</td><td><code>Plantillas/02112026_Ficha_t18_agente_v8.pdf</code></td></tr><tr><td>t19</td><td>Progreso de la checklist</td><td>M</td><td><code>Plantillas/02112026_Ficha_t19_agente_v8.pdf</code></td></tr><tr><td>t20</td><td>Duplicar una nota</td><td>S</td><td><code>Plantillas/02112026_Ficha_t20_agente_v8.pdf</code></td></tr><tr><td>t21</td><td>Fusionar cambios de dos dispositivos</td><td>L</td><td><code>Plantillas/02112026_Ficha_t21_agente_v8.pdf</code></td></tr><tr><td>t22</td><td>Notas bloqueadas</td><td>M</td><td><code>Plantillas/02112026_Ficha_t22_agente_v8.pdf</code></td></tr><tr><td>t23</td><td>Tiempo de ciclo</td><td>M</td><td><code>Plantillas/02112026_Ficha_t23_agente_v8.pdf</code></td></tr><tr><td>t24</td><td>Límite de notas por minuto</td><td>M</td><td><code>Plantillas/02112026_Ficha_t24_agente_v8.pdf</code></td></tr></table></section>
+<div class="pie"><span>Ana Sofía Arango · Juan José Arias</span><span>Ágiles 2026-2 · Unicauca</span></div></body></html>

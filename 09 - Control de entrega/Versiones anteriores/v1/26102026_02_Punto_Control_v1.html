@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Punto de control · Proyecto final</title>
+<link rel="stylesheet" href="../../../_Estilo/estilo.css">
+</head>
+<body>
+
+<div class="portada">
+  <div class="franjas"><span style="background:#BCC86F"></span><span style="background:#F5CB99"></span><span style="background:#FFABA9"></span><span style="background:#F68578"></span><span style="background:#B9794A"></span></div>
+  <div class="etiqueta">Taller de Metodologías Ágiles · 2026-2 · Tercer corte</div>
+  <h1>Punto de control del proyecto final</h1>
+  <div class="sub">Programar en pareja con una persona o con un agente: qué se gana, qué se pierde y qué aprendizaje desaparece</div>
+  <dl class="meta">
+    <dt>Tema de exposición</dt><dd>3 · Pair programming</dd>
+    <dt>Práctica que asiste el agente</dt><dd>Desarrollo de una tarea con el agente como copiloto</dd>
+    <dt>Pareja</dt><dd>Ana Sofía Arango Yanza · Juan José Arias Chacua</dd>
+    <dt>Profesor</dt><dd>César Jesús Pardo Calvache, Ph.D.</dd>
+    <dt>Fecha y versión</dt><dd>Viernes 30 de octubre de 2026 · v1 (borrador del 26/10)</dd>
+    <dt>Repositorio</dt><dd><a href="https://github.com/Sofii141/CAMEIA-lite">github.com/Sofii141/CAMEIA-lite</a> · ramas <code style="background:#5a2a16;color:#F5CB99">main</code> (código) y <code style="background:#5a2a16;color:#F5CB99">documentacion</code></dd>
+  </dl>
+</div>
+
+<section>
+  <h2><span class="num">0</span>Estado frente a lo que pide el punto de control</h2>
+  <p class="lead">El punto de control revisa tres cosas: el caso base, la especificación del agente (v1) y la línea base ya medida. Además, ese día se intercambian tres casos con otra pareja.</p>
+  <div class="tarjetas">
+    <div class="tarjeta verde"><div class="t">Caso base</div><div class="v">24 casos</div><span class="chip ok">Listo</span> 10 difíciles · congelar el 26/10</div>
+    <div class="tarjeta miel"><div class="t">Especificación v1</div><div class="v">1 agente</div><span class="chip info">Borrador</span> falta fijar la herramienta y el modelo</div>
+    <div class="tarjeta rosa"><div class="t">Línea base</div><div class="v">≥ 10 tareas</div><span class="chip pend">Se mide el 29/10</span> pareja humana, sin IA</div>
+  </div>
+  <table>
+    <thead><tr><th>Requisito del enunciado</th><th>Dónde está</th><th>Estado</th></tr></thead>
+    <tbody>
+      <tr><td>Caso base con ≥ 10 casos e incluye material difícil</td><td>§2 · repo <code>main</code></td><td><span class="chip ok">Listo</span></td></tr>
+      <tr><td>Caso congelado antes de tocar el agente</td><td>commit <code>congelado v1</code></td><td><span class="chip pend">26/10</span></td></tr>
+      <tr><td>Línea base medida con GQM, ≥ 10 casos y condiciones registradas</td><td>§3 y §5</td><td><span class="chip pend">29/10</span></td></tr>
+      <tr><td>Especificación de agentes v1 con sus 8 campos</td><td>§6</td><td><span class="chip info">Borrador</span></td></tr>
+      <tr><td>Tres casos para entregar a otra pareja y tres que recibimos</td><td><code>02 - Caso base/Casos …</code></td><td><span class="chip pend">30/10</span></td></tr>
+    </tbody>
+  </table>
+  <div class="caja alerta"><h4>Antes de enviar este documento</h4><p>Todo lo marcado <span class="chip pend">Pendiente</span> se completa con datos reales. Las tablas de la línea base (§5) están <strong>vacías a propósito</strong>: no se llenan hasta medir. Inventar datos de línea base es lo único que invalida el trabajo completo.</p></div>
+</section>
+
+<section class="nueva">
+  <h2><span class="num">1</span>Tema, práctica e hipótesis</h2>
+  <p>El enunciado asigna al tema 3 la práctica <strong>"desarrollo de una tarea con el agente como copiloto"</strong>, y como métricas sugiere tiempo, retrabajo y errores detectados a tiempo. Para que el proyecto cuente una sola historia con la exposición, agregamos la pregunta central del tema: <strong>qué aprendizaje se pierde</strong> cuando el compañero es un agente que no necesita entender.</p>
+  <h3>Qué dice la literatura (y qué esperamos ver)</h3>
+  <table>
+    <thead><tr><th style="width:34%">Hallazgo publicado</th><th>Hipótesis para nuestro caso</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Hannay et al. 2009</strong> (metaanálisis, <em>IST</em>): el pairing humano tiene un efecto pequeño en calidad, medio en duración y negativo en esfuerzo, y depende de la complejidad.</td><td>H1: con el agente, la duración baja en las tareas S y M, pero no en las difíciles.</td></tr>
+      <tr><td><strong>METR 2025</strong> (RCT, 16 devs): con IA fueron 19 % más lentos, aunque creían ir ~20 % más rápido.</td><td>H2: la velocidad <em>percibida</em> con el agente supera a la medida.</td></tr>
+      <tr><td><strong>Welter et al. 2025</strong> (ASE): las sugerencias de la IA se aceptan con menos escrutinio que las de un compañero humano.</td><td>H3: con el agente se escapan más errores a las pruebas ocultas.</td></tr>
+      <tr><td><strong>Anthropic 2026</strong> (RCT, 52 ingenieros): con IA, ~17 puntos menos de comprensión, sobre todo en depuración.</td><td>H4: el codewalk baja en la condición con agente, sobre todo para el compañero que no participó.</td></tr>
+    </tbody>
+  </table>
+  <div class="caja nota"><h4>Cómo leeremos los resultados</h4><p>Con n ≈ 10 por condición no podemos afirmar causalidad: reportaremos diferencias y tendencias, junto con lo que <strong>no</strong> demuestran. Si el agente no mejora la práctica, lo diremos con los datos.</p></div>
+</section>
+
+<section class="nueva">
+  <h2><span class="num">2</span>El caso base: CAMEIA-lite</h2>
+  <p class="lead">24 tareas pequeñas de programación. Cada una aísla una regla <strong>real</strong> del backlog de CAMEIA, el proyecto en el que trabajamos los dos durante el semestre.</p>
+  <div class="dos-col">
+    <div>
+      <h3>De dónde sale</h3>
+      <p>De los 324 PR fusionados en los 9 repositorios de CAMEIA (extraídos con <code>gh</code> el 25/10). Cada tarea viene de un ítem de Jira (17 en total, de 5 repos) y de su PR. La trazabilidad está en <code>26102026_01_Backlog_Origen_CAMEIA-lite_v1.xlsx</code>.</p>
+      <h3>Por qué así y no directamente sobre CAMEIA</h3>
+      <p>Las tareas reales exigen montar Docker, Firebase y PostgreSQL, y sus PR son muy desiguales en tamaño. Así, el cronómetro mediría la configuración y no la práctica. CAMEIA-lite conserva los requisitos reales, se corre con un solo comando y permite tareas comparables entre condiciones.</p>
+    </div>
+    <div>
+      <h3>Qué lo hace representativo y difícil</h3>
+      <ul>
+        <li><strong>11 S · 11 M · 2 L</strong>, asignadas por sorteo estratificado.</li>
+        <li><strong>10 difíciles</strong>: Unicode/NFC, 29 de febrero, concurrencia por doble clic, orden de reglas 404/409, inyección de cabeceras, el subdominio trampa en CORS, la variable vacía que sí existe y el falso obvio <code>production</code>/<code>prod</code>.</li>
+        <li>Cada tarea trae <strong>pruebas visibles</strong> (las que guían el desarrollo) y <strong>pruebas ocultas</strong> (las que miden los errores escapados).</li>
+        <li>Validado: las 110 pruebas pasan con soluciones de referencia y fallan todas con el esqueleto.</li>
+      </ul>
+    </div>
+  </div>
+  <h3>Las 24 tareas</h3>
+  <table>
+    <thead><tr><th>ID</th><th>Tarea</th><th>Tam.</th><th>Difícil</th><th>Origen (Jira)</th><th>Ya la hizo</th></tr></thead>
+    <tbody><tr><td><code>t01</code></td><td>Normalizar texto</td><td class="c"><span class="chip s">S</span></td><td class="c"></td><td>CM-36</td><td>—</td></tr><tr><td><code>t02</code></td><td>Contar caracteres</td><td class="c"><span class="chip s">S</span></td><td class="c"></td><td>CM-36</td><td>—</td></tr><tr><td><code>t03</code></td><td>Validar nombre</td><td class="c"><span class="chip m">M</span></td><td class="c"><span class="chip dif">Difícil</span></td><td>CM-36</td><td>—</td></tr><tr><td><code>t04</code></td><td>Validar correo</td><td class="c"><span class="chip s">S</span></td><td class="c"></td><td>CM-36</td><td>—</td></tr><tr><td><code>t05</code></td><td>Validar celular</td><td class="c"><span class="chip s">S</span></td><td class="c"></td><td>CM-36</td><td>—</td></tr><tr><td><code>t06</code></td><td>Política de contraseñas</td><td class="c"><span class="chip m">M</span></td><td class="c"></td><td>CM-36</td><td>—</td></tr><tr><td><code>t07</code></td><td>Fecha de nacimiento</td><td class="c"><span class="chip m">M</span></td><td class="c"><span class="chip dif">Difícil</span></td><td>CM-279</td><td>—</td></tr><tr><td><code>t08</code></td><td>Cupo de perfiles por plan</td><td class="c"><span class="chip m">M</span></td><td class="c"><span class="chip dif">Difícil</span></td><td>CM-271</td><td>—</td></tr><tr><td><code>t09</code></td><td>Nivel de log por estado HTTP</td><td class="c"><span class="chip s">S</span></td><td class="c"></td><td>CM-184</td><td>—</td></tr><tr><td><code>t10</code></td><td>Mensajes de error por campo</td><td class="c"><span class="chip m">M</span></td><td class="c"></td><td>CM-336 / CM-298</td><td>Juan José</td></tr><tr><td><code>t11</code></td><td>Contador de reintentos</td><td class="c"><span class="chip m">M</span></td><td class="c"></td><td>CM-217</td><td>Juan José</td></tr><tr><td><code>t12</code></td><td>Crear una sola vez (doble clic)</td><td class="c"><span class="chip l">L</span></td><td class="c"><span class="chip dif">Difícil</span></td><td>CM-270</td><td>Juan José</td></tr><tr><td><code>t13</code></td><td>Eliminar rol objetivo</td><td class="c"><span class="chip m">M</span></td><td class="c"><span class="chip dif">Difícil</span></td><td>CM-71 / CM-271</td><td>—</td></tr><tr><td><code>t14</code></td><td>Sustituir rol conservando su lugar</td><td class="c"><span class="chip s">S</span></td><td class="c"></td><td>CM-72</td><td>—</td></tr><tr><td><code>t15</code></td><td>Catálogo de roles por idioma</td><td class="c"><span class="chip s">S</span></td><td class="c"></td><td>CM-82 / CM-72</td><td>Ana Sofía</td></tr><tr><td><code>t16</code></td><td>Fechas de formación</td><td class="c"><span class="chip m">M</span></td><td class="c"></td><td>CM-271</td><td>—</td></tr><tr><td><code>t17</code></td><td>Expectativa salarial</td><td class="c"><span class="chip s">S</span></td><td class="c"></td><td>CM-271</td><td>—</td></tr><tr><td><code>t18</code></td><td>Propagar X-Request-Id</td><td class="c"><span class="chip m">M</span></td><td class="c"><span class="chip dif">Difícil</span></td><td>CM-279 / CM-104</td><td>—</td></tr><tr><td><code>t19</code></td><td>Limpiar cabeceras de identidad</td><td class="c"><span class="chip m">M</span></td><td class="c"><span class="chip dif">Difícil</span></td><td>CM-104</td><td>—</td></tr><tr><td><code>t20</code></td><td>Origen permitido (CORS)</td><td class="c"><span class="chip s">S</span></td><td class="c"><span class="chip dif">Difícil</span></td><td>CM-162</td><td>—</td></tr><tr><td><code>t21</code></td><td>Perfil de arranque y emulador</td><td class="c"><span class="chip m">M</span></td><td class="c"><span class="chip dif">Difícil</span></td><td>CM-190 / CM-191 / CM-175</td><td>—</td></tr><tr><td><code>t22</code></td><td>Registro idempotente (Idempotency-Key)</td><td class="c"><span class="chip l">L</span></td><td class="c"><span class="chip dif">Difícil</span></td><td>CM-340</td><td>—</td></tr><tr><td><code>t23</code></td><td>Progreso de la entrevista</td><td class="c"><span class="chip s">S</span></td><td class="c"></td><td>CM-217</td><td>Juan José</td></tr><tr><td><code>t24</code></td><td>Enmascarar correo en logs</td><td class="c"><span class="chip s">S</span></td><td class="c"></td><td>CM-271 (registro sin datos personales)</td><td>—</td></tr></tbody>
+  </table>
+  <div class="caja nota"><h4>Limitaciones declaradas</h4>
+    <ul>
+      <li>Las reglas se sacan de su entorno, así que no medimos el costo de integrar con el sistema real.</li>
+      <li>Los PR originales se escribieron con Claude Code, de modo que la solución de referencia puede tener "estilo de agente".</li>
+      <li>Cinco tareas ya las implementó uno de nosotros: esas se asignan a la otra persona y solo en la condición con agente.</li>
+      <li>Cinco reglas se ajustaron para hacer el caso más difícil y van marcadas <code>[P]</code> en el backlog de origen.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="nueva">
+  <h2><span class="num">3</span>GQM</h2>
+  <p class="lead"><strong>Objetivo:</strong> analizar el desarrollo de una tarea con un agente copiloto, frente al pair programming humano, para evaluar su efecto en tiempo, esfuerzo, errores escapados, retrabajo y comprensión del código, en las 24 tareas de CAMEIA-lite.</p>
+  <table>
+    <thead><tr><th>Pregunta</th><th>Métrica</th><th>Cómo se toma</th><th>Qué NO representa</th><th>Respaldo</th></tr></thead>
+    <tbody>
+      <tr><td>Q1 ¿Se termina más rápido?</td><td>M1 Duración (min)</td><td>Cronómetro hasta pasar las pruebas visibles</td><td>Productividad general</td><td>Hannay 2009; Shihab 2025</td></tr>
+      <tr><td>Q2 ¿Cuesta más persona-tiempo?</td><td>M2 Esfuerzo = M1 × personas</td><td>Calculado (pareja = 2)</td><td>Tiempo de aprender la herramienta</td><td>Hannay 2009</td></tr>
+      <tr><td>Q3 ¿Se escapan más errores?</td><td>M3 Pruebas ocultas que fallan</td><td><code>pytest tests/ocultas -k tNN</code></td><td>Defectos de diseño o legibilidad</td><td>Arisholm 2007</td></tr>
+      <tr><td>Q4 ¿Hay más retrabajo?</td><td>M4 Minutos y commits después de "terminado"</td><td>git log + cronómetro</td><td>El tamaño de cada corrección</td><td>Enunciado del curso</td></tr>
+      <tr><td>Q5 ¿Qué aprendizaje se pierde?</td><td>M5 Codewalk 0–5 (autor y compañero)</td><td>5 preguntas fijas, sin mirar el código</td><td>La habilidad general</td><td>Welter 2025; Anthropic 2026</td></tr>
+      <tr><td>Q6 ¿Nos engaña la sensación de velocidad?</td><td>M6 Pronóstico antes y ayuda percibida después</td><td>Hoja de medición</td><td>El resultado real</td><td>METR 2025</td></tr>
+    </tbody>
+  </table>
+  <h3>Las 5 preguntas del codewalk</h3>
+  <ol class="pasos">
+    <li>¿Qué hace la función, en una frase y sin leerla?</li>
+    <li>¿Qué caso borde maneja y dónde?</li>
+    <li>¿Por qué se eligió esta forma y no otra?</li>
+    <li>Si mañana falla con la entrada X, ¿dónde mirarías primero? <em>(depuración)</em></li>
+    <li>¿Qué cambiarías si el requisito cambia en Y?</li>
+  </ol>
+</section>
+
+<section class="nueva">
+  <h2><span class="num">4</span>Diseño de la medición</h2>
+  <table>
+    <thead><tr><th></th><th>Línea base (antes del 30/10)</th><th>Ciclo 1 (2–6 nov)</th><th>Ciclo 2 (9–13 nov)</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Condición</strong></td><td>Pareja humana: conductor y navegante, cambian cada 15 min, sin IA</td><td colspan="2">Una persona + el agente copiloto; el compañero no participa</td></tr>
+      <tr><td><strong>Tareas</strong></td><td>10 (por sorteo)</td><td>6</td><td>6 + los 3 casos recibidos</td></tr>
+      <tr><td><strong>Evidencia</strong></td><td colspan="3">Grabación de pantalla, commits por tarea, hoja de medición y bitácora (en los ciclos, una fila por cada uso del agente)</td></tr>
+    </tbody>
+  </table>
+  <h3>Protocolo por tarea</h3>
+  <ol class="pasos">
+    <li>Anotar el pronóstico de minutos.</li>
+    <li>Iniciar el cronómetro al abrir el enunciado.</li>
+    <li>Trabajar solo con las pruebas visibles.</li>
+    <li>Declarar "terminado" cuando pasan, parar el cronómetro y hacer commit <code>tNN: terminado</code>.</li>
+    <li>Correr las pruebas ocultas: cada fallo es un error escapado. Si se corrige, cuenta como retrabajo.</li>
+    <li>Codewalk de 5 minutos al autor y al compañero.</li>
+    <li>Llenar la hoja de medición al momento, no al final del día.</li>
+  </ol>
+  <div class="caja ok"><h4>Controles para que la comparación valga</h4>
+    <ul>
+      <li><strong>Sorteo reproducible</strong> (<code>python sorteo.py &lt;semilla&gt;</code>): la semilla queda en un acta.</li>
+      <li><strong>Estratificación por tamaño</strong>: cada condición recibe una mezcla parecida de S, M y L.</li>
+      <li>Si alguien abre las <strong>pruebas ocultas antes de tiempo</strong>, la tarea se descarta con la marca <code>[C]</code>.</li>
+      <li>En los ciclos, la carpeta <code>tests/ocultas</code> se saca del espacio de trabajo del agente.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="nueva">
+  <h2><span class="num">5</span>Línea base <span class="chip pend" style="vertical-align:4pt">Se mide el jueves 29/10</span></h2>
+  <h3>Condiciones de la medición</h3>
+  <table>
+    <thead><tr><th style="width:35%">Campo</th><th>Valor</th></tr></thead>
+    <tbody>
+      <tr><td>Participantes</td><td>Ana Sofía Arango Yanza y Juan José Arias Chacua</td></tr>
+      <tr><td>Fecha, hora y duración total</td><td>&nbsp;</td></tr>
+      <tr><td>Lugar o canal</td><td>&nbsp;</td></tr>
+      <tr><td>Herramientas</td><td>Python 3.13, pytest, editor _____ · <strong>sin IA</strong></td></tr>
+      <tr><td>Semilla del sorteo</td><td>&nbsp;</td></tr>
+      <tr><td>Interrupciones o incidentes</td><td>&nbsp;</td></tr>
+    </tbody>
+  </table>
+  <h3>Resultados por tarea</h3>
+  <table>
+    <thead><tr><th>Tarea</th><th>Tam.</th><th>Pronóstico (min)</th><th>Duración (min)</th><th>Esfuerzo (min·pers.)</th><th>Ocultas que fallan</th><th>Retrabajo (min)</th><th>Codewalk A / J</th></tr></thead>
+    <tbody><tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody>
+  </table>
+  <h3>Resumen (lo recalcula de forma independiente la otra persona)</h3>
+  <table>
+    <thead><tr><th>Métrica</th><th>S</th><th>M</th><th>L</th><th>Total</th><th>Recalculó</th></tr></thead>
+    <tbody>
+      <tr><td>Duración media</td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Errores escapados (total)</td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Codewalk medio</td><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="nueva">
+  <h2><span class="num">6</span>Especificación del agente · v1</h2>
+  <table>
+    <thead><tr><th style="width:24%">Campo</th><th>Contenido</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Rol y alcance</strong></td><td>Navegante en el desarrollo de <em>una</em> tarea de CAMEIA-lite: propone enfoque, código y pruebas. La persona conduce y decide.</td></tr>
+      <tr><td><strong>Entradas</strong></td><td>El enunciado y los criterios de aceptación de la tarea (<code>TAREAS.md</code>), su archivo <code>src/cameia_lite/tNN.py</code> y las pruebas visibles. Nada más.</td></tr>
+      <tr><td><strong>Salidas</strong></td><td>Un plan corto en pasos, el diff propuesto y la lista de supuestos que hizo.</td></tr>
+      <tr><td><strong>Herramientas y permisos</strong></td><td>Herramienta y modelo: <span class="chip pend">por definir</span>. Puede leer y escribir solo en el archivo de la tarea, en una rama local. No tiene acceso a <code>tests/ocultas</code>, al remoto ni a credenciales.</td></tr>
+      <tr><td><strong>Prohibiciones</strong></td><td>No hacer push ni merge. No modificar pruebas ni otros archivos. No inventar requisitos que no estén en el enunciado. No desactivar ni saltarse pruebas. No leer <code>tests/ocultas</code>.</td></tr>
+      <tr><td><strong>Criterio de validación</strong></td><td>Se acepta solo si pasa las pruebas visibles, cumple los criterios de aceptación y quien conduce puede explicar cada línea sin mirar al agente.</td></tr>
+      <tr><td><strong>Punto de control humano</strong></td><td>Antes de cada commit, quien conduce decide aceptar, corregir o rechazar y lo registra en la bitácora con su razón. Después, el compañero hace el codewalk.</td></tr>
+      <tr><td><strong>Versión</strong></td><td>v1 · 25/10/2026. Cada cambio da una versión nueva, con el dato de la bitácora que lo motivó.</td></tr>
+    </tbody>
+  </table>
+  <p class="pequeno">Empezamos con un solo agente. Solo agregaremos un segundo ("revisor") en el ciclo 2 si la bitácora del ciclo 1 muestra un problema que el primero no resuelve.</p>
+</section>
+
+<section>
+  <h2><span class="num">7</span>Calendario</h2>
+  <div class="tiempo">
+    <div class="t1"><b>29 oct</b>Línea base: 10 tareas en pareja humana</div>
+    <div class="t2"><b>30 oct</b>Punto de control e intercambio de 3 casos</div>
+    <div class="t3"><b>2–6 nov</b>Ciclo 1 con el agente, con bitácora y spec v2</div>
+    <div class="t4"><b>9–13 nov</b>Ciclo 2, 3 fallos documentados y video</div>
+    <div class="t5"><b>16–18 nov</b>Reporte, diapositivas y exposición</div>
+  </div>
+  <h3>Preguntas para el profesor en el punto de control</h3>
+  <ul class="check">
+    <li>¿Acepta CAMEIA-lite (requisitos reales de CAMEIA, aislados como funciones) como caso base, en lugar de trabajar directamente sobre los repositorios?</li>
+    <li>¿Es válido agregar la comprensión del código (codewalk) a las métricas sugeridas para el tema 3?</li>
+    <li>¿Con qué pareja intercambiamos los tres casos?</li>
+  </ul>
+</section>
+
+<section>
+  <h2><span class="num">8</span>Fuentes</h2>
+  <ul class="pequeno" style="color:var(--ink)">
+    <li>Hannay, J. E., Dybå, T., Arisholm, E., &amp; Sjøberg, D. I. K. (2009). The effectiveness of pair programming: A meta-analysis. <em>Information and Software Technology</em>, 51(7), 1110–1122. doi:10.1016/j.infsof.2009.02.001</li>
+    <li>Arisholm, E., Gallis, H., Dybå, T., &amp; Sjøberg, D. I. K. (2007). Evaluating pair programming with respect to system complexity and programmer expertise. <em>IEEE TSE</em>, 33(2), 65–86. doi:10.1109/TSE.2007.17</li>
+    <li>Welter, A. et al. (2025). From developer pairs to AI copilots: A comparative study on knowledge transfer. ASE 2025. arXiv:2506.04785</li>
+    <li>Shihab, M. I. H., Hundhausen, C. et al. (2025). The effects of GitHub Copilot on computing students' programming effectiveness, efficiency, and processes in brownfield programming tasks. arXiv:2506.10051</li>
+    <li>Becker, J., Rush, N., Barnes, B., &amp; Rein, D. (2025). Measuring the impact of early-2025 AI on experienced open-source developer productivity. METR. arXiv:2507.09089</li>
+    <li>Peng, S., Kalliamvakou, E., Cihon, P., &amp; Demirer, M. (2023). The impact of AI on developer productivity: Evidence from GitHub Copilot. arXiv:2302.06590</li>
+    <li>Ma, Q., Wu, T., &amp; Koedinger, K. (2023). Is AI the better programming partner? Human-human pair programming vs. human-AI pAIr programming. LLM@AIED. arXiv:2306.05153</li>
+    <li>Anthropic (2026). How AI assistance impacts the formation of coding skills. anthropic.com/research</li>
+    <li>Basili, V., Caldiera, G., &amp; Rombach, H. D. (1994). The Goal Question Metric approach.</li>
+  </ul>
+</section>
+
+<section>
+  <h2><span class="num">9</span>Declaración de uso de IA</h2>
+  <table>
+    <thead><tr><th>Herramienta</th><th>Para qué</th><th>Qué verificamos nosotros</th></tr></thead>
+    <tbody>
+      <tr><td>Claude Code</td><td>Leer los enunciados y la retroalimentación de la E1, proponer la estructura, generar las 24 tareas con sus pruebas, armar el backlog de origen a partir de los PR, buscar fuentes y maquetar este documento.</td><td><span class="chip pend">Completar</span> que revisamos las 24 tareas, que cada fila del backlog coincide con su PR y que leímos las fuentes citadas.</td></tr>
+    </tbody>
+  </table>
+  <p class="pequeno">Ningún dato de línea base ni de bitácora fue generado por IA: esos datos salen solo de nuestras sesiones cronometradas.</p>
+</section>
+
+<div class="pie"><span>Ana Sofía Arango Yanza · Juan José Arias Chacua</span><span>Ágiles 2026-2 · Unicauca · Punto de control v1</span></div>
+</body>
+</html>

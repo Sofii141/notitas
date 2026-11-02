@@ -12,9 +12,9 @@ Ojo: el 27 tienen la Entrega 2 y el 28 el Parcial 2. Por eso el trabajo pesado q
 | Qué | Dónde |
 |---|---|
 | Caso base: repo con 24 tareas (11 S, 11 M, 2 L; 10 difíciles ⚠️), pruebas visibles y ocultas validadas, sorteo reproducible, con git | `Repositorio/CAMEIA-lite` (https://github.com/Sofii141/CAMEIA-lite) |
-| GQM v1 con 6 métricas y el codewalk | `03 - Linea base/26102026_01_GQM_v1.md` |
-| Spec v1 del agente (borrador) | `04 - Especificacion agentes/25102026_01_Spec_Copiloto_v1.md` |
-| Bitácora y hoja de medición | `05 - Ciclos y bitacora/25102026_01_Bitacora_v1.xlsx` |
+| GQM v1 con 6 métricas y el codewalk | `03 - Linea base/Versiones anteriores/v1/26102026_01_GQM_v1.md` |
+| Spec v1 del agente (borrador) | `04 - Especificacion agentes/Versiones anteriores/v1/25102026_01_Spec_Copiloto_v1.md` |
+| Bitácora y hoja de medición | `05 - Ciclos y bitacora/Versiones anteriores/v1/25102026_01_Bitacora_v1.xlsx` |
 | Cómo miden los estudios + 5 artículos en PDF | `01 - Exposicion/Fuentes/` |
 
 ## Lo que tienen que hacer ustedes

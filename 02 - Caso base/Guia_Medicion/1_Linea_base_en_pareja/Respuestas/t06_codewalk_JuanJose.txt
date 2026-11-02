@@ -1,0 +1,5 @@
+1. Traer las notas que se adaptan al filtro de etiquetas segun el modo solicitado
+2. Maneja el caso en que no haya etiquetas por las cuales filtar al inicio en un if para ver si esta vacia la lista de etiquetas
+3. es la manera mas adecuada de solucionar la tarea con los conocimientos que poseemos de python a pesar de no ser tal vez la mas optima
+4. en donde se normalizan las listas de string a minuscula para que no afecte la comparación
+5. Añadiria un elif en el if principal y haria otro bucle invirtiendo la logica y descartar las notas que tengan algunas de las etiquetas del filtro.

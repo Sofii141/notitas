@@ -32,3 +32,6 @@ Ana Sofía Arango Yanza · Juan José Arias Chacua · Prof. César Pardo
 `DDMMAAAA_NN_Nombre_vX.ext` → p. ej. `30102026_01_Spec_Copiloto_v1.md`.
 Aplica a los artefactos que evolucionan (spec, GQM, bitácora, propuestas, plan, fuentes). Los documentos estables y las plantillas (`README`, `GUIA_EntregaFinal`, `CHANGELOG`, `Plantilla_*`, `Registro_Uso_IA`) no llevan fecha.
 Nunca sobrescribir una versión entregada o revisada: se copia con fecha nueva y se anota en [CHANGELOG.md](CHANGELOG.md).
+
+## Cómo encontrar los documentos
+En cada carpeta, el archivo vigente queda a la vista. Las versiones anteriores están en `Versiones anteriores/v1`, `v2`, etc.

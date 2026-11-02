@@ -1,6 +1,6 @@
 # Cómo medir y cómo presentar los resultados — v3 (31/10/2026, caso Notitas)
 
-Reemplaza a `29102026_02_Como_Medir_y_Presentar_v2.md` (se conserva). **Qué cambió:** el caso base es ahora **Notitas** y las métricas se redujeron a las **5 directas del GQM v3**: sin esfuerzo, sin ayuda percibida y sin tamaño de efecto. Las fuentes con DOI están en `29102026_01_Fuentes_v2.md`.
+Reemplaza a `Versiones anteriores/v2/29102026_02_Como_Medir_y_Presentar_v2.md` (se conserva). **Qué cambió:** el caso base es ahora **Notitas** y las métricas se redujeron a las **5 directas del GQM v3**: sin esfuerzo, sin ayuda percibida y sin tamaño de efecto. Las fuentes con DOI están en `29102026_01_Fuentes_v2.md`.
 
 ---
 

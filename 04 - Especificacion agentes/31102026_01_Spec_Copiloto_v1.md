@@ -1,6 +1,6 @@
 # Especificación del agente Copiloto — v1 (caso Notitas, 31/10/2026)
 
-> Es la misma v1 del 29/10 (`29102026_01_Spec_Copiloto_v1.md`, que se conserva), ajustada al caso base **Notitas**. El agente todavía no se ha usado: por eso sigue siendo v1. Desde aquí, cada cambio es una versión nueva (v2, v3…) en un archivo nuevo, con el dato de la bitácora que la motivó.
+> Es la misma v1 del 29/10 (`Versiones anteriores/v1/29102026_01_Spec_Copiloto_v1.md`, que se conserva), ajustada al caso base **Notitas**. El agente todavía no se ha usado: por eso sigue siendo v1. Desde aquí, cada cambio es una versión nueva (v2, v3…) en un archivo nuevo, con el dato de la bitácora que la motivó.
 
 **De dónde sale esta especificación.** Los **8 campos** son los que exige el enunciado del proyecto (Paso 3: rol y alcance, entradas, salidas, herramientas y permisos, prohibiciones, criterio de validación, punto de control humano y versión). El **contenido** de cada campo se apoya en la literatura que estudiamos para el tema y en la guía de riesgos de IA generativa que vimos en el curso; la columna *Fundamento* dice en qué. Las referencias completas, con DOI, están en `01 - Exposicion/Fuentes/29102026_01_Fuentes_v2.md`.
 

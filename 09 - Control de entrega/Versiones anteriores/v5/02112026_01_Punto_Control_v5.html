@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Punto de control · Proyecto final</title>
+<link rel="stylesheet" href="../../../_Estilo/estilo.css">
+<style>
+  a.ref { font: 800 7.5pt var(--f-texto); color: var(--tea-rose); text-decoration: none; white-space: nowrap; }
+  dl.glosario { display: grid; grid-template-columns: 38mm 1fr; gap: 1.5mm 4mm; margin: 2mm 0 5mm; font-size: 9.5pt; }
+  dl.glosario dt { font-weight: 800; color: var(--chocolate); }
+  dl.glosario dd { margin: 0; }
+</style>
+</head>
+<body>
+
+<div class="portada">
+  <div class="franjas"><span style="background:#BCC86F"></span><span style="background:#F5CB99"></span><span style="background:#FFABA9"></span><span style="background:#F68578"></span><span style="background:#B9794A"></span></div>
+  <div class="etiqueta">Taller de Metodologías Ágiles · 2026-2 · Tercer corte</div>
+  <h1>Punto de control del proyecto final</h1>
+  <div class="sub">Programar en pareja con una persona o con un agente de IA: qué se gana, qué se pierde y qué aprendizaje desaparece</div>
+  <dl class="meta">
+    <dt>Tema de exposición</dt><dd>3 · Pair programming</dd>
+    <dt>Práctica que asiste el agente</dt><dd>Desarrollo de una tarea con el agente como copiloto</dd>
+    <dt>Caso base</dt><dd>Notitas: un tablero kanban de notas adhesivas</dd>
+    <dt>Pareja</dt><dd>Ana Sofía Arango Yanza · Juan José Arias Chacua</dd>
+    <dt>Profesor</dt><dd>César Jesús Pardo Calvache, Ph.D.</dd>
+    <dt>Versión</dt><dd>v5 · noviembre de 2026</dd>
+    <dt>Repositorio</dt><dd><a href="https://github.com/Sofii141/notitas">github.com/Sofii141/notitas</a> · las referencias [R1]…[R15] de este documento están enlazadas en la sección 11</dd>
+  </dl>
+</div>
+
+<section>
+  <h2><span class="num">1</span>El proyecto en una página</h2>
+  <p class="lead">Queremos saber qué cambia cuando una persona programa con un agente de IA como compañero, en lugar de programar en pareja con otra persona.</p>
+  <ol class="pasos">
+    <li><strong>La práctica.</strong> En el <em>pair programming</em> dos personas programan juntas: una escribe el código (el <em>conductor</em>) y la otra revisa y guía (el <em>navegante</em>). Comparamos eso con una persona que programa sola con un agente de IA haciendo de navegante.</li>
+    <li><strong>El material (caso base).</strong> Construimos <strong>Notitas</strong>, un tablero kanban de notas adhesivas con un tablero visual ya terminado y <strong>24 reglas de backend sin programar</strong>. Cada regla es una tarea pequeña, con sus criterios de aceptación y sus pruebas automáticas <a class="ref" href="https://github.com/Sofii141/notitas/tree/main">[R1]</a> <a class="ref" href="https://github.com/Sofii141/notitas/blob/main/TAREAS.md">[R2]</a>.</li>
+    <li><strong>Antes del agente (línea base).</strong> Programamos 10 de esas tareas en pareja, sin IA, cronometrando y grabando.</li>
+    <li><strong>Con el agente (dos ciclos de una semana).</strong> Programamos otras tareas, cada uno solo con el agente, y registramos cada uso del agente en una bitácora.</li>
+    <li><strong>La comparación.</strong> Medimos en las dos condiciones lo mismo: tiempo, errores que se escapan, retrabajo y cuánto entendemos del código que quedó (sección 4).</li>
+  </ol>
+  <div class="tarjetas">
+    <div class="tarjeta verde"><div class="t">Caso base</div><div class="v">24 tareas</div>10 de ellas difíciles a propósito</div>
+    <div class="tarjeta miel"><div class="t">Agente</div><div class="v">1</div>OpenCode con DeepSeek V4.1 Flash (sección 8)</div>
+    <div class="tarjeta rosa"><div class="t">Línea base</div><div class="v">10 tareas</div>en pareja y sin IA (sección 6)</div>
+  </div>
+  <h3>Términos que usamos en el documento</h3>
+  <dl class="glosario">
+    <dt>Línea base</dt><dd>La medición de cómo trabajamos hoy, en pareja y sin IA, antes de usar el agente.</dd>
+    <dt>Ciclo</dt><dd>Una semana de trabajo real con el agente, sobre al menos 5 tareas.</dd>
+    <dt>Tamaño S, M, L</dt><dd>Tarea pequeña (unos 15–25 min), mediana (25–45 min) o grande (45–70 min), según su complejidad (sección 3).</dd>
+    <dt>Pruebas visibles</dt><dd>Pruebas automáticas que se ven mientras se programa y dicen cuándo la tarea está terminada.</dd>
+    <dt>Pruebas ocultas</dt><dd>Pruebas que nadie ve hasta terminar. Cada una que falla es un error que se escapó.</dd>
+    <dt>Codewalk</dt><dd>Cinco preguntas sobre el código, respondidas sin mirarlo, para medir cuánto se entendió (0 a 5).</dd>
+    <dt>Bitácora</dt><dd>La hoja de cálculo donde se anota cada uso del agente y si se aceptó, se corrigió o se rechazó, y por qué.</dd>
+  </dl>
+</section>
+
+<section class="nueva">
+  <h2><span class="num">2</span>Qué esperamos ver</h2>
+  <p>La literatura revisada por pares sobre programar con IA apunta a tres cosas, y cada una corresponde a una de nuestras mediciones:</p>
+  <table>
+    <thead><tr><th style="width:30%">Qué esperamos</th><th>Por qué lo esperamos</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Que el tiempo baje en las tareas sencillas, pero no en las difíciles</strong></td><td>Con IA los estudiantes terminaron un 35 % más rápido (Shihab et al., 2025), pero el efecto de programar en pareja depende de la complejidad de la tarea (Hannay et al., 2009; Arisholm et al., 2007).</td></tr>
+      <tr><td><strong>Que se escapen más errores y haya más retrabajo</strong></td><td>Las sugerencias de la IA se aceptan con menos escrutinio que las de un compañero (Welter et al., 2025), y con IA se escribe código menos seguro creyendo que es más seguro (Perry et al., 2023).</td></tr>
+      <tr><td><strong>Que se entienda menos el código, sobre todo el compañero que no participó</strong></td><td>En pareja se transfiere conocimiento (Plonka et al., 2015); con IA, los estudiantes no entendían por qué funcionaban las sugerencias (Shihab et al., 2025). Aunque otro estudio no encontró pérdida de aprendizaje (Kazemitabaar et al., 2023).</td></tr>
+    </tbody>
+  </table>
+  <p>Son expectativas, no conclusiones: si los datos dicen otra cosa, lo reportaremos así. Con unas 10 tareas por condición no podremos afirmar causas, solo tendencias (sección 7).</p>
+</section>
+
+<section class="nueva">
+  <h2><span class="num">3</span>El caso base: Notitas</h2>
+  <p class="lead">Notitas es un tablero de notas adhesivas con tres columnas (<em>Por hacer · En curso · Hecho</em>). El tablero visual ya está hecho; lo que falta son las reglas que lo hacen funcionar.</p>
+  <div class="dos-col">
+    <div>
+      <h3>Cómo está hecho</h3>
+      <p>El repositorio tiene dos partes <a class="ref" href="https://github.com/Sofii141/notitas/tree/main">[R1]</a>. El <strong>frontend</strong> <a class="ref" href="https://github.com/Sofii141/notitas/tree/main/frontend">[R7]</a> es el tablero, con arrastrar y soltar y animaciones; ya está terminado y <strong>no se mide</strong>. El <strong>backend</strong> <a class="ref" href="https://github.com/Sofii141/notitas/tree/main/backend/notitas">[R3]</a> tiene 24 funciones vacías: cada tarea consiste en escribir la lógica de una de ellas. En cuanto una función funciona, el tablero empieza a usarla.</p>
+      <p>Así, el cronómetro mide solo el desarrollo de la tarea, no la configuración, y todas las tareas se pueden comparar entre sí. Ninguno de los dos había programado antes estas reglas.</p>
+    </div>
+    <div>
+      <h3>Qué lo hace representativo y difícil</h3>
+      <ul>
+        <li>Son las reglas típicas de un tablero real: validar datos, mover notas entre columnas, buscar y filtrar, fechas de vencimiento, deshacer, exportar.</li>
+        <li><strong>10 de las 24 son difíciles a propósito</strong>: concurrencia, zonas horarias, texto con tildes y otros caracteres, inyección de código en el contenido, copias que comparten datos sin querer y reglas que parecen obvias pero no lo son.</li>
+        <li>Cada tarea tiene pruebas visibles y ocultas <a class="ref" href="https://github.com/Sofii141/notitas/tree/main/backend/tests">[R4]</a>: <strong>41 visibles</strong> y <strong>72 ocultas</strong>. Comprobamos que las 113 fallan con las funciones vacías y pasan con soluciones de referencia, que no están en el repositorio.</li>
+      </ul>
+    </div>
+  </div>
+  <h3>Tamaño de las tareas y en qué se basa</h3>
+  <table>
+    <thead><tr><th>Tamaño</th><th>Cuántas</th><th>Tiempo estimado</th><th>Criterio</th></tr></thead>
+    <tbody>
+      <tr><td><span class="chip s">pequeña (S)</span></td><td class="c">10</td><td>15–25 min</td><td>Una función que valida o transforma un dato, con reglas independientes entre sí</td></tr>
+      <tr><td><span class="chip m">mediana (M)</span></td><td class="c">12</td><td>25–45 min</td><td>Varias reglas que interactúan, fechas o zonas horarias, o una clase que guarda estado</td></tr>
+      <tr><td><span class="chip l">grande (L)</span></td><td class="c">2</td><td>45–70 min</td><td>Concurrencia o un algoritmo de varios pasos con casos de conflicto</td></tr>
+    </tbody>
+  </table>
+  <p class="pequeno">Es una estimación por juicio de quien diseñó las tareas, revisada por la pareja antes de congelar el caso. No es un dato del estudio: solo sirve para que cada condición reciba una mezcla parecida de tareas. El número de criterios de aceptación no distingue los tamaños (todas tienen entre 3 y 5), por eso no lo usamos. La duración real la da el cronómetro, y si un tamaño no se cumple, lo reportaremos.</p>
+  <h3>Las 24 tareas <a class="ref" href="https://github.com/Sofii141/notitas/blob/main/TAREAS.md">[R2]</a></h3>
+  <table>
+    <thead><tr><th>ID</th><th>Tarea</th><th>Tamaño</th><th>Por qué es difícil</th></tr></thead>
+    <tbody><tr><td><code>t01</code></td><td>Validar el título de una nota</td><td class="c"><span class="chip s">pequeña</span></td><td></td></tr><tr><td><code>t02</code></td><td>Color de la nota</td><td class="c"><span class="chip s">pequeña</span></td><td></td></tr><tr><td><code>t03</code></td><td>Transiciones entre columnas</td><td class="c"><span class="chip m">mediana</span></td><td><span class='chip dif'>Difícil</span> Muchas combinaciones y una regla que parece obvia pero no lo es (no se salta "En curso")</td></tr><tr><td><code>t04</code></td><td>Límite WIP de "En curso"</td><td class="c"><span class="chip m">mediana</span></td><td><span class='chip dif'>Difícil</span> Reordenar dentro de la misma columna no debe contar como una nota más</td></tr><tr><td><code>t05</code></td><td>Insertar en una posición</td><td class="c"><span class="chip m">mediana</span></td><td></td></tr><tr><td><code>t06</code></td><td>Filtrar por etiquetas</td><td class="c"><span class="chip s">pequeña</span></td><td></td></tr><tr><td><code>t07</code></td><td>Buscar sin tildes ni mayúsculas</td><td class="c"><span class="chip m">mediana</span></td><td><span class='chip dif'>Difícil</span> Unicode: tildes, ñ y letras como ß que no se resuelven con lower()</td></tr><tr><td><code>t08</code></td><td>Estado de vencimiento</td><td class="c"><span class="chip m">mediana</span></td><td><span class='chip dif'>Difícil</span> Zona horaria: a las 10 p. m. de Bogotá ya es el día siguiente en UTC</td></tr><tr><td><code>t09</code></td><td>Normalizar etiquetas</td><td class="c"><span class="chip s">pequeña</span></td><td></td></tr><tr><td><code>t10</code></td><td>Qué notas se archivan</td><td class="c"><span class="chip s">pequeña</span></td><td></td></tr><tr><td><code>t11</code></td><td>Deshacer movimientos</td><td class="c"><span class="chip m">mediana</span></td><td></td></tr><tr><td><code>t12</code></td><td>Dos personas mueven la misma nota</td><td class="c"><span class="chip l">grande</span></td><td><span class='chip dif'>Difícil</span> Concurrencia: dos llamadas al mismo tiempo con la misma versión; solo una puede ganar</td></tr><tr><td><code>t13</code></td><td>Exportar e importar el tablero</td><td class="c"><span class="chip m">mediana</span></td><td></td></tr><tr><td><code>t14</code></td><td>Contenido seguro (sin inyectar HTML)</td><td class="c"><span class="chip m">mediana</span></td><td><span class='chip dif'>Difícil</span> Trampa de seguridad: hay que escapar antes de dar formato, no después</td></tr><tr><td><code>t15</code></td><td>Resumen por columna</td><td class="c"><span class="chip s">pequeña</span></td><td></td></tr><tr><td><code>t16</code></td><td>Ordenar por prioridad y fecha</td><td class="c"><span class="chip s">pequeña</span></td><td></td></tr><tr><td><code>t17</code></td><td>Paginar el listado</td><td class="c"><span class="chip s">pequeña</span></td><td></td></tr><tr><td><code>t18</code></td><td>Iniciales del responsable</td><td class="c"><span class="chip s">pequeña</span></td><td></td></tr><tr><td><code>t19</code></td><td>Progreso de la checklist</td><td class="c"><span class="chip m">mediana</span></td><td></td></tr><tr><td><code>t20</code></td><td>Duplicar una nota</td><td class="c"><span class="chip s">pequeña</span></td><td><span class='chip dif'>Difícil</span> Trampa de mutabilidad: una copia superficial comparte las listas con la original</td></tr><tr><td><code>t21</code></td><td>Fusionar cambios de dos dispositivos</td><td class="c"><span class="chip l">grande</span></td><td><span class='chip dif'>Difícil</span> Fusión a tres bandas, empates y fechas con zonas horarias distintas</td></tr><tr><td><code>t22</code></td><td>Notas bloqueadas</td><td class="c"><span class="chip m">mediana</span></td><td></td></tr><tr><td><code>t23</code></td><td>Tiempo de ciclo</td><td class="c"><span class="chip m">mediana</span></td><td><span class='chip dif'>Difícil</span> La nota puede ir y volver entre columnas, y los eventos pueden llegar desordenados</td></tr><tr><td><code>t24</code></td><td>Límite de notas por minuto</td><td class="c"><span class="chip m">mediana</span></td><td><span class='chip dif'>Difícil</span> Ventana deslizante: los bordes y los intentos rechazados</td></tr></tbody>
+  </table>
+  <div class="caja nota"><h4>Limitaciones que declaramos</h4>
+    <ul>
+      <li>Las pruebas se derivaron de los criterios de aceptación y de casos borde, y se validaron contra funciones vacías y soluciones de referencia; no se midió su cobertura.</li>
+      <li>En la línea base, cada tarea la escribe una sola persona: no hay cambio de rol dentro de la tarea.</li>
+      <li><strong>Es un caso diseñado para el experimento</strong>, no el backlog de un proyecto en curso: los resultados no se generalizan a un sistema real grande.</li>
+      <li>Las tareas, las pruebas y el tablero se generaron con Claude Code. Para que el caso no quede "a la medida" del agente: el agente es <strong>otro modelo</strong> (DeepSeek), nadie ve las pruebas ocultas antes de terminar, el agente no tiene acceso a ellas y se incorporan 3 casos de otra pareja.</li>
+      <li>Las tareas son reglas aisladas: no medimos el costo de integrarlas con un sistema más grande.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="nueva">
+  <h2><span class="num">4</span>Qué medimos (GQM)</h2>
+  <p class="lead"><strong>Objetivo:</strong> analizar el desarrollo de una tarea con un agente copiloto, frente al pair programming humano, para saber si cambian el tiempo, los errores que se escapan, el retrabajo y la comprensión del código.</p>
+  <p>Son cinco métricas <strong>directas</strong> <a class="ref" href="https://github.com/Sofii141/notitas/blob/documentacion/03%20-%20Linea%20base/31102026_01_GQM_v3.md">[R10]</a>: cada una es un número que se anota tal cual, sin fórmulas. Las tres primeras son las que el enunciado sugiere para el tema 3 (tiempo, retrabajo y errores detectados a tiempo); la cuarta responde la pregunta del tema (qué aprendizaje desaparece) y la quinta muestra si la sensación de velocidad engaña.</p>
+  <table>
+    <thead><tr><th>Pregunta</th><th>Métrica</th><th>Cómo se toma</th><th>Qué NO representa</th></tr></thead>
+    <tbody>
+      <tr><td>¿Se termina más rápido?</td><td><strong>M1</strong> Minutos hasta que pasan las pruebas visibles</td><td>Hora de inicio y de fin, menos pausas</td><td>La productividad en general</td></tr>
+      <tr><td>¿Se detectan los errores a tiempo?</td><td><strong>M2</strong> Pruebas ocultas que fallan al decir "terminado"</td><td>Se corren las ocultas de esa tarea</td><td>Defectos de diseño o de legibilidad</td></tr>
+      <tr><td>¿Hay retrabajo?</td><td><strong>M3</strong> Minutos de corrección después de "terminado"</td><td>Cronómetro aparte (0 si no hubo)</td><td>El tamaño de la corrección</td></tr>
+      <tr><td>¿Qué aprendizaje se pierde?</td><td><strong>M4</strong> Codewalk de 0 a 5, al autor y al compañero</td><td>5 preguntas sin mirar el código <a class="ref" href="https://github.com/Sofii141/notitas/blob/documentacion/03%20-%20Linea%20base/31102026_02_Codewalk_Preguntas_v1.md">[R11]</a></td><td>La habilidad general de la persona</td></tr>
+      <tr><td>¿Nos engaña la sensación de velocidad?</td><td><strong>M5</strong> Pronóstico en minutos, antes de empezar</td><td>Se compara con M1</td><td>El resultado real</td></tr>
+    </tbody>
+  </table>
+  <h3>Las 5 preguntas del codewalk</h3>
+  <p>Son las mismas para todas las tareas, porque preguntan por la comprensión y no por una tarea en particular. Solo cambian la X y la Y, que están fijadas por tarea para que sean iguales en las dos condiciones <a class="ref" href="https://github.com/Sofii141/notitas/blob/documentacion/03%20-%20Linea%20base/31102026_02_Codewalk_Preguntas_v1.md">[R11]</a>.</p>
+  <ol class="pasos">
+    <li>¿Qué hace la función, en una frase?</li>
+    <li>¿Qué caso borde maneja y dónde?</li>
+    <li>¿Por qué se eligió esta forma y no otra?</li>
+    <li>Si mañana falla con la entrada X, ¿dónde mirarías primero?</li>
+    <li>¿Qué cambiarías si el requisito cambia en Y?</li>
+  </ol>
+  <p class="pequeno">En los ciclos, la bitácora registra además cada uso del agente con su decisión (aceptar, corregir o rechazar), su razón y su responsable <a class="ref" href="https://github.com/Sofii141/notitas/blob/documentacion/05%20-%20Ciclos%20y%20bitacora/31102026_01_Bitacora_v3.xlsx">[R9]</a>.</p>
+</section>
+
+<section class="nueva">
+  <h2><span class="num">5</span>Cómo medimos</h2>
+  <table>
+    <thead><tr><th></th><th>Línea base</th><th>Ciclos 1 y 2</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Quién trabaja</strong></td><td>Los dos en llamada, sin IA: en cada tarea uno escribe en su computador y el otro guía; el conductor se alterna por tarea, para repartirlas mitad y mitad</td><td>Una persona sola con el agente; el compañero no participa en esa tarea</td></tr>
+      <tr><td><strong>Cuántas tareas</strong></td><td>10: 5 pequeñas, 4 medianas y 1 grande</td><td>12 (6 por ciclo): 5 pequeñas, 6 medianas y 1 grande; cada uno conduce 6. En el ciclo 2 se suman los 3 casos de otra pareja</td></tr>
+      <tr><td><strong>Evidencia</strong></td><td colspan="2">Grabación de pantalla, un commit al empezar, al terminar y al corregir cada tarea, la hoja de medición y la hoja de sesiones <a class="ref" href="https://github.com/Sofii141/notitas/blob/documentacion/05%20-%20Ciclos%20y%20bitacora/31102026_01_Bitacora_v3.xlsx">[R9]</a>; en los ciclos, además, una fila de bitácora por cada uso del agente</td></tr>
+    </tbody>
+  </table>
+  <h3>Pasos por tarea</h3>
+  <ol class="pasos">
+    <li>Anotar cuántos minutos creemos que tomará (M5).</li>
+    <li>Abrir el enunciado e iniciar el cronómetro.</li>
+    <li>Programar con ayuda solo de las pruebas visibles.</li>
+    <li>Cuando pasan, declarar "terminado" y parar el cronómetro (M1).</li>
+    <li>Correr las pruebas ocultas y anotar cuántas fallan (M2). Después corregimos siempre hasta que pasen, sin límite de tiempo y con cronómetro aparte: ese tiempo es retrabajo (M3).</li>
+    <li>Codewalk al autor y al compañero (M4).</li>
+    <li>Llenar la hoja de medición en ese momento, no al final del día.</li>
+  </ol>
+  <div class="caja ok"><h4>Controles para que la comparación sea justa</h4>
+    <ul>
+      <li><strong>Sorteo</strong> <a class="ref" href="https://github.com/Sofii141/notitas/blob/main/sorteo.py">[R5]</a> <a class="ref" href="https://github.com/Sofii141/notitas/tree/main/registro">[R6]</a>: un programa reparte las tareas entre la línea base y los ciclos, de modo que cada condición reciba una mezcla parecida de tamaños y de tareas difíciles; también sortea el orden. Se puede repetir con la misma semilla y da lo mismo.</li>
+      <li><strong>Mismas ayudas en todas las tareas:</strong> documentación de Python y búsquedas puntuales en la web; ninguna otra IA aparte del agente de los ciclos.</li>
+      <li><strong>Caso congelado</strong> antes de medir: desde ese momento no se cambian las tareas ni las pruebas.</li>
+      <li>Si alguien ve las pruebas ocultas antes de tiempo, esa tarea se descarta y se usa una de repuesto.</li>
+      <li>El agente trabaja en una copia del proyecto <strong>sin</strong> las pruebas ocultas y con permisos limitados <a class="ref" href="https://github.com/Sofii141/notitas/tree/main/agente">[R8]</a>.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="nueva">
+  <h2><span class="num">6</span>Línea base</h2>
+  <p class="pequeno">Lo que sigue lo genera un script a partir de la bitácora <a class="ref" href="https://github.com/Sofii141/notitas/blob/documentacion/05%20-%20Ciclos%20y%20bitacora/31102026_01_Bitacora_v3.xlsx">[R9]</a> <a class="ref" href="https://github.com/Sofii141/notitas/blob/documentacion/07%20-%20Analisis/Scripts/resumen_medicion.py">[R15]</a>, con lo medido en las sesiones cronometradas y grabadas. No se escribe a mano.</p>
+  <!-- LB:INICIO --><div class="caja alerta"><h4>Pendiente de medir</h4><p>Esta sección la llena <code>07 - Analisis/Scripts/resumen_medicion.py</code> a partir de la bitácora, después de cada sesión.</p></div><!-- LB:FIN -->
+</section>
+
+<section class="nueva">
+  <h2><span class="num">7</span>Cómo presentaremos los resultados</h2>
+  <p class="lead">Con pocas tareas por condición, mostramos todos los datos y decimos qué no demuestran <a class="ref" href="https://github.com/Sofii141/notitas/blob/documentacion/01%20-%20Exposicion/Fuentes/31102026_01_Como_Medir_y_Presentar_v3.md">[R14]</a>.</p>
+  <table>
+    <thead><tr><th>Qué reportamos</th><th>Ejemplo</th><th>Fuente</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Mediana [mínimo–máximo]</strong> de minutos y del codewalk, por tamaño</td><td>"Tareas medianas: 32 min [21–48] en pareja y 25 min [18–60] con el agente"</td><td>Kitchenham et al., 2017</td></tr>
+      <tr><td><strong>Conteos</strong> de errores escapados y de retrabajo</td><td>"Se escaparon 4 de 30 errores; 3 de 10 tareas tuvieron retrabajo"</td><td>Arisholm et al., 2007</td></tr>
+      <tr><td><strong>Pronóstico frente a tiempo real</strong></td><td>"En 7 de 12 tareas tardamos más de lo que creíamos"</td><td>Perry et al., 2023</td></tr>
+      <tr><td><strong>Decisiones de la bitácora</strong></td><td>"De 48 usos: 20 aceptados, 21 corregidos y 7 rechazados"</td><td>Enunciado del curso</td></tr>
+      <tr><td><strong>Sin afirmar causas</strong>, y en cada cifra, qué no demuestra</td><td>"No prueba que el agente cause la diferencia: son pocas tareas y distintas en cada condición"</td><td>Kitchenham et al., 2002; Wohlin et al., 2012</td></tr>
+      <tr><td><strong>Una cifra recalculada por la otra persona</strong></td><td>El script, la hoja de cálculo y un cálculo a mano deben coincidir</td><td>—</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="nueva">
+  <h2><span class="num">8</span>Especificación del agente · v1 <a class="ref" href="https://github.com/Sofii141/notitas/blob/documentacion/04%20-%20Especificacion%20agentes/31102026_01_Spec_Copiloto_v1.md">[R12]</a></h2>
+  <p class="pequeno">Los 8 campos son los que pide el enunciado del proyecto. La columna <em>Fundamento</em> dice en qué investigación o norma se apoya cada decisión.</p>
+  <table>
+    <thead><tr><th style="width:17%">Campo</th><th style="width:50%">Contenido</th><th>Fundamento</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Rol y alcance</strong></td><td>Hace de navegante en el desarrollo de <em>una</em> tarea de Notitas: propone un enfoque, el código y los casos borde que conviene probar. La persona escribe y decide.</td><td>Roles de conductor y navegante (Williams et al., 2000; Bryant et al., 2008)</td></tr>
+      <tr><td><strong>Entradas</strong></td><td>Solo el enunciado de la tarea, su archivo del backend y sus pruebas visibles.</td><td>Compartir solo lo necesario (NIST AI 600-1, 2024)</td></tr>
+      <tr><td><strong>Salidas</strong></td><td>En formato fijo: un plan de 3 a 6 pasos, el cambio propuesto en el código, los supuestos que hizo y los casos borde que cree que faltan.</td><td>El enunciado: sin formato definido, una salida no se puede evaluar</td></tr>
+      <tr><td><strong>Herramientas y permisos</strong></td><td><strong>OpenCode</strong> con el modelo gratuito <strong>DeepSeek V4.1 Flash</strong>, el mismo para los dos todo el ciclo (el modelo y la versión se anotan). Trabaja en una copia del proyecto sin las pruebas ocultas; tiene prohibido leerlas, cambiar las pruebas, guardar o subir cambios al repositorio, salir de la carpeta y buscar en internet, y para todo lo demás pide permiso <a class="ref" href="https://github.com/Sofii141/notitas/tree/main/agente">[R8]</a>.</td><td>Mínimo privilegio (NIST AI 600-1, 2024). No es de la familia Claude, con la que se construyó el caso</td></tr>
+      <tr><td><strong>Prohibiciones</strong></td><td>No guardar ni subir cambios al repositorio. No modificar pruebas ni otros archivos. No leer las pruebas ocultas. No desactivar ni saltarse pruebas. No inventar requisitos. No manejar credenciales ni datos personales.</td><td>Validez de la medición (Ko et al., 2015); código inseguro con IA (Perry et al., 2023)</td></tr>
+      <tr><td><strong>Criterio de validación</strong></td><td>Se acepta solo si pasan las pruebas visibles, cumple cada criterio de aceptación y quien conduce puede explicar cada línea sin mirar al agente.</td><td>Menos escrutinio con IA (Welter et al., 2025); no entender las sugerencias (Shihab et al., 2025)</td></tr>
+      <tr><td><strong>Punto de control humano</strong></td><td>Antes de guardar cada cambio, quien conduce decide aceptar, corregir o rechazar y lo anota en la bitácora con su razón. Las pruebas ocultas las corre la persona. Después viene el codewalk.</td><td>Human-in-the-loop (NIST AI 600-1, 2024; sesión 3 del curso)</td></tr>
+      <tr><td><strong>Versión</strong></td><td>v1. Cada cambio da una versión nueva, con el dato de la bitácora que la motivó.</td><td>El enunciado</td></tr>
+    </tbody>
+  </table>
+  <p class="pequeno">Empezamos con un solo agente. Solo agregaremos un segundo ("revisor") en el ciclo 2 si la bitácora del ciclo 1 muestra un problema que el primero no resuelve.</p>
+</section>
+
+<section>
+  <h2><span class="num">9</span>Calendario</h2>
+  <div class="tiempo">
+    <div class="t1"><b>Caso base</b>Congelado y sorteado</div>
+    <div class="t2"><b>Línea base</b>10 tareas en pareja, sin IA</div>
+    <div class="t3"><b>Ciclo 1</b>Con el agente, bitácora y spec v2</div>
+    <div class="t4"><b>Ciclo 2</b>3 casos de otra pareja, 3 fallos y video</div>
+    <div class="t5"><b>16–18 nov</b>Reporte, diapositivas y exposición</div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">10</span>Fuentes</h2>
+  <p class="pequeno">Todas revisadas por pares, salvo la norma de NIST. Los DOI se verificaron en Crossref y OpenAlex. La lista completa, con la base de datos de cada una, está en <a class="ref" href="https://github.com/Sofii141/notitas/blob/documentacion/01%20-%20Exposicion/Fuentes/29102026_01_Fuentes_v2.md">[R13]</a>.</p>
+  <ul class="pequeno" style="color:var(--ink)">
+    <li>Arisholm, E., Gallis, H., Dybå, T., &amp; Sjøberg, D. I. K. (2007). Evaluating pair programming with respect to system complexity and programmer expertise. <em>IEEE Transactions on Software Engineering, 33</em>(2), 65–86. doi:10.1109/TSE.2007.17</li>
+    <li>Basili, V., Caldiera, G., &amp; Rombach, H. D. (1994). The Goal Question Metric approach. En <em>Encyclopedia of Software Engineering</em>. Wiley.</li>
+    <li>Bryant, S., Romero, P., &amp; du Boulay, B. (2008). Pair programming and the mysterious role of the navigator. <em>International Journal of Human-Computer Studies, 66</em>(7), 519–529. doi:10.1016/j.ijhcs.2007.03.005</li>
+    <li>Fan, G., Liu, D., Zhang, R., &amp; Pan, L. (2025). The impact of AI-assisted pair programming on student motivation, programming anxiety, collaborative learning, and programming performance. <em>International Journal of STEM Education, 12</em>, 16. doi:10.1186/s40594-025-00537-3</li>
+    <li>Hannay, J. E., Dybå, T., Arisholm, E., &amp; Sjøberg, D. I. K. (2009). The effectiveness of pair programming: A meta-analysis. <em>Information and Software Technology, 51</em>(7), 1110–1122. doi:10.1016/j.infsof.2009.02.001</li>
+    <li>Kazemitabaar, M., Chow, J., Ma, C. K. T., Ericson, B. J., Weintrop, D., &amp; Grossman, T. (2023). Studying the effect of AI code generators on supporting novice learners in introductory programming. <em>CHI 2023</em>, 1–23. doi:10.1145/3544548.3580919</li>
+    <li>Kitchenham, B. et al. (2002). Preliminary guidelines for empirical research in software engineering. <em>IEEE TSE, 28</em>(8), 721–734. doi:10.1109/TSE.2002.1027796</li>
+    <li>Kitchenham, B., Madeyski, L., Budgen, D., Keung, J., Brereton, P., Charters, S., Gibbs, S., &amp; Pohthong, A. (2017). Robust statistical methods for empirical software engineering. <em>Empirical Software Engineering, 22</em>(2), 579–630. doi:10.1007/s10664-016-9437-5</li>
+    <li>Ko, A. J., LaToza, T. D., &amp; Burnett, M. M. (2015). A practical guide to controlled experiments of software engineering tools with human participants. <em>Empirical Software Engineering, 20</em>(1), 110–141. doi:10.1007/s10664-013-9279-3</li>
+    <li>Lee, H.-P. et al. (2025). The impact of generative AI on critical thinking. <em>CHI 2025</em>, 1–22. doi:10.1145/3706598.3713778</li>
+    <li>Moradi Dakhel, A. et al. (2023). GitHub Copilot AI pair programmer: Asset or liability? <em>Journal of Systems and Software, 203</em>, 111734. doi:10.1016/j.jss.2023.111734</li>
+    <li>NIST (2024). <em>Artificial Intelligence Risk Management Framework: Generative Artificial Intelligence Profile</em> (NIST AI 600-1). doi:10.6028/NIST.AI.600-1</li>
+    <li>Perry, N., Srivastava, M., Kumar, D., &amp; Boneh, D. (2023). Do users write more insecure code with AI assistants? <em>ACM CCS 2023</em>, 2785–2799. doi:10.1145/3576915.3623157</li>
+    <li>Plonka, L., Sharp, H., van der Linden, J., &amp; Dittrich, Y. (2015). Knowledge transfer in pair programming: An in-depth analysis. <em>International Journal of Human-Computer Studies, 73</em>, 66–78. doi:10.1016/j.ijhcs.2014.09.001</li>
+    <li>Shihab, M. I. H., Hundhausen, C., Tariq, A., Haque, S., Qiao, Y., &amp; Mulanda, B. (2025). The effects of GitHub Copilot on computing students' programming effectiveness, efficiency, and processes in brownfield coding tasks. <em>ICER 2025</em>, 407–420. doi:10.1145/3702652.3744219</li>
+    <li>Vargha, A., &amp; Delaney, H. D. (2000). A critique and improvement of the CL common language effect size statistics of McGraw and Wong. <em>Journal of Educational and Behavioral Statistics, 25</em>(2), 101–132. doi:10.3102/10769986025002101</li>
+    <li>Welter, A., Schneider, N., Dick, T., Weis, K., Tinnes, C., &amp; Wyrich, M. (2025). An empirical study of knowledge transfer in AI pair programming. <em>ASE 2025</em>, 166–177. doi:10.1109/ASE63991.2025.00022</li>
+    <li>Williams, L., Kessler, R. R., Cunningham, W., &amp; Jeffries, R. (2000). Strengthening the case for pair programming. <em>IEEE Software, 17</em>(4), 19–25. doi:10.1109/52.854064</li>
+    <li>Wohlin, C., Runeson, P., Höst, M., Ohlsson, M. C., Regnell, B., &amp; Wesslén, A. (2012). <em>Experimentation in software engineering</em>. Springer. doi:10.1007/978-3-642-29044-2</li>
+  </ul>
+</section>
+
+<section class="nueva">
+  <h2><span class="num">11</span>Dónde está cada cosa en el repositorio</h2>
+  <p>Las referencias <span class="ref" style="font:800 8pt var(--f-texto);color:var(--tea-rose)">[R1]</span>…<span style="font:800 8pt var(--f-texto);color:var(--tea-rose)">[R15]</span> del texto enlazan aquí. No adjuntamos archivos aparte: todo está en el repositorio, con su historial de versiones. El código está en la rama <code>main</code> y los documentos en la rama <code>documentacion</code>.</p>
+  <table>
+    <thead><tr><th style="width:8%">Ref.</th><th>Qué es</th><th>Enlace</th></tr></thead>
+    <tbody><tr><td><strong>R1</strong></td><td>Repositorio del proyecto (código del caso base)</td><td><a href="https://github.com/Sofii141/notitas/tree/main">rama main</a></td></tr><tr><td><strong>R2</strong></td><td>Enunciado y criterios de aceptación de las 24 tareas</td><td><a href="https://github.com/Sofii141/notitas/blob/main/TAREAS.md">TAREAS.md</a></td></tr><tr><td><strong>R3</strong></td><td>Código de las tareas (donde se programa la lógica)</td><td><a href="https://github.com/Sofii141/notitas/tree/main/backend/notitas">backend/notitas/</a></td></tr><tr><td><strong>R4</strong></td><td>Pruebas visibles y ocultas</td><td><a href="https://github.com/Sofii141/notitas/tree/main/backend/tests">backend/tests/</a></td></tr><tr><td><strong>R5</strong></td><td>Sorteo de las tareas</td><td><a href="https://github.com/Sofii141/notitas/blob/main/sorteo.py">sorteo.py</a></td></tr><tr><td><strong>R6</strong></td><td>Resultado del sorteo y registro de sesiones</td><td><a href="https://github.com/Sofii141/notitas/tree/main/registro">registro/</a></td></tr><tr><td><strong>R7</strong></td><td>Tablero (frontend, no se mide) y servidor</td><td><a href="https://github.com/Sofii141/notitas/tree/main/frontend">frontend/ y backend/servidor.py</a></td></tr><tr><td><strong>R8</strong></td><td>Configuración y permisos del agente</td><td><a href="https://github.com/Sofii141/notitas/tree/main/agente">agente/opencode.json</a></td></tr><tr><td><strong>R9</strong></td><td>Bitácora y hoja de medición</td><td><a href="https://github.com/Sofii141/notitas/blob/documentacion/05%20-%20Ciclos%20y%20bitacora/31102026_01_Bitacora_v3.xlsx">31102026_01_Bitacora_v3.xlsx</a></td></tr><tr><td><strong>R10</strong></td><td>GQM</td><td><a href="https://github.com/Sofii141/notitas/blob/documentacion/03%20-%20Linea%20base/31102026_01_GQM_v3.md">31102026_01_GQM_v3.md</a></td></tr><tr><td><strong>R11</strong></td><td>Preguntas del codewalk con su X y su Y por tarea</td><td><a href="https://github.com/Sofii141/notitas/blob/documentacion/03%20-%20Linea%20base/31102026_02_Codewalk_Preguntas_v1.md">31102026_02_Codewalk_Preguntas_v1.md</a></td></tr><tr><td><strong>R12</strong></td><td>Especificación del agente v1 (con fundamento e historial)</td><td><a href="https://github.com/Sofii141/notitas/blob/documentacion/04%20-%20Especificacion%20agentes/31102026_01_Spec_Copiloto_v1.md">31102026_01_Spec_Copiloto_v1.md</a></td></tr><tr><td><strong>R13</strong></td><td>Fuentes revisadas por pares, con DOI</td><td><a href="https://github.com/Sofii141/notitas/blob/documentacion/01%20-%20Exposicion/Fuentes/29102026_01_Fuentes_v2.md">29102026_01_Fuentes_v2.md</a></td></tr><tr><td><strong>R14</strong></td><td>Cómo medimos y cómo presentaremos los resultados</td><td><a href="https://github.com/Sofii141/notitas/blob/documentacion/01%20-%20Exposicion/Fuentes/31102026_01_Como_Medir_y_Presentar_v3.md">31102026_01_Como_Medir_y_Presentar_v3.md</a></td></tr><tr><td><strong>R15</strong></td><td>Script que resume la bitácora</td><td><a href="https://github.com/Sofii141/notitas/blob/documentacion/07%20-%20Analisis/Scripts/resumen_medicion.py">resumen_medicion.py</a></td></tr></tbody>
+  </table>
+</section>
+
+<section>
+  <h2><span class="num">12</span>Declaración de uso de IA</h2>
+  <table>
+    <thead><tr><th>Herramienta</th><th>Para qué</th><th>Qué verificamos nosotros</th></tr></thead>
+    <tbody>
+      <tr><td>Claude Code</td><td>Leer los enunciados; proponer la estructura; generar las 24 tareas con sus pruebas y soluciones de referencia, el backend y el tablero; buscar fuentes y verificar sus DOI en Crossref y OpenAlex; revisar la coherencia de los documentos con un segundo agente revisor; maquetar este documento.</td><td><span class="chip pend">Completar antes de entregar</span>: que revisamos las 24 tareas antes de congelar y qué fuentes leímos.</td></tr>
+    </tbody>
+  </table>
+  <p class="pequeno">Ningún dato de línea base ni de bitácora fue generado por IA: esos datos salen solo de nuestras sesiones cronometradas y grabadas.</p>
+</section>
+
+<div class="pie"><span>Ana Sofía Arango Yanza · Juan José Arias Chacua</span><span>Ágiles 2026-2 · Unicauca · Punto de control v5</span></div>
+</body>
+</html>

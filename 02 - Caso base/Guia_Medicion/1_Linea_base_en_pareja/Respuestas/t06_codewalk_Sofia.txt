@@ -1,0 +1,5 @@
+1. ayudar al usuario a filtrar una nota que tenga todas las etiquetas seleccionadas o que al menos tenga una.
+2. primero si las etiquetas están vacias se devuelven todas las notas, si un modo no esta definido lanza una excepción.
+3. pues estamos retomando lo del código de pronto se pudo haber hecho todo con menos if y for y utilizando mas funciones de python pero no nos acordábamos de otras funcionalidades con las que cuenta el lenguaje entonces decidimos hacerlo de forma sencilla la cual es con if anidados y for para recorrer los elementos de la listas.
+4. pues miro en el for donde se comparan las etiquetas buscadas con las de las notas a ver si ambas están inicialmente con la función .lower aplciada. nosotros definimos al inicio de una vez tener el arreglo de etiquetas en mayuscula pero faltaría comprobar si en lo de notas se hace bien esa conversion
+5. pues se que no es la mejor solución pero agregaría otro if para que hiciera esa búsqueda de notas sin las etiquetas mencionadas.
