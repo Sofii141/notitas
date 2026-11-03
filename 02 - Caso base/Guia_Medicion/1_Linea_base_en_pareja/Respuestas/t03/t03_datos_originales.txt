@@ -1,0 +1,31 @@
+02 de noviembre de 2026 sesión 2
+Conduce Sofia/ navega Juan Jose Arias 
+pronostico Juan Jose: 30 min Sofia : 40 min
+tiempo de inicio 6:44 pm
+tiempo de inicio 7:08 pm
+Tiempo 23:28 min
+M2 · Ocultas que fallan R/0 de 3
+M3 · Minutos corrigiendo (0 si no falló ninguna) R/0
+M4 · Codewalk autor 5
+M4 · Codewalk compañero 5
+¿Abrieron las ocultas antes?No
+Observaciones y nombre del video
+
+Juan Jose:
+1. ¿Qué hace la función, en una frase?
+Es una validación de si es posible un cambio de estado de la nota en base a su origen y destino
+2. ¿Qué caso borde maneja y dónde?
+Maneja el caso borde de que los nombres de las columnas de origen y destino, tal cual se pusieron no existan.
+3. ¿Por qué se eligió esta forma y no otra?
+No es la forma mas optimizada pero para retornar a Python se opto por algo funcional, que cumpla. 
+4. Si mañana falla con esto, ¿dónde mirarías primero? Falla: "Hecho" (con mayúscula) no lanza error
+El condicional al inicio que valida los nombres de las columnas permitidas tal cual.
+5. ¿Qué cambiarías si el requisito cambia así? Cambio: también se permite pasar de Por hacer directo a Hecho
+El if de los estado permitidos de la columna Por hacer y añadiría Hecho al If de los que devuelven true.
+
+Sofia:
+1.Validar si es permitido la navegación entre las columnas definidas
+2.en caso tal de que alguna columna no existe sea de origen o destino lanza una excepción
+3.muchos if anidados no nos parecía adecuado asi que elegimos una alternativa que nos sugirió una pagina de google al switch case que no tiene python
+4.pues tocaria al inicio en el origen y destino poner todo en minúsculas si ese criterio se define para que valga mayuscula o minúscula si no pues miraría al inicio en las columnas que me permite el código
+5. voy al caso del por hacer y permito ese movimiento en el condicional

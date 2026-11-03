@@ -20,3 +20,4 @@ El profe pide, en el reporte y en la última diapositiva: qué herramientas usar
 | 02/11/2026 | Claude Code | Transcribir ficha t06 a ficha, bitácora y respuestas; reorganizar codewalk y versiones | [P] Confirmar los datos de t06, las horas aproximadas y el orden de tareas | Ana Sofía |
 | 02/11/2026 | Claude Code | Agregar a ficha t06 y bitácora el commit, la nota de prioridad por tamaño y el alcance del video | [P] Revisar la redacción de Observaciones y confirmar la hora de fin de sesión | Ana Sofía |
 | 02/11/2026 | Claude Code | Revisar y reorganizar carpetas, guías y versiones | [P] Revisar que encuentren todo en su sitio | Ana Sofía |
+| 02/11/2026 | Claude Code | Transcribir t03; calificar codewalk de t03 y t06 con el código abierto, sin que sea ciega; correr las pruebas ocultas para comprobar M2 | [P] Confirmar pronóstico acordado de t03 y revisar los motivos; la nota oficial sigue siendo de la pareja | Ana Sofía |

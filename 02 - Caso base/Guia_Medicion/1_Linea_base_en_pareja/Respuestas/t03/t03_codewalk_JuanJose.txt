@@ -1,0 +1,5 @@
+1. Es una validación de si es posible un cambio de estado de la nota en base a su origen y destino
+2. Maneja el caso borde de que los nombres de las columnas de origen y destino, tal cual se pusieron no existan.
+3. No es la forma mas optimizada pero para retornar a Python se opto por algo funcional, que cumpla.
+4. El condicional al inicio que valida los nombres de las columnas permitidas tal cual.
+5. El if de los estado permitidos de la columna Por hacer y añadiría Hecho al If de los que devuelven true.

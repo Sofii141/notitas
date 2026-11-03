@@ -1,0 +1,5 @@
+1. Validar si es permitido la navegación entre las columnas definidas
+2. en caso tal de que alguna columna no existe sea de origen o destino lanza una excepción
+3. muchos if anidados no nos parecía adecuado asi que elegimos una alternativa que nos sugirió una pagina de google al switch case que no tiene python
+4. pues tocaria al inicio en el origen y destino poner todo en minúsculas si ese criterio se define para que valga mayuscula o minúscula si no pues miraría al inicio en las columnas que me permite el código
+5. voy al caso del por hacer y permito ese movimiento en el condicional
