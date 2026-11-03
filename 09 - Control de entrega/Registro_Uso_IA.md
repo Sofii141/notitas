@@ -21,3 +21,5 @@ El profe pide, en el reporte y en la última diapositiva: qué herramientas usar
 | 02/11/2026 | Claude Code | Agregar a ficha t06 y bitácora el commit, la nota de prioridad por tamaño y el alcance del video | [P] Revisar la redacción de Observaciones y confirmar la hora de fin de sesión | Ana Sofía |
 | 02/11/2026 | Claude Code | Revisar y reorganizar carpetas, guías y versiones | [P] Revisar que encuentren todo en su sitio | Ana Sofía |
 | 02/11/2026 | Claude Code | Transcribir t03; calificar codewalk de t03 y t06 con el código abierto, sin que sea ciega; correr las pruebas ocultas para comprobar M2 | [P] Confirmar pronóstico acordado de t03 y revisar los motivos; la nota oficial sigue siendo de la pareja | Ana Sofía |
+| 02/11/2026 | Claude Code | Aclarar el CA5 de t12 durante la tarea, con un ejemplo de uso y sin solución | [P] Declarado en la ficha; dar la misma aclaración en la condición con agente | Ana Sofía |
+| 02/11/2026 | Claude Code | Transcribir t12, comprobar M2 y calificar su codewalk sin que sea ciega | [P] Confirmar nota de la pareja, pausas y video | Ana Sofía |

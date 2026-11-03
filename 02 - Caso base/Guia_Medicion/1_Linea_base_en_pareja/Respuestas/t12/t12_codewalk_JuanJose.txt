@@ -1,0 +1,5 @@
+1. Validar multiples cambios a un solo tablero con las mismas notas aplicando conceptos de concurrencia y referencias en memoria.
+2. Maneja el caso en que varios hilos al mismo tiempo intentes modificar la misma nota y si una copia por referencia externa hace un cambio afecte a las notas del tablero
+3. Se tuvo que estudiar muy bien diferentes conceptos de mutex y copias profundas al ser estructuras de varios niveles(un diccionario de listas), para llegar a la version que funcionara para multiples usuarios a la vez.
+4. Miraria el atributo lock de la clase tablero que maneja la concurrencia de varios hilos, bloqueando los cambios hasta que termine el primer hilo.
+5. Iria a la clase conflicto y devolveria tambien una copia de la nota actual.

@@ -1,0 +1,5 @@
+1. Control de conflictos en caso tal de que dos usuarios muevan la misma nota
+2. si no existe una nota y también si alguien ya movio la nota anteriormente
+3. nos ayudamos de internet para la parte de hilos que no teníamos mucho conocimiento y para recordar la encapsulación y la parte de las copias. se que hay version mas eficiente pero asi fue como se entendio y se uso google y nuestros conocimientos para armar la respuesta
+4. pues estamos manejando la concurrencia con eso de aquire y lock entonces pues iría a esa parte para ver si se esta permitiendo solo un usuario cuando se accede a ese recurso por asi decir para ver si realmente esa función sirve y se esta validando correctamente
+5. pues antes de lanzar la excepción imprimo la version actual de la nota y no se si se pueda mandar esos datos como parámetro de la excepción personalizada, no recuerdo pero pensaría algo asi si eso se refiere
