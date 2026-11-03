@@ -53,3 +53,4 @@
 | 02/11/2026 | Ana Sofía (con Claude Code) | Respuestas/t03 y t06 (anteriores en `t06/Versiones anteriores/v2/`); bitácora; video t03; `03 - Linea base/Datos/Cronometros/` | Segundo dato de línea base; capturas de cronómetro; horas de t06 según la captura; revisión de codewalk con IA, no ciega | Pedido de la pareja |
 | 02/11/2026 | Ana Sofía (con Claude Code) | Ficha t03 (anterior en `t03/Versiones anteriores/v1/`) y bitácora | Pronóstico acordado de t03: 35 min | Dato confirmado por la pareja |
 | 02/11/2026 | Ana Sofía (con Claude Code) | Respuestas/t12; bitácora; capturas de cronómetro de t12 | Tercer dato de línea base; queda declarada la aclaración del CA5 de t12 hecha con Claude. Faltan la nota de codewalk, las pausas y el video | Pedido de la pareja |
+| 02/11/2026 | Ana Sofía (con Claude Code) | Video de t12; ficha t12 (anterior en `t12/Versiones anteriores/v1/`); bitácora | Se agrega la grabación de la sesión S03 | Pedido de la pareja |
