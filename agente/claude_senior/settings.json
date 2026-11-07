@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "defaultMode": "plan",
+    "deny": [
+      "Edit", "Write", "NotebookEdit", "Bash", "WebFetch", "WebSearch",
+      "Read(./backend/tests/ocultas/**)", "Read(./.env)"
+    ]
+  }
+}
