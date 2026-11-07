@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Asesoría y propuesta de escenarios</title>
+<link rel="stylesheet" href="../../_Estilo/estilo.css">
+<style>
+td, th { vertical-align: top; }
+.ref { font-size: 8.5pt; }
+.ref li { margin-bottom: 1.4mm; }
+</style>
+</head>
+<body>
+
+<div class="portada">
+  <div class="franjas"><span style="background:#BCC86F"></span><span style="background:#F5CB99"></span><span style="background:#FFABA9"></span><span style="background:#F68578"></span><span style="background:#B9794A"></span></div>
+  <div class="etiqueta">Taller de Metodologías Ágiles · 2026-2</div>
+  <h1>Asesoría y propuesta de escenarios</h1>
+  <div class="sub">Qué pidió el profe, qué leer, con qué grabar y qué escenarios y roles probar en los ciclos</div>
+  <dl class="meta">
+    <dt>Pareja</dt><dd>Ana Sofía Arango Yanza · Juan José Arias Chacua</dd>
+    <dt>Fecha y versión</dt><dd>06/11/2026 · v1 · propuesta para decidir en pareja</dd>
+  </dl>
+</div>
+
+<section>
+  <h2><span class="num">1</span>Qué pidió el profe y qué proponemos</h2>
+  <p class="lead">Son seis pedidos. Ninguno cambia la práctica que medimos (desarrollar una tarea en pair programming) ni las cinco métricas: cambian la forma de grabar y las configuraciones que probamos en los ciclos.</p>
+  <table>
+    <tr><th style="width:30%">Pedido</th><th>Propuesta</th><th style="width:9%">Sección</th></tr>
+    <tr><td>Leer la fuente principal del pair programming y entender de dónde viene y para qué sirve</td><td>Una ruta de lectura corta, con un mapa para llenar entre los dos</td><td>2</td></tr>
+    <tr><td>Una herramienta específica de pair programming para grabar</td><td>VS Code Live Share (o Code With Me si usan PyCharm), sin dejar de grabar pantalla y audio</td><td>3</td></tr>
+    <tr><td>Justificar cuántos casos tiene la línea base</td><td>5 casos: los 3 que ya tienen (uno por tamaño) y 2 más grabados con la herramienta</td><td>4</td></tr>
+    <tr><td>Roles definidos, también para los agentes, y agentes con seniority</td><td>Una tarjeta por rol: quién escribe, quién revisa y quién decide. La seniority se aplica a los agentes</td><td>5</td></tr>
+    <tr><td>Explorar configuraciones: agente y persona en las dos direcciones, dos personas más agente, varios agentes</td><td>4 escenarios aparte de la línea base, con 3 casos cada uno: 17 casos en total</td><td>6</td></tr>
+    <tr><td>Reducir la erosión del pensamiento crítico</td><td>Cómo se mide con lo que ya registran y cinco reglas para reducirla</td><td>7</td></tr>
+  </table>
+  <div class="caja nota"><h4>Antes de seguir</h4><p>El enunciado pide al menos diez casos en la línea base. El profe dijo en la asesoría que la cantidad es flexible si se justifica. Conviene dejarlo escrito en un acta y citarlo en el reporte, para que nadie lo lea como un incumplimiento.</p></div>
+</section>
+
+<section>
+  <h2><span class="num">2</span>Qué leer para entender el tema</h2>
+  <p class="lead">El libro de referencia es <i>Pair Programming Illuminated</i> [2]. Si no lo consiguen completo, el artículo de los mismos autores [3] es corto, gratuito y cuenta lo esencial.</p>
+  <table>
+    <tr><th style="width:4%">#</th><th style="width:30%">Qué leer</th><th>Qué responde</th><th style="width:14%">Quién</th></tr>
+    <tr><td>1</td><td>Beck, <i>Extreme Programming Explained</i> [1]: la parte de prácticas</td><td>De dónde viene: el pair programming nace como práctica de XP, con todo el código de producción escrito en pareja</td><td>Los dos</td></tr>
+    <tr><td>2</td><td>Williams et al. (2000) [3] y, si se consigue, el libro [2]</td><td>Para qué sirve: menos defectos, mejor diseño y más confianza a cambio de más esfuerzo. Aquí aparecen los roles de conductor y navegante</td><td>Ana Sofía</td></tr>
+    <tr><td>3</td><td>Hannay et al. (2009) [4], el metaanálisis</td><td>Qué dice la evidencia: en tareas simples la pareja va más rápido; en complejas, gana calidad pero gasta más esfuerzo. Por eso medimos por tamaño</td><td>Juan José</td></tr>
+    <tr><td>4</td><td>Bryant et al. (2008) [6] y Chong y Hurlbutt (2007) [7]</td><td>Los roles en la práctica: en parejas reales, el navegante no hace solo de "estratega" y los dos trabajan al mismo nivel. Lo que más pesa es quién sabe más</td><td>Ana Sofía</td></tr>
+    <tr><td>5</td><td>Plonka et al. (2015) [8]</td><td>Transferencia de conocimiento: cómo el que sabe más le enseña al otro mientras programan. Es lo que medimos con el codewalk</td><td>Juan José</td></tr>
+    <tr><td>6</td><td>Lyu et al. (2025) [13] y Daryanto et al. (2026) [14]</td><td>Qué cambia con la IA: con IA se pregunta por sintaxis y conceptos, y con la pareja se discuten ideas. Con un compañero presente se copia menos código de la IA</td><td>Los dos</td></tr>
+  </table>
+  <p><b>El mapa:</b> cada uno llena estas siete filas con lo que leyó, en una frase y con su fuente: <b>origen</b>, <b>objetivo</b>, <b>roles</b>, <b>beneficios</b>, <b>costos</b>, <b>cuándo conviene y cuándo no</b>, y <b>qué cambia con la IA</b>. Después se intercambian y explican la parte del otro, igual que en el codewalk. Ese mapa sirve también para la exposición.</p>
+</section>
+
+<section>
+  <h2><span class="num">3</span>Herramienta para grabar</h2>
+  <p class="lead">OBS graba la pantalla, pero no es una herramienta de pair programming. La recomendación es programar en una sesión compartida, hecha para esto, y seguir grabando pantalla y audio.</p>
+  <table>
+    <tr><th style="width:22%">Herramienta</th><th>Qué aporta</th><th style="width:26%">Ojo con</th></tr>
+    <tr><td><b>VS Code Live Share</b> [20] (recomendada)</td><td>Los dos trabajan en el mismo código, cada uno desde su computador. Muestra el cursor y el nombre de cada uno, y el navegante puede seguir al conductor o señalar una línea. Es gratuita y oficial de Microsoft</td><td>Microsoft la tiene en mantenimiento: funciona, pero no le agregan funciones. No graba sola</td></tr>
+    <tr><td><b>Code With Me</b> (JetBrains) [21]</td><td>Lo mismo dentro de PyCharm, con un modo explícito para pair programming. Viene incluida en PyCharm Community</td><td>La versión gratuita limita invitados y duración de la sesión. No graba sola</td></tr>
+    <tr><td>Grabación de pantalla, audio y cámara</td><td>Es lo que usan los estudios de pair programming que analizan sesiones reales [8][10][11]. OBS sirve para esto</td><td>Debe grabar la pantalla de quien conduce</td></tr>
+    <tr><td>CodeWatcher [22]</td><td>Registra cada edición en VS Code con hora. Daría datos finos de quién escribió qué</td><td>Es un preprint sin revisión por pares. Solo si sobra tiempo</td></tr>
+  </table>
+  <div class="caja nota"><h4>Qué no cambia</h4><p>La ficha, las métricas y los commits son los mismos. Solo cambian dos cosas: quien conduce abre la sesión de Live Share y el navegante se une, y se agrega una regla, <b>solo el conductor escribe</b>; el navegante puede seguir y señalar, pero no editar. Así los roles se ven en el video.</p></div>
+</section>
+
+<section>
+  <h2><span class="num">4</span>La línea base: por qué solo en pareja y cuántos casos</h2>
+  <p class="lead">La línea base es la práctica como se hace hoy, sin IA: dos personas, una conduce y la otra navega. Si la línea base tuviera agente, no habría un "antes" con el cual comparar.</p>
+  <p>El proyecto pide medir cómo cambia la práctica cuando entra el agente, así que primero hay que saber cómo funciona sin él. Por eso la línea base es solo de ustedes dos, y el agente aparece en los ciclos.</p>
+  <div class="tarjetas">
+    <div class="tarjeta verde"><div class="t">Ya medidos</div><div class="v">3</div>t06 (S), t03 (M) y t12 (L): uno por tamaño</div>
+    <div class="tarjeta miel"><div class="t">Con la herramienta</div><div class="v">+2</div>t15 (S) y t07 (M), los siguientes en el orden del sorteo</div>
+    <div class="tarjeta rosa"><div class="t">Total</div><div class="v">5</div>2 S · 2 M · 1 L</div>
+  </div>
+  <p><b>Cómo justificar 5:</b></p>
+  <ol>
+    <li><b>Todos los tamaños.</b> El tamaño cambia el efecto del pair programming [4][5], así que la línea base tiene que cubrir S, M y L. Los 3 primeros ya lo hacen.</li>
+    <li><b>Igual que los escenarios.</b> Cada escenario de los ciclos tendrá 3 casos (sección 6). Con 5 en la línea base, la referencia es un poco más estable que cada escenario, sin quitarles tiempo a los ciclos.</li>
+    <li><b>El costo real.</b> Un caso tomó entre 24 y 76 minutos con corrección, más el codewalk, la ficha y la grabación. Con 24 tareas en total, cada caso de línea base es uno menos para los escenarios.</li>
+    <li><b>El tipo de estudio.</b> Es un estudio exploratorio de casos múltiples: los resultados se describen y no se generalizan [23][24]. Con 5 o con 10 casos la conclusión sigue siendo una tendencia, no una causa.</li>
+    <li><b>La herramienta.</b> Los 2 casos nuevos además prueban la grabación con Live Share antes de usarla en los ciclos. Se anota en la hoja Sesiones que cambió la herramienta.</li>
+  </ol>
+  <p class="pequeno">Las tareas de línea base que no se usen (t16, t04, t14, t20 y t10) pasan a los escenarios en el mismo orden del sorteo, para no elegirlas a mano.</p>
+</section>
+
+<section>
+  <h2><span class="num">5</span>Roles definidos</h2>
+  <p class="lead">Conductor y navegante no son lo mismo que junior y senior: son funciones, no niveles de experiencia [6][7]. Por eso la seniority se aplica a los agentes, donde sí se puede definir con su especificación.</p>
+  <table>
+    <tr><th style="width:18%">Rol</th><th style="width:12%">Quién</th><th>Qué hace</th><th style="width:26%">Qué no hace</th></tr>
+    <tr><td><b>Conductor</b></td><td>Persona o agente</td><td>Escribe el código y explica en voz alta lo que hace</td><td>No decide solo si la tarea terminó</td></tr>
+    <tr><td><b>Navegante</b></td><td>Persona o agente</td><td>Revisa cada paso, piensa en los casos borde y vigila los criterios de aceptación</td><td>No escribe en el editor</td></tr>
+    <tr><td><b>Decisor</b></td><td>Siempre una persona</td><td>Acepta, corrige o rechaza lo que propone el agente, con su razón en la bitácora. Corre las ocultas</td><td>No delega esa decisión</td></tr>
+    <tr><td><b>Agente junior</b> (implementador)</td><td>Agente</td><td>Escribe el código que se le pide y declara sus supuestos</td><td>No elige el enfoque ni da la tarea por terminada</td></tr>
+    <tr><td><b>Agente senior</b> (mentor)</td><td>Agente</td><td>Revisa, hace preguntas y señala riesgos y casos borde. Responde con preguntas antes que con código</td><td>No escribe la solución</td></tr>
+  </table>
+  <p>La idea de repartir el trabajo entre agentes con roles de un equipo real viene de ChatDev [15] y MetaGPT [16], donde los agentes hacen de programador, revisor o tester y cada uno revisa lo que entrega el otro.</p>
+</section>
+
+<section>
+  <h2><span class="num">6</span>Escenarios y casos</h2>
+  <p class="lead">Cuatro escenarios aparte de la línea base, cada uno con 3 casos. Cada escenario responde una pregunta distinta frente a la línea base.</p>
+  <table>
+    <tr><th style="width:17%">Escenario</th><th style="width:15%">Conduce</th><th style="width:15%">Navega</th><th>Qué pregunta responde</th><th style="width:20%">Tareas (orden del sorteo)</th></tr>
+    <tr><td><b>E0</b> Línea base</td><td>Persona</td><td>Persona</td><td>Cómo se hace hoy, sin IA</td><td>t06, t03, t12, t15, t07</td></tr>
+    <tr><td><b>E1</b> Persona conduce, agente navega</td><td>Persona</td><td>Agente (spec Copiloto v1)</td><td>Qué pasa si el agente reemplaza al compañero que revisa</td><td>t01 S, t23 M, t21 L</td></tr>
+    <tr><td><b>E2</b> Agente conduce, persona navega</td><td>Agente junior</td><td>Persona</td><td>La otra dirección: qué pasa si el agente escribe y la persona revisa. E1 frente a E2 es la comparación bidireccional</td><td>t02 S, t22 M, t19 M</td></tr>
+    <tr><td><b>E3</b> Tríada: dos personas más agente</td><td>Persona</td><td>Persona, con un agente compartido</td><td>Qué le suma el agente a una pareja humana. Es la comparación más directa con la línea base [14]</td><td>t16 S, t04 M, t14 M</td></tr>
+    <tr><td><b>E4</b> Agentes con seniority</td><td>Agente junior</td><td>Agente senior; la persona decide</td><td>Si repartir roles entre agentes da mejor código y deja a la persona pensando más</td><td>t09 S, t18 S, t11 M</td></tr>
+  </table>
+  <div class="tiempo">
+    <div class="t1"><b>Línea base</b>5 casos, en pareja</div>
+    <div style="background:var(--matcha)"><b>Ciclo 1</b>E1 y E2: cada uno trabaja solo con el agente, en paralelo</div>
+    <div style="background:var(--semolina)"><b>Entre ciclos</b>Ajustar las specs con lo que pasó en la bitácora</div>
+    <div style="background:var(--tea-rose)"><b>Ciclo 2</b>E3 en pareja y E4 individual</div>
+    <div style="background:#f4ece4"><b>Total</b>17 casos medidos</div>
+  </div>
+  <p><b>Cómo salen estas tareas:</b> E1 y E2 usan las 6 tareas que el sorteo ya asignó al ciclo 1. Cada uno hace de las dos direcciones: Ana Sofía t01 (E1), t02 (E2) y t23 (E1); Juan José t22 (E2), t21 (E1) y t19 (E2). E3 usa las primeras tareas de línea base que quedan libres, porque se comparan con la línea base. E4 usa las primeras del ciclo 2 del sorteo. Quedan de repuesto t20, t10, t24, t08, t17, t05 y t13.</p>
+  <p><b>Qué hay que preparar:</b></p>
+  <ul>
+    <li><b>E1:</b> nada nuevo, usa la spec Copiloto v1.</li>
+    <li><b>E2:</b> una spec nueva para el agente junior, que escribe el código.</li>
+    <li><b>E3:</b> la misma spec v1, con un agente que ven los dos.</li>
+    <li><b>E4:</b> dos specs, senior y junior, y media página que diga cómo se pasan el trabajo, quién tiene la última palabra y qué pasa si no coinciden. El enunciado lo pide cuando hay varios agentes.</li>
+  </ul>
+  <div class="caja nota"><h4>Si no alcanza el tiempo</h4><p>Quiten E4, que es el que más preparación pide. Quedan 3 escenarios y 14 casos, y la pregunta bidireccional y la de la tríada se mantienen. Lo que no conviene es poner menos de 3 casos por escenario: con 1 o 2 no se ve ninguna tendencia.</p></div>
+</section>
+
+<section>
+  <h2><span class="num">7</span>Pensamiento crítico</h2>
+  <p class="lead">El riesgo es aceptar lo que dice la IA sin pensarlo. Quienes más confían en la IA reportan pensar menos críticamente [17], y en programación algunos estudiantes terminan con una falsa sensación de que entienden [18][19].</p>
+  <p><b>Cómo medirlo sin métricas nuevas:</b></p>
+  <ul>
+    <li><b>M4 Codewalk por escenario:</b> si con el agente baja la nota, la persona entiende menos lo que entregó.</li>
+    <li><b>Porcentaje de propuestas aceptadas sin modificar</b>, de la columna que ya tiene la bitácora. Si casi todo se acepta sin cambios, es una señal de alerta.</li>
+    <li><b>Correcciones y rechazos con su razón:</b> muestran que alguien revisó.</li>
+  </ul>
+  <p><b>Reglas para reducirlo, en todos los escenarios con agente:</b></p>
+  <ol>
+    <li><b>Pensar antes de preguntar:</b> 2 minutos para anotar el enfoque propio antes de abrir el agente.</li>
+    <li><b>Explicar sin mirar:</b> no se acepta una línea que no puedan explicar sin el agente. Ya está en la spec v1.</li>
+    <li><b>Un agente que pregunta:</b> el agente senior responde primero con preguntas y no con código.</li>
+    <li><b>La última palabra es humana:</b> las ocultas las corre siempre una persona.</li>
+    <li><b>Alternar quién conduce</b> entre tareas, para que nadie se quede solo revisando.</li>
+  </ol>
+</section>
+
+<section>
+  <h2><span class="num">8</span>Lo que tienen que decidir</h2>
+  <ol>
+    <li><b>Editor:</b> VS Code con Live Share o PyCharm con Code With Me.</li>
+    <li><b>Escenarios:</b> los 4 (17 casos) o sin E4 (14 casos).</li>
+    <li><b>Acta:</b> escribir lo que dijo el profe sobre la cantidad flexible de casos y guardarla en esta carpeta.</li>
+    <li><b>Specs:</b> si siguen, preparo las nuevas (junior, senior y su articulación) y las agrego a la bitácora con una columna <i>Escenario</i>.</li>
+  </ol>
+</section>
+
+<section>
+  <h2><span class="num">9</span>Referencias</h2>
+  <p class="pequeno">Todas son revisadas por pares, salvo los libros y la documentación de herramientas, que se indican, y [22], que es un preprint.</p>
+  <ol class="ref">
+    <li>Beck, K. (1999). <i>Extreme programming explained: Embrace change</i>. Addison-Wesley. (Libro.) https://www.oreilly.com/library/view/extreme-programming-explained/0201616416</li>
+    <li>Williams, L., &amp; Kessler, R. (2002). <i>Pair programming illuminated</i>. Addison-Wesley. (Libro.) https://openlibrary.org/books/OL22018567M/Pair_programming_illuminated</li>
+    <li>Williams, L., Kessler, R. R., Cunningham, W., &amp; Jeffries, R. (2000). Strengthening the case for pair programming. <i>IEEE Software, 17</i>(4), 19–25. https://doi.org/10.1109/52.854064 · PDF: https://collaboration.csc.ncsu.edu/laurie/Papers/ieeeSoftware</li>
+    <li>Hannay, J. E., Dybå, T., Arisholm, E., &amp; Sjøberg, D. I. K. (2009). The effectiveness of pair programming: A meta-analysis. <i>Information and Software Technology, 51</i>(7), 1110–1122. https://doi.org/10.1016/j.infsof.2009.02.001</li>
+    <li>Arisholm, E., Gallis, H., Dybå, T., &amp; Sjøberg, D. I. K. (2007). Evaluating pair programming with respect to system complexity and programmer expertise. <i>IEEE Transactions on Software Engineering, 33</i>(2), 65–86. https://doi.org/10.1109/TSE.2007.17</li>
+    <li>Bryant, S., Romero, P., &amp; du Boulay, B. (2008). Pair programming and the mysterious role of the navigator. <i>International Journal of Human-Computer Studies, 66</i>(7), 519–529. https://doi.org/10.1016/j.ijhcs.2007.03.005</li>
+    <li>Chong, J., &amp; Hurlbutt, T. (2007). The social dynamics of pair programming. <i>ICSE 2007</i>, 354–363. https://doi.org/10.1109/ICSE.2007.87</li>
+    <li>Plonka, L., Sharp, H., van der Linden, J., &amp; Dittrich, Y. (2015). Knowledge transfer in pair programming: An in-depth analysis. <i>International Journal of Human-Computer Studies, 73</i>, 66–78. https://doi.org/10.1016/j.ijhcs.2014.09.001</li>
+    <li>Lui, K. M., &amp; Chan, K. C. C. (2006). Pair programming productivity: Novice–novice vs. expert–expert. <i>International Journal of Human-Computer Studies, 64</i>(9), 915–925. https://research.polyu.edu.hk/en/publications/pair-programming-productivity-novice-novice-vs-expert-expert/</li>
+    <li>Zieris, F., &amp; Prechelt, L. (2016). Observations on knowledge transfer of professional software developers during pair programming. <i>ICSE 2016 Companion (SEIP)</i>, 242–250. https://doi.org/10.1145/2889160.2889249</li>
+    <li>Salinger, S., &amp; Prechelt, L. (2013). <i>Understanding pair programming: The base layer</i>. (Libro académico, basado en una tesis doctoral.) https://mi.fu-berlin.de/w/SE/PairProgrammingHome</li>
+    <li>Welter, A., Schneider, N., Dick, T., Weis, K., Tinnes, C., &amp; Wyrich, M. (2025). An empirical study of knowledge transfer in AI pair programming. <i>ASE 2025</i>, 166–177. https://doi.org/10.1109/ASE63991.2025.00022</li>
+    <li>Lyu, W., Wang, Y., Sun, Y., &amp; Zhang, Y. (2025). Will your next pair programming partner be human? An empirical evaluation of generative AI as a collaborative teammate in a semester-long classroom setting. <i>L@S '25</i>, 83–94. https://arxiv.org/abs/2505.08119</li>
+    <li>Daryanto, T., et al. (2026). Human-human-AI triadic programming: Uncovering the role of AI agent and the value of human partner in collaborative learning. <i>CHI '26</i>. https://arxiv.org/abs/2601.12134</li>
+    <li>Qian, C., et al. (2024). ChatDev: Communicative agents for software development. <i>ACL 2024</i>. https://arxiv.org/abs/2307.07924</li>
+    <li>Hong, S., et al. (2024). MetaGPT: Meta programming for a multi-agent collaborative framework. <i>ICLR 2024</i>. https://proceedings.iclr.cc/paper_files/paper/2024/hash/6507b115562bb0a305f1958ccc87355a-Abstract-Conference.html</li>
+    <li>Lee, H.-P., Sarkar, A., Tankelevitch, L., Drosos, I., Rintel, S., Banks, R., &amp; Wilson, N. (2025). The impact of generative AI on critical thinking. <i>CHI 2025</i>. https://doi.org/10.1145/3706598.3713778</li>
+    <li>Prather, J., et al. (2024). The widening gap: The benefits and harms of generative AI for novice programmers. <i>ICER 2024</i>. https://arxiv.org/abs/2405.17739</li>
+    <li>Kazemitabaar, M., Chow, J., Ma, C. K. T., Ericson, B. J., Weintrop, D., &amp; Grossman, T. (2023). Studying the effect of AI code generators on supporting novice learners in introductory programming. <i>CHI 2023</i>, 1–23. https://doi.org/10.1145/3544548.3580919</li>
+    <li>Microsoft. (s. f.). Coedit, follow, and focus in a collaboration session in Visual Studio Code. (Documentación.) https://learn.microsoft.com/en-us/visualstudio/liveshare/use/coedit-follow-focus-visual-studio-code</li>
+    <li>JetBrains. (2025). Code With Me. <i>PyCharm Help</i>. (Documentación.) https://www.jetbrains.com/help/pycharm/2025.2/code-with-me.html</li>
+    <li>CodeWatcher: IDE telemetry data extraction tool for understanding coding interactions with LLMs. (2025). arXiv:2510.11536. (Preprint.) https://arxiv.org/abs/2510.11536</li>
+    <li>Wohlin, C., Runeson, P., Höst, M., Ohlsson, M. C., Regnell, B., &amp; Wesslén, A. (2012). <i>Experimentation in software engineering</i>. Springer. https://doi.org/10.1007/978-3-642-29044-2</li>
+    <li>Kitchenham, B., Madeyski, L., Budgen, D., Keung, J., Brereton, P., Charters, S., Gibbs, S., &amp; Pohthong, A. (2017). Robust statistical methods for empirical software engineering. <i>Empirical Software Engineering, 22</i>(2), 579–630. https://doi.org/10.1007/s10664-016-9437-5</li>
+  </ol>
+</section>
+
+<div class="pie"><span>Ana Sofía Arango · Juan José Arias</span><span>Ágiles 2026-2 · Unicauca</span></div>
+</body>
+</html>
