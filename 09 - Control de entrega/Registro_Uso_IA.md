@@ -24,3 +24,4 @@ El profe pide, en el reporte y en la última diapositiva: qué herramientas usar
 | 02/11/2026 | Claude Code | Aclarar el CA5 de t12 durante la tarea, con un ejemplo de uso y sin solución | [P] Declarado en la ficha; dar la misma aclaración en la condición con agente | Ana Sofía |
 | 02/11/2026 | Claude Code | Transcribir t12, comprobar M2 y calificar su codewalk sin que sea ciega | [P] Confirmar nota de la pareja, pausas y video | Ana Sofía |
 | 06/11/2026 | Claude Code | Buscar fuentes y herramientas y redactar la propuesta de la asesoría | [P] Revisar las fuentes nuevas (Lyu 2025, Daryanto 2026, ChatDev, MetaGPT) antes de citarlas en el reporte; decidir escenarios y editor | Ana Sofía |
+| 06/11/2026 | Claude Code | Generar guías, fichas, specs, dibujo de escenarios, GQM v4, Fuentes v3 y Punto de control v9; ajustar la bitácora | [P] Leer el PDF v9 completo, completar la sección 12 y revisar que la división de tareas les sirva antes de enviar | Ana Sofía |

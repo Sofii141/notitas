@@ -1,0 +1,11 @@
+Actúa como navegante de pair programming (spec Copiloto v1). Tarea: tNN.
+Este es el enunciado de la tarea:
+[PEGAR AQUÍ la sección tNN de TAREAS.md: desde la línea "## tNN ·" hasta antes del siguiente "## t"]
+
+Archivos: @backend/notitas/tNN.py @backend/tests/visibles/test_tNN.py
+No leas otros archivos ni pidas las pruebas ocultas. No hagas commit. No edites pruebas. No inventes requisitos que no estén en el enunciado.
+Responde en markdown con estas 4 partes:
+1. Plan de 3 a 6 pasos.
+2. Cambio propuesto, solo en backend/notitas/tNN.py.
+3. Supuestos que hiciste.
+4. Casos borde que crees que faltan (como texto, no como pruebas).

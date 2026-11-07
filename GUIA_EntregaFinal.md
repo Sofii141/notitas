@@ -56,7 +56,7 @@
 - Congelen el caso (fecha en cada ficha) **antes** de medir. Lo que falte después va como limitación.
 - Revisen datos sensibles antes de dárselos al agente (y si el repo es del Proyecto II, que el equipo esté de acuerdo).
 
-**GQM (actualizado el 31/10):** son 5 métricas directas: minutos, ocultas que fallan, minutos de retrabajo, codewalk 0–5 y pronóstico. El detalle está en `03 - Linea base/31102026_01_GQM_v3.md`.
+**GQM (actualizado el 31/10):** son 5 métricas directas: minutos, ocultas que fallan, minutos de retrabajo, codewalk 0–5 y pronóstico. El detalle está en `03 - Linea base/06112026_01_GQM_v4.md` (v4, 06/11: por escenario).
 
 El codewalk es lo que conecta todo con el tema. La literatura revisada por pares dice que con IA se acepta con **menos escrutinio** (Welter et al. 2025), que los estudiantes **no entendían por qué funcionaban** las sugerencias (Shihab et al. 2025) y que hay **más confianza con menos seguridad** (Perry et al. 2023); en contra, Kazemitabaar et al. (2023) no encontró menos retención. Ustedes lo comprueban o lo refutan con su propio caso.
 
@@ -70,7 +70,10 @@ El codewalk es lo que conecta todo con el tema. La literatura revisada por pares
 - [ ] Confirmar que el tema 3 quedó registrado en el archivo compartido (cerró el 24/10) y guardar captura en `09`.
 - [ ] Ojo con la semana: **Entrega 2 el 27/10 y Parcial 2 el 28/10** del curso, y el punto de control es el **30/10**. Repártanse bien.
 
-### 🔴 Próxima entrega: caso base y línea base hasta el martes 3 de noviembre (el profe amplió el plazo; paso a paso en `09 - Control de entrega/31102026_02_Guia_Entrega_y_Medicion_v2.pdf`)
+### 🔴 Próxima entrega: domingo 8 de noviembre — todo definido (`09 - Control de entrega/06112026_01_Punto_Control_v9.pdf`)
+Tras la asesoría del 06/11 no hace falta tener resultados: hay que dejar definido qué se va a hacer. Ya están: línea base de 5 tareas con Live Share, 4 escenarios con 3 tareas cada uno, roles, specs Junior y Senior, y reglas contra la pérdida de pensamiento crítico. Falta: completar la sección 12 del PDF (uso de IA), escribir el acta de la asesoría y medir t15 y t07.
+
+Lista del punto de control anterior (referencia):
 - [ ] **Caso base**: ≥10 fichas (mejor 12) con difíciles marcadas, congeladas. → `02 - Caso base/Casos propios`
 - [ ] **Línea base medida**: ≥10 tareas en pareja humana con la hoja *Medicion por caso* llena + condiciones (quién, cuánto duró, herramientas). → `03 - Linea base`
 - [ ] **GQM** escrito. → `03 - Linea base`
@@ -113,9 +116,9 @@ El codewalk es lo que conecta todo con el tema. La literatura revisada por pares
 ## 6. Archivos ya creados (versiones vigentes al 31/10)
 - `Repositorio/CAMEIA-lite` (rama `main`): caso base **Notitas** — `TAREAS.md`, `sorteo.py`, `demo/` y `agente/opencode.json`.
 - `05 - Ciclos y bitacora/31102026_01_Bitacora_v3.xlsx` — sesiones, medición por caso, codewalk, bitácora y resumen.
-- `04 - Especificacion agentes/31102026_01_Spec_Copiloto_v1.md` — spec v1 (OpenCode + DeepSeek V4.1 Flash).
-- `03 - Linea base/31102026_01_GQM_v3.md` — GQM con 5 métricas directas.
-- `01 - Exposicion/Fuentes/29102026_01_Fuentes_v2.md` y `31102026_01_Como_Medir_y_Presentar_v3.md` — fuentes revisadas por pares y cómo presentar los resultados.
-- `09 - Control de entrega/02112026_01_Punto_Control_v8.pdf` — lo que se envía el 3/11; `31102026_02_Guia_Entrega_y_Medicion_v2.pdf` — el paso a paso.
-- `02 - Caso base/Guia_Medicion/02112026_01_Guia_General_v10.pdf`: **empiecen aquí para medir**; de ahí pasan a la guía y a las fichas de cada condición.
+- `04 - Especificacion agentes/31102026_01_Spec_Copiloto_v1.md` — spec Copiloto v1 (OpenCode + DeepSeek V4.1 Flash), para E1 y E3; `06112026_01_Specs_Escenarios_v1.pdf` — Junior v1 y Senior v1 (Claude Opus 5.5) y su articulación, para E2 y E4.
+- `03 - Linea base/06112026_01_GQM_v4.md` — GQM con 5 métricas directas, por escenario.
+- `01 - Exposicion/Fuentes/06112026_01_Fuentes_v3.md` y `31102026_01_Como_Medir_y_Presentar_v3.md` — fuentes revisadas por pares y cómo presentar los resultados.
+- `09 - Control de entrega/06112026_01_Punto_Control_v9.pdf` — lo que se envía el 8/11. `Actas pareja/06112026_01_Asesoria_y_Propuesta_v1.pdf` — la propuesta tras la asesoría.
+- `02 - Caso base/Guia_Medicion/06112026_01_Guia_General_v11.pdf`: **empiecen aquí para medir**; de ahí pasan a la línea base (`1_Linea_base_en_pareja/`) y a los escenarios (`2_Escenarios_con_agente/`).
 - `02 - Caso base/Plantilla_Ficha_Caso.md` — ficha de cada caso.
