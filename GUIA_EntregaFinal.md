@@ -70,7 +70,7 @@ El codewalk es lo que conecta todo con el tema. La literatura revisada por pares
 - [ ] Confirmar que el tema 3 quedó registrado en el archivo compartido (cerró el 24/10) y guardar captura en `09`.
 - [ ] Ojo con la semana: **Entrega 2 el 27/10 y Parcial 2 el 28/10** del curso, y el punto de control es el **30/10**. Repártanse bien.
 
-### 🔴 Próxima entrega: domingo 8 de noviembre — todo definido (`09 - Control de entrega/08112026_01_Punto_Control_v10.pdf`)
+### 🔴 Próxima entrega: domingo 8 de noviembre — todo definido (`09 - Control de entrega/08112026_02_Punto_Control_v11.pdf`)
 Tras la asesoría del 06/11 no hace falta tener resultados: hay que dejar definido qué se va a hacer. Ya están: línea base de 5 tareas con Live Share, 4 escenarios con 3 tareas cada uno, roles, specs Junior y Senior, y reglas contra la pérdida de pensamiento crítico. Falta: escribir el acta de la asesoría y medir t15 y t07.
 
 Lista del punto de control anterior (referencia):
@@ -119,6 +119,6 @@ Lista del punto de control anterior (referencia):
 - `04 - Especificacion agentes/31102026_01_Spec_Copiloto_v1.md` — spec Copiloto v1 (OpenCode + DeepSeek V4.1 Flash), para E1 y E3; `06112026_01_Specs_Escenarios_v1.pdf` — Junior v1 y Senior v1 (Claude Opus 5.5) y su articulación, para E2 y E4.
 - `03 - Linea base/06112026_01_GQM_v4.md` — GQM con 5 métricas directas, por escenario.
 - `01 - Exposicion/Fuentes/06112026_01_Fuentes_v3.md` y `31102026_01_Como_Medir_y_Presentar_v3.md` — fuentes revisadas por pares y cómo presentar los resultados.
-- `09 - Control de entrega/08112026_01_Punto_Control_v10.pdf` — lo que se envía el 8/11. `Actas pareja/06112026_01_Asesoria_y_Propuesta_v1.pdf` — la propuesta tras la asesoría.
+- `09 - Control de entrega/08112026_02_Punto_Control_v11.pdf` — lo que se envía el 8/11. `Actas pareja/06112026_01_Asesoria_y_Propuesta_v1.pdf` — la propuesta tras la asesoría.
 - `02 - Caso base/Guia_Medicion/06112026_01_Guia_General_v11.pdf`: **empiecen aquí para medir**; de ahí pasan a la línea base (`1_Linea_base_en_pareja/`) y a los escenarios (`2_Escenarios_con_agente/`).
 - `02 - Caso base/Plantilla_Ficha_Caso.md` — ficha de cada caso.
