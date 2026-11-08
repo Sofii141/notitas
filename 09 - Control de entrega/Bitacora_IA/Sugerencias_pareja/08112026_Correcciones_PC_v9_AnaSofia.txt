@@ -1,0 +1,20 @@
+Mis correciones:
+el titulo 1 osea el del el proyecto en 1 pagina no se si se pueda escribir algo como acerca del proyecto algo asi osea es que suena raro eso del proyecto en una pagina
+se supone que es un punto de control no se deberia hablar como de lo que se va a hacer es que eso de comparams eso con cuatro configuraciones suena que ya lo hicimos
+igual eso de programamos 5 tareas osea no hemos hecho eso aun en la linea base y suena de que ya programamos.
+a que se refiere 4 + base en escenarios eso no entiendo osea creo que con el dibujo si pero deberia estar explicado para alguien que no sabe lo que vamos a hacer osea friendly
+el de terminos que usamos en el documento mira si esta todo completo y no quede nada raro o poco claro
+y tambien verifica muy bien las referencias
+sip y tambien como son pocos casos los que vamos a revisar no es que podamos hacer la re conclusion asegurando que todo sea asi y eso de que esperamos y porque siento que podriamos explicar un poco mas
+en lo del tamaño de las tareas pues siento que seria bueno decir que la estimacion la propuso claude en base a .... como que nosotros revisamos que estuviera estimando en base a que pq tipo pq claude considero que eso fuera asi.
+en limitaciones que declaramos osea dice m1 no incluye la lectura inicial pero antes no menciona que es m1 y puede que el profe se pierda osea verifica muy bien eso pq siento que a veces esta escrito como para nosotros que ya sabemos que es pero ten en cuenta que eso lo va a leer un profe
+igual que en eso de las 3 tareas de la linea base se hicieron compartiendo pantalla en una llamada osea podriamos en general decir que ya grabamos o hicimos 3 sesiones y que las otras dos ya las haremos en una herramienta especializada o ago asi que las primeras era como para conocer la metodologia que vamos a utilizar y asi osea ayudame a justificar bien eso y que quede claro
+ya verificaste que el gqm este bien planteado?
+la parte de la grabacion cuando sea solo una persona por ejemplo yo con un agente o con dos agentes con que se graba hay herramienta para eso o solo grabacion normal?
+el dibujo esos bonitos de los escenarios se repiten dos veces es necesario? o es mejor solo mostrarlo una vez tipo ya esta arriba o no se es que ver que el dibujo se repite 2 veces no se que tan necesario sea o pq lo hiciste asi
+no digas nada de el profe nos pidio.... osea no escribas eso suena feo tipo no menciones al profe porque eso fue asesoria para nosotros mejorar pero no tanto escribir que nos dijo el profe que hicieramos
+tambien osea esa parte se podria mostrar como primeros resultados o algo asi donde estan las 3 tareas que hicimos y porque t12 tiene en el m4 vacio si yo te mande toda esa info o no se si es que no entendi bien o error mio pq tu tienes todas las respuestas de las 3 sesiones que hicimos
+en lo de como presentar los resultados osea usando toda la info qu evaos a tener se hara eso cierto? osea para que nos quede todo completo
+en lo del rol del agente osea eso es para todas las configuraciones tipo la sesion 8 ya bien especificada con eso?
+tengo una duda las preguntas con mi compañero y las preguntas del codewalk solo yo con el agente son las mismas? y si son las mismas pq?
+y lo de que verificamos nosotros cita nuestra bitacora de ia (creo que tenemos una) porque nosotros te hemos hecho bastantes sugerencias, correciones, cosas que añadir etc y lo adjuntas tmb el link para que el profe navegue a ese archivo del repositorio tmb para este y todas esas cosas tipo bitacora de ia quisiera una tabla con la misma plantilla de colores que andamos usando.

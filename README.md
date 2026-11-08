@@ -2,7 +2,7 @@
 
 Ana Sofía Arango Yanza · Juan José Arias Chacua · Prof. César Pardo
 
-**Empiecen por [GUIA_EntregaFinal.md](GUIA_EntregaFinal.md)**. **Lo que se envía el domingo 8/11:** [06112026_01_Punto_Control_v9.pdf](09%20-%20Control%20de%20entrega/06112026_01_Punto_Control_v9.pdf). **Para medir, empiecen por:** [06112026_01_Guia_General_v11.pdf](02%20-%20Caso%20base/Guia_Medicion/06112026_01_Guia_General_v11.pdf). Los documentos con fecha del 25 al 29/10 son de CAMEIA-lite y se conservan como historial.
+**Empiecen por [GUIA_EntregaFinal.md](GUIA_EntregaFinal.md)**. **Lo que se envía el domingo 8/11:** [08112026_01_Punto_Control_v10.pdf](09%20-%20Control%20de%20entrega/08112026_01_Punto_Control_v10.pdf). **Para medir, empiecen por:** [06112026_01_Guia_General_v11.pdf](02%20-%20Caso%20base/Guia_Medicion/06112026_01_Guia_General_v11.pdf). Los documentos con fecha del 25 al 29/10 son de CAMEIA-lite y se conservan como historial.
 
 ## Carpetas
 | Carpeta | Qué va |

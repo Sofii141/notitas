@@ -1,0 +1,52 @@
+el titulo de la primera sección 1 puede cambiar de "El proyecto en una página" a "Introducción"
+
+viñeta 2 de la sección 1 "El material (caso base). Construimos Notitas, un tablero kanban de notas adhesivas con un tablero visual
+ya terminado y 24 reglas de backend sin programar. Cada regla es una tarea pequeña, con sus criterios de
+aceptación y sus pruebas automáticas [R1] [R2].
+" cambiar por "El material (caso base). Construimos Notitas, un tablero kanban de notas adhesivas con un tablero visual y 24 reglas de backend sin programar. Cada regla es una tarea, tienen diferentes tamaños, con sus criterios de
+aceptación y sus pruebas automáticas [R1] [R2].
+ 
+en la sección 3 
+en este fragmento "El repositorio tiene dos partes [R1]. El frontend [R7] es
+el tablero, con arrastrar y soltar y animaciones; ya está
+terminado y no se mide. El backend [R3] tiene 24
+funciones vacías: cada tarea consiste en escribir la
+lógica de una de ellas. En cuanto una función funciona,
+el tablero empieza a usarla.
+" el final suena un poco redundante no podríamos decir mejor algo como en cuantouna función es correctamente implementada  o algo así
+
+"Ninguno de los dos había
+programado antes estas reglas.
+"aquí no se como clarificar que nos referimos a nosotros lo estudiantes del proyecto
+
+las "LIMITACIONES QUE DECLARAMOS" tal vez deberían ir mas abajo es que hablan de M2 o cosas que hasta ese momento el texto no menciona, yo no sabia que era m2, hay que recordar que el texto es para un humano
+en esta limitacón "Los escenarios son un diseño propio, inspirado en estudios publicados; ninguno trae esta combinación tal
+cual." seria bueno mencionar a parte del diseño propio que fueron consejos del profe
+
+"Las tareas, las pruebas y el tablero se generaron con Claude Code. Para que el caso no quede "a la
+medida" del agente: el agente que escribe código es otro modelo (DeepSeek), nadie ve las pruebas
+ocultas antes de terminar, ningún agente tiene acceso a ellas y se incorporan 3 casos de otra pareja. En
+E4 se usa Claude Opus 5.5 como revisor: no escribe código ni ve las ocultas, pero es de la misma familia
+con que se construyó el caso, y lo declaramos." aquí quitar lo de se incorporan 3 casos de otra pareja ya que hasta ahora ningún grupo ha hecho eso, mejor decir se incorporaran cuando se tengan.
+
+En la tabla "Resultados por tarea (n = 3)" específicamente en la fila
+"t12 Dos personas
+mueven la misma nota
+L Sí 60 54 1/3 22 — / —" por que la nota del code walk esta vacia si la calificamos con Sofi con 5/5
+
+
+En "12 Declaración de uso de IA"
+en la única fina de la tabla "Herramienta Para qué Qué verificamos nosotros
+Claude
+Code
+Leer los enunciados; proponer la estructura; generar las 24 tareas con
+sus pruebas y soluciones de referencia, el backend y el tablero; buscar
+fuentes y verificar sus DOI en Crossref y OpenAlex; revisar la
+coherencia de los documentos con un segundo agente revisor;
+proponer los escenarios, los roles y la herramienta de grabación
+después de la asesoría; hacer una revisión preliminar, no ciega, de los
+codewalk; maquetar este documento.
+Completar antes de entregar : que
+revisamos las 24 tareas antes de
+congelar y qué fuentes leímos.
+" en que verificamosnosotros creo que deberíamos quitar la nota que dice "Completar antes de entregar" oir que ya se hizo se leyeron las fuentes se verificaron las tareas pues nosotros hicimos el sorteo, además de programar las tareas iniciales del casobase, verificar este documento, y leer las fuente hacerca de pair programming
