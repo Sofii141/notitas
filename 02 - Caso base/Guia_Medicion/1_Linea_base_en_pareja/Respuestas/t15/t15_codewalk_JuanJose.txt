@@ -1,0 +1,5 @@
+1. La función da una vista a cuantas notas hay por columna y el porcentaje de las completadas.
+2. Maneja el caso borde cuando no hay ninguna nota entonces el porcentaje de completas es 0
+3. Se considero el mas legible por otros con un match y también s einvestigo la forma de redondear al entero mas cercano
+4. en el if que definimos para redondear al entero mas cercano si esta bien la condición para redondear hacia arriba o hacia bajo
+5. EN la operación que sacamos el total de notas para sacar el porcentaje quitaría de la suma las notas que están en por_hacer

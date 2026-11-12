@@ -1,0 +1,5 @@
+1. Darle a el usuario un resumen de los estados de sus tarjetas con un su porcentaje de tareas terminadas
+2. Si no hay tareas el porcentaje es 0
+3. a la hora del desarrollo decidimos usar un case en vez de ifs anidados debido a que eran varios casos y en caso de que a futuro aumenten sea mas fácil acomodarlos en el switch y la parte del redondeo la que nos sugirió google porque no encontramos una función especifica de python para eso
+4. En la parte del redondeo revisaría ese condicional a ver como se esta haciendo e ir imprimiendo que da en cada paso
+5. voy a la parte de mas abajo de la función y quito la clave del diccionario resumen donde esta la clave  "Por hacer" y ya no se calcularía con eso en el porcentaje
