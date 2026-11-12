@@ -26,12 +26,10 @@ def resumen_columnas(notas: list[dict]) -> dict:
         resumen["porcentaje_hecho"] = 0
     else:
         resumen["porcentaje_hecho"] = (float(resumen["hecho"])/float(resumen["total"])) * 100
-        print(resumen["porcentaje_hecho"])
         if resumen["porcentaje_hecho"] - int(resumen["porcentaje_hecho"]) >= 0.5:
-            int(resumen["porcentaje_hecho"]) + 1
+            resumen["porcentaje_hecho"] = int(resumen["porcentaje_hecho"]) + 1
         else:
-            int(resumen["porcentaje_hecho"])    
+            resumen["porcentaje_hecho"] = int(resumen["porcentaje_hecho"])    
 
                     
     return resumen
-
