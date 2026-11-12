@@ -29,3 +29,4 @@ El profe pide, en el reporte y en la última diapositiva: qué herramientas usar
 | 11/11/2026 | Claude Code | Actualizar las fichas de t15 y t07 a Live Share y la guía de línea base a v11 | Revisan la ficha antes de grabar | Ana Sofía |
 | 11/11/2026 | Claude Code | Organizar los resultados de t07 (ficha, codewalk, bitácora, nombres del cronómetro y del video) y revisión preliminar no ciega del codewalk | Los datos son los que mandó la pareja; las pausas quedan [N] | Ana Sofía |
 | 11/11/2026 | Claude Code | Organizar los resultados de t15 y revisión preliminar no ciega de su codewalk; recomendar e instalar Open Collaboration Tools | Los datos son los que mandó la pareja; sin captura del cronómetro de M1; pausas [N] | Ana Sofía |
+| 11/11/2026 | Claude Code | Cambiar E3 y la guía de escenarios a Open Collaboration Tools y revisar que las guías de E1 a E4 estén completas | Revisan la guía y las fichas antes de empezar | Ana Sofía |
