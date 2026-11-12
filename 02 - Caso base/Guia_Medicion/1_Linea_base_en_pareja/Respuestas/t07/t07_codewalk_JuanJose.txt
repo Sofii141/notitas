@@ -1,0 +1,5 @@
+1. Busca coincidencias de un texto en una lista de notas, ya sea en titulo o contenido, independiente de mayuscualas y minúsculas, ni caracteres especiales
+2. el caso borde si el texto esta vacio o son puros espacios, lo maneja en un condicional al inicio.
+3. Se busco en la documentación de Python y foros las mejores maneras de normalizar el texto usando unidecode o casefold para comparar cadenas de forma segura
+4. miraría el lugar donde normalizamos el texto con unidecode y donde normalizamos los campos de las notas
+5. Cambiaria el if dentrodel for donde se busca por cada nota en los campos titulo y contenido agregaría buscar en el campo de etiquetas.

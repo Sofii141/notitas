@@ -1,0 +1,5 @@
+1. Le permite al usuario buscar coincidencias en sus notas de la frase que se desee
+2. Si la persona manda un texto vacio o con espacios se retornan todos los id, se maneja en la primera validación con esa funcionalidad de python isspace y una condición para ver si esta vacio.
+3. Una forma fácil de entender el problema y adicionalmente al buscar en google encontramos funcioanlidades de pyhton que ya realizaban estas validaciones entre ellas una librería Unicode asi que decidimos aprovechar estas ventajas del lenguaje para hacer mas sencillo el ejercicio
+4. Miraria en el for que recorre todas las notas y a ver si en las validaciones de texto y contenido se aplican las normalizaciones correspondientes o en el texto de entrada del usuario
+5. en el condicional aparte de texto y contenido buscaría en las etiquetas y tmb se le aplicarían las mismas funciones que a texto y contenido
