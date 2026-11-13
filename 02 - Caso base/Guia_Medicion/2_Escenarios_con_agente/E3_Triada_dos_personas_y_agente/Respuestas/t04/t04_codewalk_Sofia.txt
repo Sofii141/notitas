@@ -1,0 +1,5 @@
+1. Al usuario no se le permite exceder el limite definido de tareas que pueden estar en la columna en curso
+2. si el id de la nota no existe lanza un error y eso al inicio con un keyerror primero se busca en todas las notas si existe ese id
+3. Fue la que open code sugirió y estuvimos de acuerdo algo distinto a lo imaginado porque yo no conocía esa funcio sum o next de python
+4. eso significa que esta contando mal y que en la validación de que si el destino es en curso esta haciendo algo distinto a lo esperado entonces revisaría ese if a ver que esta haciendo
+5. pues ya no evaluaria solamente en curso y sumaria adicionalmente lo que esta en hecho fuera bueno hacer una función que devuelva según la columna que yo necesite la cantidad de tareas para que no se acumulen variables que sumen de arriba y abajo y centralizar ese comportamiento

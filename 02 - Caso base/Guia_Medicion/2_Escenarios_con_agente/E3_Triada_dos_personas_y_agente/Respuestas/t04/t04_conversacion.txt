@@ -1,0 +1,91 @@
+Sesión de OpenCode: Límite WIP en t04 · modelo deepseek-v4.1-flash-free (opencode) · agente build
+
+=== Ustedes (12/11/2026 21:32:08) ===
+Actúa como navegante de pair programming (spec Copiloto v1). Tarea: t04.
+Este es el enunciado de la tarea:
+## t04 · Límite WIP de "En curso" (M) ⚠️
+
+Archivo: `backend/notitas/t04.py`
+
+Firma: `def validar_wip(notas: list[dict], nota_id: str, destino: str, limite: int = 3) -> None`
+
+Cada nota es un diccionario con al menos `"id"` y `"columna"`. El módulo ya define la excepción `WipExcedido`.
+- CA1: si mover la nota a `"en_curso"` dejaría **más de `limite`** notas en esa columna, se lanza `WipExcedido`. Si no, no devuelve nada.
+- CA2: el límite solo aplica a `"en_curso"`; las otras columnas no tienen tope.
+- CA3: si la nota **ya está** en `"en_curso"` (solo se reordena), no cuenta como una nota más.
+- CA4: si `nota_id` no existe, `KeyError`.
+Archivos: @backend/notitas/t04.py @backend/tests/visibles/test_t04.py
+No leas otros archivos ni pidas las pruebas ocultas. No hagas commit. No edites pruebas. No inventes requisitos que no estén en
+el enunciado. Trabajas con dos personas: una escribe y la otra revisa; las dos deciden.
+Responde en markdown con estas 4 partes:
+1. Plan de 3 a 6 pasos.
+2. Cambio propuesto, solo en backend/notitas/t04.py.
+3. Supuestos que hiciste.
+4. Casos borde que crees que faltan (como texto, no como pruebas).
+
+
+[herramienta read: C:\Users\ASUS\Desktop\Proyecto final agiles\EntregaFinal-AGILES\Repositorio\notitas-agente\backend\notitas\t04.py]
+[herramienta read: C:\Users\ASUS\Desktop\Proyecto final agiles\EntregaFinal-AGILES\Repositorio\notitas-agente\backend\tests\visibles\test_t04.py]
+=== Agente (21:32:12) ===
+## 1. Plan
+
+1. Localizar la nota por `nota_id` en `notas`; si no aparece, lanzar `KeyError` (CA4).
+2. Descartar el resto de columnas distintas de `"en_curso"`: no hay tope (CA2).
+3. Si la nota ya está en `"en_curso"`, salir sin contar (reordenamiento, CA3).
+4. Contar cuántas notas hay en `"en_curso"` y comprobar si `conteo + 1 > limite`; en ese caso lanzar `WipExcedido` (CA1).
+5. Devolver `None` implícitamente cuando la validación pasa.
+
+## 2. Cambio propuesto (`backend/notitas/t04.py`)
+
+```python
+class WipExcedido(Exception):
+    pass
+
+
+def validar_wip(notas: list[dict], nota_id: str, destino: str, limite: int = 3) -> None:
+    """Ver TAREAS.md, tarea t04."""
+    nota = next((n for n in notas if n.get("id") == nota_id), None)
+    if nota is None:
+        raise KeyError(nota_id)
+
+    # CA2: el límite solo aplica a "en_curso".
+    if destino != "en_curso":
+        return None
+
+    # CA3: reordenar dentro de "en_curso" no suma una nota.
+    if nota.get("columna") == "en_curso":
+        return None
+
+    en_curso = sum(1 for n in notas if n.get("columna") == "en_curso")
+
+    # CA1: estrictamente más de `limite` notas en la columna.
+    if en_curso + 1 > limite:
+        raise WipExcedido(
+            f'"{destino}" admite como máximo {limite} notas; ya hay {en_curso}.'
+        )
+
+    return None
+```
+
+## 3. Supuestos
+
+- Los `id` de las notas son únicos; si hubiera duplicados, se toma la primera coincidencia.
+- `destino` es una columna válida; no se valida contra un catálogo de columnas porque el enunciado no lo pide.
+- La comparación de `destino` es exacta (`"en_curso"` literal), sin normalizar mayúsculas ni espacios.
+- `limite` es un entero no negativo y no se valida su tipo ni su signo.
+- La nota no se mueve realmente: la función solo valida y no muta `notas` (coherente con el retorno `None`).
+- `KeyError` aplica antes que cualquier otra regla, es decir, aunque `destino` no sea `"en_curso"`.
+- Usar `.get(...)` es defensivo ante notas sin `"columna"`; el enunciado garantiza que existe.
+
+## 4. Casos borde que creo que faltan
+
+- `limite = 0`: cualquier entrada a `"en_curso"` debe fallar; conviene confirmar que es el comportamiento esperado.
+- `notas` vacía o `nota_id` inexistente: debe salir `KeyError`, no un error de índice u otro tipo.
+- Nota ya en `"en_curso"` con la columna ya llena (`conteo == limite`): el reordenamiento debe permitirse aunque no quepa una nota nueva.
+- Nota en otra columna movida a otra columna distinta de `"en_curso"`: nunca debe lanzar `WipExcedido`, aunque haya muchas notas en `"en_curso"`.
+- Justo en el borde: `conteo + 1 == limite` debe pasar y `conteo + 1 == limite + 1` debe fallar (el enunciado dice "más de `limite`", no "igual o más").
+- IDs duplicados en la lista: definir si se cuenta la nota dos veces o se asume invariante de unicidad.
+- Notas con `"columna": "en_curso"` pero `"id"` ausente: hoy `n.get("id")` no falla, pero podría enmascarar datos corruptos.
+- `limite` negativo o de tipo no entero: comportamiento no especificado.
+- Distinguir si `KeyError` debe llevar el `nota_id` como argumento/ mensaje (útil para depuración, aunque no sea requisito).
+

@@ -1,0 +1,5 @@
+1. La función evalúa el limite wip de la columna en_curso, al pasar una nota de una columna diferente a la de en_curso
+2. EL evaluar si la nota a cambiar de columna realmente existe, además de si no se encuentra ya en la nota en la columna en_curso
+3. Es la manera que nos sugirió la ia y tenia menos costo computacional y estaba mas ordenado que el enfoque que inicialmente planteamos
+4. Validar el er if de la función donde se evalúa si el origen de la nota es la misma columna en curso, debe de retornar none y no lanzar excepciones
+5. Eliminar la validación que retorna sin errores  si destino es diferentes de en_cruso para que acepte también si el destino es hecho, poner una nueva validación  al final si destino es hecho y hay mas de 10 lanzar wip error y mover el return none luego de esta nueva validación
