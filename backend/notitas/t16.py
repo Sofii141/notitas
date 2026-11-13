@@ -1,3 +1,9 @@
 def ordenar(notas: list[dict]) -> list[dict]:
-    """Ver TAREAS.md, tarea t16."""
-    raise NotImplementedError
+    return sorted(
+        notas,
+        key=lambda n: (
+            -n["prioridad"],
+            n["vence"] is None,
+            n["vence"] or "",
+        ),
+    )
