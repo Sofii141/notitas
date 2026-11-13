@@ -30,3 +30,4 @@ El profe pide, en el reporte y en la última diapositiva: qué herramientas usar
 | 11/11/2026 | Claude Code | Organizar los resultados de t07 (ficha, codewalk, bitácora, nombres del cronómetro y del video) y revisión preliminar no ciega del codewalk | Los datos son los que mandó la pareja; las pausas quedan [N] | Ana Sofía |
 | 11/11/2026 | Claude Code | Organizar los resultados de t15 y revisión preliminar no ciega de su codewalk; recomendar e instalar Open Collaboration Tools | Los datos son los que mandó la pareja; sin captura del cronómetro de M1; pausas [N] | Ana Sofía |
 | 11/11/2026 | Claude Code | Cambiar E3 y la guía de escenarios a Open Collaboration Tools y revisar que las guías de E1 a E4 estén completas | Revisan la guía y las fichas antes de empezar | Ana Sofía |
+| 12/11/2026 | Claude Code | Completar las fichas de los escenarios con lo que faltaba anotar y actualizar las guías | Revisan una ficha antes de empezar t16 | Ana Sofía |
