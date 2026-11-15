@@ -1,0 +1,556 @@
+Sesión de OpenCode: Validar título de nota t01 · modelo deepseek-v4.1-flash-free (opencode) · agente build
+
+=== Ana Sofía (15/11/2026 14:36:08) ===
+Actúa como navegante de pair programming (spec Copiloto v1). Tarea: t01.
+Este es el enunciado de la tarea:
+## t01 · Validar el título de una nota (S)
+
+Archivo: `backend/notitas/t01.py`
+
+Firma: `def validar_titulo(s: str) -> str`
+
+Devuelve el título limpio o lanza `ValueError`.
+- CA1: se quitan los espacios al inicio y al final (incluye tabulaciones, saltos de línea y el espacio duro ` `).
+- CA2: los espacios internos repetidos se dejan en uno solo (`"Comprar   pan"` → `"Comprar pan"`).
+- CA3: el texto se normaliza a Unicode **NFC**.
+- CA4: si queda vacío o tiene **más de 80 caracteres** (puntos de código, después de normalizar), `ValueError`.
+Archivos: @backend/notitas/t01.py @backend/tests/visibles/test_t01.py
+No leas otros archivos ni pidas las pruebas ocultas. No hagas commit. No edites pruebas. No inventes requisitos que no estén en
+el enunciado. No edites archivos: solo propones; la persona escribe el código.
+Responde en markdown con estas 4 partes:
+1. Plan de 3 a 6 pasos.
+2. Cambio propuesto, solo en backend/notitas/t01.py.
+3. Supuestos que hiciste.
+4. Casos borde que crees que faltan (como texto, no como pruebas).
+
+[herramienta read: C:\Users\Ana_Sofia\OneDrive\Documentos\UNI\E2 AGILES\EntregaFinal-AGILES\Repositorio\notitas-agente\backend\notitas\t01.py · completed]
+[herramienta read: C:\Users\Ana_Sofia\OneDrive\Documentos\UNI\E2 AGILES\EntregaFinal-AGILES\Repositorio\notitas-agente\backend\tests\visibles\test_t01.py · completed]
+=== Agente (14:36:13) ===
+## 1. Plan de 3 a 6 pasos
+
+1. Recortar extremos con `s.strip()`: en Python elimina `\t`, `\n`, `\r` y también el espacio duro `U+00A0`, así que cubre CA1 sin listar caracteres a mano.
+2. Normalizar a **NFC** con `unicodedata.normalize("NFC", ...)` (CA3). Hacerlo antes del conteo garantiza que el límite se mida sobre puntos de código ya normalizados.
+3. Colapsar las rachas de **espacio interno** `U+0020` a uno solo con `re.sub(r" {2,}", " ", ...)` (CA2), sin tocar otros caracteres internos.
+4. Validar CA4 sobre el título ya limpio: si queda vacío (`""`) o `len(titulo) > 80` → `ValueError`.
+5. Devolver el título limpio (recortado, colapsado y en NFC).
+
+## 2. Cambio propuesto (solo `backend/notitas/t01.py`)
+
+```python
+import re
+import unicodedata
+
+MAX_TITULO = 80
+_ESPACIOS_REPETIDOS = re.compile(r" {2,}")
+
+
+def validar_titulo(s: str) -> str:
+    """Ver TAREAS.md, tarea t01."""
+    titulo = s.strip()
+    titulo = unicodedata.normalize("NFC", titulo)
+    titulo = _ESPACIOS_REPETIDOS.sub(" ", titulo)
+    if not titulo:
+        raise ValueError("el título no puede quedar vacío")
+    if len(titulo) > MAX_TITULO:
+        raise ValueError(f"el título supera los {MAX_TITULO} caracteres")
+    return titulo
+```
+
+Si prefieres no importar `re`, la línea del colapso se puede escribir sin regex, pero entonces conviene ser explícito para no colapsar tabs/saltos internos (`" ".join(s.split())` no serviría para eso, porque también convierte `\t` y `\n` internos en espacio).
+
+## 3. Supuestos que hice
+
+- **`s` es siempre `str`**: no añado validación de tipo; un valor de otro tipo produciría `TypeError`, no `ValueError`, y el enunciado no lo pide.
+- **"espacio" en CA2 = `U+0020`**: solo colapso rachas del espacio ASCII. El enunciado menciona tabulaciones y saltos de línea únicamente para los extremos (CA1), así que un `\t` o `\n` **interno** se conserva tal cual.
+- **El límite de 80 se mide sobre el título ya limpio** (después de recortar y colapsar), no sobre la cadena original. "Si queda vacío o tiene más de 80" sugiere que se evalúa el resultado del proceso.
+- **`len()` es la métrica correcta** porque en Python cuenta puntos de código (un emoji fuera del BMP cuenta 1, una letra con acento combinante cuenta 2 tras NFC solo si no compone).
+- **`str.strip()` es un superconjunto aceptable de CA1**: además de `\t`, `\n` y `U+00A0`, quita otros espacios Unicode (p. ej. `U+2007`, `U+202F`). CA1 dice "incluye", no "solo".
+- **No hay requisitos de mayúsculas, puntuación ni eliminación de caracteres de control internos**; no los invento.
+- **El texto del `ValueError` es libre**: las pruebas solo esperan la excepción.
+- **Una sola normalización NFC es suficiente** y no altera el resultado del recorte ni del colapso (NFC no convierte espacios en otros caracteres ni viceversa).
+
+## 4. Casos borde que creo que faltan (en texto)
+
+- Recorte de **tabulaciones** al inicio y final (`"\tComprar pan\t"` → `"Comprar pan"`) y de **saltos de línea** (`"\n Comprar pan \r\n"`).
+- Recorte del **espacio duro** `U+00A0` solo, y combinado con espacios normales (`"\u00a0\u00a0 Comprar pan \u00a0"`).
+- Cadena vacía `""` (no solo espacios) → `ValueError`.
+- Cadena formada únicamente por `U+00A0` o por `\t\n` → `ValueError` tras el recorte.
+- **Colapso interno** de tres o más espacios, y que el colapso **no** toque tabs o saltos internos (si se acepta el supuesto de CA2 = `U+0020`).
+- Cadena que se **acorta hasta 80 por el colapso**: p. ej. 41 caracteres con un espacio doble en medio pasan, aunque la entrada cruda mida más de 80.
+- **Límite exacto**: título de exactamente 80 puntos de código pasa; 81 lanza `ValueError`.
+- **NFC que reduce el conteo**: texto descompuesto (`"e" + U+0301` repetido) cuya forma normalizada mide 80 debe pasar aunque la entrada cruda supere 80; y a la inversa, verificar que se devuelve la forma compuesta (`"é"`).
+- **Caracteres no BMP** (emoji): 80 emojis deben pasar porque cuentan como 1 punto de código cada uno.
+- Caracteres que **NFC no compone** (p. ej. `"ñ"` ya compuesta, o una marca combinante sin base) y que deben conservarse sin cambios.
+- Texto que solo se diferencia en espacios internos **alrededor de puntuación** (`"pan ,  leche"` → `"pan , leche"`, sin inventar limpieza extra).
+- Que **no** se cambie el caso (`"Comprar PAN"` se mantiene) ni se recorten caracteres internos distintos de `U+0020`.
+- Entrada de tipo distinto de `str` (por ejemplo `None`) para dejar constancia de que el comportamiento esperado no es `ValueError` (probablemente `TypeError`), si el equipo decide cubrirlo.
+
+No he editado archivos ni hecho commit: el cambio de arriba es solo propuesta para que lo escribas tú.
+
+=== Ana Sofía (15/11/2026 14:43:03) ===
+me aclaras esta parte     titulo = unicodedata.normalize("NFC", titulo)
+    titulo = _ESPACIOS_REPETIDOS.sub(" ", titulo)
+
+=== Agente (14:43:03) ===
+Claro. Son dos transformaciones independientes que se aplican en cadena: la primera arregla la **forma Unicode**, la segunda arregla los **espacios repetidos**. Ninguna de las dos valida nada; la validación viene después.
+
+## Línea 1: `unicodedata.normalize("NFC", titulo)`
+
+`normalize(forma, texto)` devuelve una **copia** del texto en la forma Unicode pedida. `"NFC"` significa *Canonical Decomposition, followed by Canonical Composition*: primero descompone cada carácter en su forma base + marcas, y luego vuelve a componer lo que se pueda.
+
+Ejemplos:
+
+| Entrada | Puntos de código | Salida NFC | Puntos de código |
+|---|---|---|---|
+| `"e" + U+0301` (e + acento combinante) | 2 | `"é"` | 1 |
+| `"A" + U+030A` | 2 | `"Å"` | 1 |
+| `"ñ"` ya compuesta | 1 | `"ñ"` (sin cambios) | 1 |
+| `"Comprar pan"` | — | idéntico | — |
+
+Qué **no** hace NFC (importante para no romper CA1/CA2):
+
+- No cambia mayúsculas ni minúsculas.
+- No quita acentos ni signos.
+- No aplica compatibilidad: `"ﬁ"` sigue siendo `"ﬁ"`, `"７"` (fullwidth) sigue igual.
+- **No convierte el espacio duro `U+00A0` en espacio normal.** Eso lo haría `NFKC`/`NFKD`, porque `U+00A0` tiene una descomposición de *compatibilidad* a `U+0020`. Ojo con eso: si alguien cambia `"NFC"` por `"NFKC"`, el espacio duro interno pasaría a ser espacio ASCII y luego el colapso lo tocaría, cambiando el comportamiento de CA1/CA2.
+
+Es idempotente: normalizar dos veces da lo mismo. Por eso da igual si el texto llega ya en NFC.
+
+## Línea 2: `_ESPACIOS_REPETIDOS.sub(" ", titulo)`
+
+La constante del módulo es:
+
+```python
+_ESPACIOS_REPETIDOS = re.compile(r" {2,}")
+```
+
+- `r"..."` es un *raw string*: la barra invertida no se interpreta en Python (aquí no hay ninguna, pero es la convención en regex).
+- El **espacio dentro del patrón es un espacio literal real**, no un metacarácter.
+- `{2,}` es el cuantificador "**dos o más** veces".
+- Así que el patrón significa literalmente: *"una racha de 2 o más espacios seguidos"*.
+
+`.sub(" ", titulo)` recorre el texto, encuentra **todas** las coincidencias (no solo la primera) y sustituye cada racha completa por un único `" "`. Lo que no coincide se queda igual.
+
+```python
+"Comprar   pan"          -> "Comprar pan"
+"a  b   c    d"          -> "a b c d"
+"a b"                    -> "a b"        # un solo espacio: no coincide
+"a\tb"                   -> "a\tb"       # el tab no es U+0020: no coincide
+"a \u00a0\u00a0 b"       -> "a  \u00a0 b" # solo se colapsan los ASCII
+```
+
+Esto es justo el supuesto que asumimos: CA2 dice "espacios internos" y solo colapsamos `U+0020`; tabulaciones y saltos de línea internos se conservan, porque el enunciado solo los menciona para los extremos (CA1).
+
+Equivalencias y alternativas:
+
+- `r" {2,}"` y `r" +"` hacen lo mismo en la práctica (una racha de ≥1 se convierte en 1 espacio, y un espacio solo queda igual).
+- `re.sub(r" {2,}", " ", titulo)` sin compilar también funciona; `re` cachea los patrones internamente, así que la constante es sobre todo por legibilidad.
+- **No** uses `" ".join(titulo.split())` si quieres respetar el supuesto anterior: `split()` sin argumentos parte por *cualquier* whitespace y convertiría `"a\tb"` en `"a b"`, y además se comería los extremos (aunque eso ya lo hizo `strip`).
+
+## Por qué en ese orden
+
+1. `strip()` deja los extremos sin espacios, así que cualquier racha que quede es interna.
+2. `normalize("NFC", ...)` deja el texto en su forma final.
+3. `sub(...)` colapsa las rachas sobre esa forma final.
+4. `len(titulo) > 80` mide entonces exactamente el título que se va a devolver, en puntos de código normalizados (CA4).
+
+Entre los pasos 2 y 3 el orden es indiferente en la práctica: NFC no crea ni destruye `U+0020`, así que colapsar antes o después da el mismo resultado. Se normaliza primero por claridad: "aquí ya está la forma canónica; ahora limpio espaciados; ahora mido".
+
+Un detalle de estilo: reutilizo el nombre `titulo` en cada paso (reasignación progresiva). Si prefieres que se lea como una tubería, puedes usar nombres distintos (`recortado`, `normalizado`, `limpio`) sin cambiar el comportamiento.
+
+=== Ana Sofía (15/11/2026 14:45:18) ===
+pero eso de puntos de codigo a que se refiere
+
+=== Agente (14:45:18) ===
+"Punto de código" (*code point*) es el **número que Unicode asigna a cada carácter**. Es la unidad atómica de un texto Unicode: un entero entre `U+0000` y `U+10FFFF`. La `A` mayúscula es `U+0041`, la `ñ` es `U+00F1`, el espacio duro es `U+00A0`, el emoji 😀 es `U+1F600`.
+
+Cuando el enunciado dice "más de 80 caracteres (**puntos de código**, después de normalizar)", quiere decir: cuenta esos números, no lo que "se ve" ni los bytes.
+
+## Las tres formas de contar (de más fina a más gruesa)
+
+1. **Bytes**: cuánto ocupa en disco/red según la codificación (UTF-8). `"á"` son 2 bytes, `"😀"` son 4.
+2. **Puntos de código**: cuántos números Unicode tiene la cadena. Esto es lo que cuenta `len()` en Python 3.
+3. **Grafemas / caracteres percibidos**: lo que un humano ve como "una letra". Un emoji con ZWJ o una bandera son **un** grafema pero **varios** puntos de código.
+
+## Tabla comparativa
+
+| Texto | Puntos de código | `len()` en Python 3 | Bytes UTF-8 | Grafemas vistos |
+|---|---|---|---|---|
+| `"a"` | 1 (`U+0061`) | 1 | 1 | 1 |
+| `"á"` precompuesta | 1 (`U+00E1`) | 1 | 2 | 1 |
+| `"a"` + `U+0301` (acento combinante) | 2 | 2 | 3 | 1 |
+| ...la misma tras NFC | 1 (`U+00E1`) | 1 | 2 | 1 |
+| `"😀"` | 1 (`U+1F600`) | 1 | 4 | 1 |
+| `"🇵🇪"` (bandera) | 2 (dos *regional indicators*) | 2 | 8 | 1 |
+| `"👨👩👧"` | 5 (3 emoji + 2 ZWJ) | 5 | 18 | 1 |
+
+Fíjate en las dos últimas filas: **lo que se ve como un solo "carácter" puede ser 2 o 5 puntos de código**. Y fíjate en las filas del acento: NFC **reduce** el conteo de 2 a 1, por eso CA4 insiste en "después de normalizar".
+
+## Por qué esto importa en t01
+
+- `len(titulo) > 80` en Python 3 cuenta **exactamente** puntos de código, así que la comprobación del código propuesto ya cumple CA4 tal cual. No hace falta ninguna librería.
+- **No** uses `len(titulo.encode("utf-8"))`: eso cuenta bytes y rechazaría títulos válidos con acentos o emoji (80 `"á"` = 160 bytes).
+- **No** uses una librería de grafemas (`grapheme`, `regex` con `\X`): el enunciado pide puntos de código, no caracteres percibidos. 80 emojis deben pasar, y una bandera cuenta 2.
+- El orden importa: si midieras **antes** de normalizar, un título de 81 puntos de código que NFC comprime a 80 se rechazaría por error. Por eso en el plan se normaliza primero y se mide después.
+- `U+00A0` (espacio duro) es **1 punto de código**, igual que el espacio normal, aunque visualmente sea distinto. Por eso `strip()` lo puede eliminar: `isspace()` es una propiedad del carácter, no de cómo se ve.
+
+## Cuidado con lenguajes que no son Python 3
+
+En JavaScript, Java o C# los strings son UTF-16 y un emoji fuera del BMP (como 😀) ocupa **dos** unidades, así que ahí `"😀".length` da 2. En Python 3 no existe ese problema: cada elemento de un `str` es un punto de código completo, y `len("😀") == 1`. Esa es una de las razones por las que "puntos de código" se especifica explícitamente en el enunciado en lugar de decir solo "caracteres": evita ambigüedad entre implementaciones.
+
+Si quieres inspeccionarlo tú mismo en el REPL:
+
+```python
+>>> import unicodedata
+>>> s = "e\u0301"
+>>> len(s), s
+(2, 'é')                      # se ve igual, pero son 2 puntos de código
+>>> len(unicodedata.normalize("NFC", s))
+1
+>>> hex(ord("😀"))
+'0x1f600'
+>>> unicodedata.name("\u00a0")
+'NO-BREAK SPACE'
+```
+
+=== Ana Sofía (15/11/2026 14:47:04) ===
+aun no entiendo muy bien es que no he trabajado con unicode
+
+=== Agente (14:47:04) ===
+Vamos desde cero, sin tecnicismos.
+
+## 1. La idea básica: Unicode es un diccionario gigante
+
+Un computador no guarda letras, guarda **números**. Entonces hace falta un acuerdo que diga "el número 97 significa `a`, el 98 significa `b`...". Ese acuerdo es Unicode: una tabla enorme con una fila por carácter.
+
+- fila 97 → `a`
+- fila 241 → `ñ`
+- fila 160 → "espacio duro" (un espacio que no se puede partir)
+- fila 128512 → `😀`
+
+Cada fila tiene un nombre formal: **punto de código** (*code point*). Se escribe con `U+` y el número en hexadecimal, así que fila 97 = `U+0061`, fila 241 = `U+00F1`, fila 160 = `U+00A0`.
+
+Eso es todo lo que significa "punto de código": **el número de la fila en esa tabla**. Nada más.
+
+## 2. Un texto es una lista de esos números
+
+`"pan"` no es "la palabra pan", es la lista `[112, 97, 110]`. Y `len()` en Python cuenta **cuántos números hay en la lista**:
+
+```python
+>>> list("pan")
+['p', 'a', 'n']          # Python te lo muestra como letras, por comodidad
+>>> [ord(c) for c in "pan"]
+[112, 97, 110]           # pero por dentro son estos números
+>>> len("pan")
+3                        # 3 números
+```
+
+Cuando el enunciado dice "más de 80 puntos de código", dice literalmente: **si la lista tiene más de 80 números, rechaza**. En Python eso es `len(titulo) > 80`. No hay nada más que entender para escribir esa línea.
+
+## 3. La única trampa: una misma cosa se puede escribir de dos formas
+
+Aquí está el 90% de la confusión con Unicode, y es lo único que te afecta en t01.
+
+La letra `é` se puede escribir de **dos maneras** en la tabla:
+
+- **Forma A (1 número)**: `é` = fila 233 (`U+00E9`). Un solo número.
+- **Forma B (2 números)**: `e` (fila 101) **+** un "acento suelto" que se pega a la letra anterior (`U+0301`, el *acento combinante*). Dos números.
+
+En pantalla las dos se ven **idénticas**: `é`. Pero una lista tiene 1 número y la otra tiene 2.
+
+Y aquí es donde entra **NFC**: es una operación que dice "si encuentras la Forma B, conviértela a la Forma A". Es decir, *pon siempre la versión de un solo número*. Eso es literalmente todo lo que hace `normalize("NFC", ...)`: **elegir una forma estándar** para que dos textos que se ven iguales se comparen igual y se cuenten igual.
+
+Por eso el enunciado dice "80 puntos de código **después de normalizar**": si no normalizas, la misma palabra `"ééé..."` podría contar el doble solo por cómo la escribió el usuario.
+
+## 4. Lo segundo que sorprende: emojis y banderas son varios números
+
+Un `😀` es **un** número (fila 128512), porque está en la tabla desde hace años. Pero cosas más nuevas son combinaciones:
+
+- Una bandera como 🇵🇪 son **2 números** (uno para "P", otro para "E", en versión bandera).
+- Una familia 👨👩👧 son **5 números**: papá, un "pegamento invisible", mamá, otro pegamento, hija.
+
+Se ven como un solo dibujo, pero son varios números. Por eso "cuántos caracteres se ven" **no** es lo mismo que "cuántos puntos de código hay". El enunciado eligió la segunda opción porque es la única que no depende de la fuente, del sistema operativo ni de la opinión de nadie: es contar la lista.
+
+## 5. Y los "bytes" son otra cosa distinta
+
+Bytes es cómo se **guardan** esos números en el disco o se mandan por la red. `é` puede ocupar 2 bytes, `😀` 4 bytes. Eso es un tercer conteo y **no** es el que pide el enunciado. Por eso: no uses `len(titulo.encode(...))`. Usa `len(titulo)` y listo.
+
+## Resumen para tu tarea
+
+Para t01 solo necesitas tres ideas:
+
+1. `len(texto)` en Python = cuántos puntos de código tiene = lo que pide CA4. → `len(titulo) > 80`.
+2. `normalize("NFC", texto)` = "usa la forma estándar de los acentos" para que el conteo sea justo. → se aplica antes de medir.
+3. Todo lo demás (bytes, banderas, emojis raros) es cultura general: no tienes que programarlo.
+
+No hace falta que memorices filas ni formas Unicode. Con `s.strip()`, `unicodedata.normalize("NFC", ...)`, el colapso de espacios y `len(...) > 80` ya cubres los cuatro criterios.
+
+=== Ana Sofía (15/11/2026 14:49:28) ===
+pq importaste re
+
+=== Agente (14:49:28) ===
+Buena pregunta, y la respuesta honesta es: **`re` era opcional, lo puse por comodidad, no porque el ejercicio lo exija.**
+
+## Qué es `re`
+
+`re` es el módulo de **expresiones regulares** de la biblioteca estándar de Python (viene incluido, no hay que instalar nada). Las expresiones regulares son un mini-lenguaje para describir "patrones de texto" en lugar de escribirlos carácter por carácter.
+
+En concreto, con `re` puedes decir en una línea: *"busca donde haya 2 o más espacios seguidos y reemplaza toda esa racha por un solo espacio"*. Eso es exactamente CA2.
+
+```python
+re.sub(r" {2,}", " ", texto)
+#  ↑       ↑     ↑    ↑
+#  │       │     │    └ el texto donde buscar
+#  │       │     └ con qué reemplazar (un espacio)
+#  │       └ el patrón: "2 o más espacios seguidos"
+#  └ "substitute": sustituye TODAS las coincidencias, no solo la primera
+```
+
+Y el `re.compile(...)` de arriba solo guarda el patrón ya "compilado" en una constante, para no reescribirlo ni reinterpretarlo en cada llamada. Es puro orden, no cambia el resultado.
+
+## Por qué lo elegí
+
+- Es **una línea** y se lee casi como la frase del enunciado.
+- **No toca** tabs ni saltos de línea internos, que era justo el comportamiento que queríamos (CA2 habla solo de espacios).
+- No me obliga a escribir un bucle a mano.
+
+## Pero se puede hacer sin `re`
+
+Y si `re` te resulta un concepto nuevo encima de Unicode, **te recomiendo la versión sin `re`**: es más fácil de leer, de depurar y de explicar en la revisión. Opción con un bucle explícito:
+
+```python
+import unicodedata
+
+MAX_TITULO = 80
+
+
+def validar_titulo(s: str) -> str:
+    """Ver TAREAS.md, tarea t01."""
+    titulo = unicodedata.normalize("NFC", s.strip())
+
+    limpio = []
+    for ch in titulo:
+        # si es un espacio y el anterior ya era un espacio, lo salto
+        if ch == " " and limpio and limpio[-1] == " ":
+            continue
+        limpio.append(ch)
+    titulo = "".join(limpio)
+
+    if not titulo:
+        raise ValueError("el título no puede quedar vacío")
+    if len(titulo) > MAX_TITULO:
+        raise ValueError(f"el título supera los {MAX_TITULO} caracteres")
+    return titulo
+```
+
+Se lee como: *"recorro el texto; si veo un espacio y el anterior ya era espacio, no lo agrego"*. Es el mismo resultado que el `re.sub`, sin dependencias.
+
+Otra alternativa sin `re` y con menos líneas, aunque un poco "truco":
+
+```python
+while "  " in titulo:
+    titulo = titulo.replace("  ", " ")
+```
+
+Funciona (cada pasada quita la mitad de los espacios sobrantes), pero es un bucle que puede ejecutarse varias veces y, para quien lo lee, no es obvio de un vistazo. Con títulos de 80 caracteres el rendimiento da igual, así que aquí la decisión es de **legibilidad**, no de velocidad.
+
+## Comparación rápida
+
+| Versión | Líneas | ¿Toca tabs internos? | Conceptos nuevos |
+|---|---|---|---|
+| `re.sub(r" {2,}", " ", t)` | 1 | no | expresiones regulares |
+| bucle con lista `limpio` | ~7 | no | ninguno (solo `if` y listas) |
+| `while "  " in t: t = t.replace(...)` | 2 | no | ninguno, pero menos obvio |
+| `" ".join(t.split())` | 1 | **sí** (los convierte en espacio) | ninguno, pero cambia el comportamiento |
+
+Esa última fila es la trampa: `split()` sin argumentos parte por cualquier whitespace, así que `"a\tb"` se volvería `"a b"`. Por eso no la propuse.
+
+**Mi recomendación:** si nadie en el equipo está cómodo con `re`, quédate con la versión del bucle con lista. Cumple los cuatro criterios igual y no añade un tema nuevo a la discusión. Si el equipo ya usa `re` en otros módulos del proyecto, entonces `re.sub` es más corto y consistente.
+
+Lo único que **no** cambiaría en ninguna versión es el orden: recortar → normalizar NFC → colapsar espacios → validar vacío/longitud → devolver.
+
+=== Ana Sofía (15/11/2026 14:54:55) ===
+$ python -m pytest backend/tests/ocultas -k t01
+F..                                                                      [100%]
+================================== FAILURES ===================================
+________________________ test_espacios_internos_y_duro ________________________
+
+    def test_espacios_internos_y_duro():
+>       assert validar_titulo("\u00a0Comprar \t  pan\n") == "Comprar pan"
+E       AssertionError: assert 'Comprar \t pan' == 'Comprar pan'
+E
+E         - Comprar pan
+E         + Comprar      pan
+E         ?         ++
+
+backend\tests\ocultas\test_t01_oculta.py:4: AssertionError
+=========================== short test summary info ===========================
+FAILED backend/tests/ocultas/test_t01_oculta.py::test_espacios_internos_y_duro - AssertionError: assert 'Comprar \t pan' == 'Comprar pan'
+1 failed, 2 passed, 69 deselected in 0.50s 
+
+
+=== Agente (14:54:55) ===
+Ese fallo es muy informativo: la prueba oculta demuestra que mi supuesto sobre CA2 era **demasiado estrecho**. Voy a corregirlo.
+
+## Diagnóstico
+
+Entrada de la prueba: `"\u00a0Comprar \t  pan\n"` (espacio duro, `Comprar`, espacio, tab, dos espacios, `pan`, salto de línea) y espera `"Comprar pan"`.
+
+Con el código anterior:
+
+1. `strip()` quita el `U+00A0` del inicio y el `\n` del final → `"Comprar \t  pan"`.
+2. El regex `r" {2,}"` solo ve espacios `U+0020`: encuentra el `"  "` entre el tab y `pan` y lo deja en uno → `"Comprar \t pan"`.
+3. El tab queda intacto → **falla**.
+
+O sea: en este proyecto, **una racha interna de cualquier whitespace se convierte en un único espacio normal `U+0020`**, no solo las rachas de espacio ASCII. La prueba lo deja claro porque el `\t` desaparece y además se come también el espacio que lo precede: `"Comprar \t  pan"` → `"Comprar pan"`, un solo espacio entre las palabras.
+
+## Cambio propuesto (solo `backend/notitas/t01.py`)
+
+```python
+import unicodedata
+
+MAX_TITULO = 80
+
+
+def validar_titulo(s: str) -> str:
+    """Ver TAREAS.md, tarea t01."""
+    # CA1 + CA2: split() sin argumentos parte por CUALQUIER whitespace
+    # (espacio, \t, \n, \r, espacio duro U+00A0, etc.) y descarta los vacíos
+    # de los extremos; luego se unen las palabras con un único espacio normal.
+    titulo = " ".join(s.split())
+
+    # CA3: forma canónica (una sola forma para los acentos).
+    titulo = unicodedata.normalize("NFC", titulo)
+
+    # CA4: vacío o más de 80 puntos de código (ya normalizados).
+    if not titulo:
+        raise ValueError("el título no puede quedar vacío")
+    if len(titulo) > MAX_TITULO:
+        raise ValueError(f"el título supera los {MAX_TITULO} caracteres")
+
+    return titulo
+```
+
+Traza de la prueba que fallaba:
+
+```python
+s = "\u00a0Comprar \t  pan\n"
+s.split()   # ['Comprar', 'pan']      <- el duro, el tab y el salto son separadores
+" ".join(...)  # 'Comprar pan'         <- un solo espacio normal entre palabras
+```
+
+Y las visibles siguen pasando: `"  Comprar pan  ".split()` → `['Comprar', 'pan']`; `"   ".split()` → `[]` → `""` → `ValueError`.
+
+## Por qué `split()` y no un regex
+
+- `str.split()` sin argumentos usa como separador **todos los caracteres con la propiedad `isspace()`**: `U+0020`, `\t`, `\n`, `\r`, `\f`, `\v`, `U+00A0` (duro), `U+202F`, `U+2007`, etc. Es exactamente la semántica que reveló la prueba oculta, sin importar `re`.
+- Además **absorbe CA1**: los separadores de los extremos generan cadenas vacías que `split()` descarta, así que ya no hace falta el `strip()` aparte (se puede mantener, es inocuo, pero es redundante).
+- Con regex habría que escribir `re.sub(r"\s+", " ", s.strip())`; funciona igual (`\s` en Python 3 también incluye `U+00A0`), pero son más piezas para lo mismo.
+
+Cuidado con la variante tramposa: **`s.split(" ")`** (con el espacio como argumento explícito) **no** sirve, porque solo parte por `U+0020`, deja pasar el tab y el duro, y además produce elementos vacíos. Tiene que ser `split()` **sin argumentos**.
+
+## Supuestos actualizados
+
+- ~~"espacio de CA2 = solo `U+0020`"~~ → **corregido**: CA2 cubre rachas de cualquier whitespace Unicode, y el resultado siempre usa el espacio normal `U+0020`. La prueba oculta es la fuente de verdad aquí.
+- El colapso se aplica tanto a rachas repetidas como a un separador raro *único* (`"a\u00a0b"` → `"a b"`), porque `split()` no distingue entre "uno" y "varios": cualquier whitespace actúa de frontera entre palabras.
+- El límite de 80 se sigue midiendo sobre el resultado final ya limpio y normalizado.
+- Sigue sin validarse el tipo de `s`; un no-`str` daría `AttributeError`/`TypeError`, no `ValueError`.
+- `NFC` no altera whitespace (`U+00A0` conserva su punto de código), así que el orden entre `join` y `normalize` no cambia el resultado; se normaliza después por claridad, y así `len()` mide la forma definitiva.
+
+## Casos borde que ahora conviene tener en cuenta
+
+- **Tabs y saltos internos** ya no se conservan: `"a\tb"`, `"a\nb"`, `"a\r\nb"` → `"a b"`. Este es el comportamiento nuevo y probablemente el esperado.
+- **Mezcla de separadores**: `"a\t \u00a0\n b"` → `"a b"` (toda la racha mixta colapsa a un espacio).
+- **Espacio duro único entre palabras**: `"pan\u00a0leche"` → `"pan leche"`.
+- **Solo whitespace raro**: `"\u00a0\t\n"` → `""` → `ValueError`.
+- **Caracteres que *parecen* espacio pero no lo son** y por tanto **sobreviven**: el espacio de ancho cero `U+200B` (categoría `Cf`) y el `U+FEFF` (BOM) no son `isspace()`, así que no actúan de separador. Si el equipo quiere tratarlos como espacios, es un requisito nuevo, no cubierto por el enunciado.
+- **El conteo baja por el colapso**: 41 palabras de un carácter separadas por dobles espacios pasan de >80 puntos de código crudos a 80 limpios y deben aceptarse, porque CA4 se mide después de limpiar.
+- **Puntuación y mayúsculas** no se tocan: `"¡Hola ,  mundo!"` → `"¡Hola , mundo!"`.
+
+No he editado nada; el bloque de arriba es la propuesta para que la escribas tú.
+
+=== Ana Sofía (15/11/2026 14:57:20) ===
+no entiendo muy bien tu supuesto tipo porque fallaste y como solucionaste pero explicalo sencillo
+
+=== Agente (14:57:20) ===
+Claro, sin tecnicismos.
+
+## Lo que pedía la prueba
+
+La prueba le mete este texto:
+
+```
+[espacio duro]Comprar[espacio][TAB][espacio][espacio]pan[salto de línea]
+```
+
+y espera que salga:
+
+```
+Comprar pan
+```
+
+Fíjate: entre `Comprar` y `pan` había **basura invisible** (un espacio, un tab, dos espacios). La prueba quiere que toda esa basura se convierta en **un solo espacio normal**.
+
+## Qué hacía mi código
+
+Mi código solo sabía reconocer **un** tipo de espacio: el de la tecla espaciadora (`" "`).
+
+Entonces hizo esto:
+
+```
+"Comprar \t  pan"
+   ↓ quita los espacios repetidos "  "
+"Comprar \t pan"
+   ↓
+```
+
+El tab (`\t`) no lo reconoció como espacio, así que **se quedó ahí**. Resultado: `"Comprar \t pan"`, que no es `"Comprar pan"`. De ahí el `F`.
+
+## Por qué fallé
+
+Porque asumí: *"espacio" = solo el de la barra espaciadora*.
+
+Pero en un texto hay **varios caracteres que funcionan como espacio** aunque no se vean:
+
+| Se ve como | Nombre | Cómo se escribe en Python |
+|---|---|---|
+| nada | espacio normal | `" "` |
+| nada | tabulación (TAB) | `"\t"` |
+| salto de línea | nueva línea | `"\n"` |
+| nada | espacio duro (no se parte) | `"\u00a0"` |
+
+Yo solo limpié el primero. La prueba demuestra que el ejercicio quiere limpiar **todos**.
+
+## Cómo lo solucioné
+
+Con una sola instrucción de Python que hace justo lo que faltaba:
+
+```python
+" ".join(s.split())
+```
+
+Se lee de dentro hacia afuera:
+
+1. **`s.split()`** = *"corta el texto en palabras"*, usando **cualquier tipo de espacio** como cuchillo (normal, tab, salto, duro). Los trozos vacíos de los extremos se tiran solos.
+2. **`" ".join(...)`** = *"vuelve a pegar esas palabras, pero ahora separadas por un espacio normal"*.
+
+Aplicado al texto de la prueba:
+
+```python
+s = "\u00a0Comprar \t  pan\n"
+
+s.split()
+# ['Comprar', 'pan']     ← el duro, el tab y el salto desaparecieron como cuchillos
+
+" ".join(['Comprar', 'pan'])
+# 'Comprar pan'          ← quedó un solo espacio normal
+```
+
+## La idea en una frase
+
+Antes: *"quito los espacios de sobra"* → solo conocía uno de los cuatro tipos.
+
+Ahora: *"corto la frase en palabras y la vuelvo a armar con espacios normales"* → me da igual qué tipo de espacio haya, porque todos sirven de cuchillo.
+
+Y como el `split()` ya tira lo que sobra en los extremos, también se cumple lo de recortar el inicio y el final (el espacio duro del principio y el salto del final desaparecen solos). Por eso la solución quedó más corta que la anterior.
+

@@ -33,3 +33,4 @@ El profe pide, en el reporte y en la última diapositiva: qué herramientas usar
 | 12/11/2026 | Claude Code | Completar las fichas de los escenarios con lo que faltaba anotar y actualizar las guías | Revisan una ficha antes de empezar t16 | Ana Sofía |
 | 12/11/2026 | Claude Code | Organizar los resultados de t04 (E3), pasar la conversación con el agente a texto y revisión preliminar no ciega del codewalk | Los datos son los que mandó la pareja | Ana Sofía |
 | 14/11/2026 | Claude Code | Organizar los resultados de t16 (E3), pasar la conversación con el agente a texto y revisión preliminar no ciega del codewalk | Los datos son los que mandó la pareja; pausas [N]; sin punto por pregunta en el codewalk | Ana Sofía |
+| 15/11/2026 | Claude Code | Organizar t01 (E1), calificar su codewalk por decisión de la pareja y actualizar la guía del codewalk | La nota no es ciega; la revisión final la hace otra IA | Ana Sofía |

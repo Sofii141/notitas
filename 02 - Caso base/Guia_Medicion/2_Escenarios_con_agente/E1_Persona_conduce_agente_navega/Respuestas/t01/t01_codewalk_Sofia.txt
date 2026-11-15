@@ -1,0 +1,5 @@
+1. Validar el titulo que ingrese el usuario devolviendoselo limpio y garantizando que este dentro del rango de caracteres y no vacio
+2. si el texto es vacio o excede los 80 caracteres
+3. basicamente pues fue lo que sugirio opencode y la vd me parecio una forma sencilla de entender y aprovechar python con todas las funcionalidades y atajos que se pueda y si fue entendible. (Respondida después, el 15/11, porque se le pasó la pregunta.)
+4. de hecho nos paso algo similar y era porque no estabas teniendo en cuenta con el agente todos los tipos de espacios entonces miraria al inicio el join y el split que usamos que basicamente se hizo para eliminar todos los tipos de espacios y volver a juntar todo entonces si algo falla debe ser ahi
+5. en la variable global definida cambio de 80 a 120 caracteres
