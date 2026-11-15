@@ -6,9 +6,9 @@ _ESPACIOS_REPETIDOS = re.compile(r" {2,}")
 
 def validar_titulo(s: str) -> str:
     """Ver TAREAS.md, tarea t01."""
-    titulo = s.strip()
+    titulo = " ".join(s.split())
     titulo = unicodedata.normalize("NFC", titulo)
-    titulo = _ESPACIOS_REPETIDOS.sub(" ", titulo)
+
     if not titulo:
         raise ValueError("el título no puede quedar vacío")
     if len(titulo) > MAX_TITULO:
