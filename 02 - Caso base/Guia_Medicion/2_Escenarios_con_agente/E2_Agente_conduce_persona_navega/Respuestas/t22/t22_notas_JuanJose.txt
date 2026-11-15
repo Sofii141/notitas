@@ -1,0 +1,82 @@
+t22
+Fecha  15 de noviembre de 2026 · sesión 1ra solitaria Juan Jose
+Quién Persona que navega y decide: Juan José (el agente junior escribe)
+Herramienta, versión y modelo exacto (por ejemplo:
+OpenCode Desktop 1.19.5 · DeepSeek V4.1 Flash · proveedor).
+También va en Sesiones
+M5 · Pronóstico en minutos: 20 min
+
+Bueno el enfoque sera
+primero hacer una copia de la nota original luego con un condicional mirar si "bloqueada": True`, si es correcto, con otro condicional mirar si el motivo no queda vacio o nulo al recortar, si no queda vacio a la copia ponerle "bloqueada": False` y la columna  por el parámetro de destino recibido y añadirle al final del historial si es que ya no lo tiene {"accion": "desbloqueo", "motivo": <motivo recortado>}, y enviar esa copia, si no tiene motivo lanzar el error `NotaBloqueada` y si no estaba bloqueada desde el inicio se cambia la columna por la de destino., siempre enviando la copia que se hace al comienzo, de preferencia una Deep copy con arreglos de mas de un nivel nunca se sabe.
+
+I'll start by reading the task file and the visible tests.
+
+Leí el archivo y la prueba visible. Voy paso por paso.
+
+Cambio 1 — CA1: Voy a devolver una copia del dict con "columna": destino cuando la nota no esté bloqueada, usando dict(nota) para no tocar el original.
+
+1. Qué cambié: Añadí el camino de nota libre: copia superficial con "columna" = destino, sin mirar motivo. 2. Supuestos: "No bloqueada" = "bloqueada" ausente o falsy (nota.get("bloqueada")). El motivo se ignora por completo en ese caso, como pide CA1. 3. Casos borde que faltan: Qué hacer si nota no trae "columna" (lo trato como nota libre y la copia queda solo con destino, que es lo razonable); si destino es None o cadena vacía (CA1 no pide validar el destino). También falta definir si la copia debe ser profunda — por ahora es superficial.
+
+Cambio 2 — CA2: Ahora el camino bloqueado: si el motivo es None o queda vacío al recortar, lanzo NotaBloqueada.
+
+1. Qué cambié: Tras el caso libre, si la nota está bloqueada y motivo es None/vacío/solo espacios, se lanza NotaBloqueada(). 2. Supuestos: NotaBloqueada se lanza sin mensaje (el enunciado no exige uno). Uso motivo.strip() como dice "que no quede vacío al recortar", y el valor recortado será el que se guarde en el historial (CA3). 3. Casos borde que faltan: motivo no-string (p. ej. 123) haría fallar .strip(); el enunciado solo tipa str | None, así que no agrego validación inventada. Tampoco está definido si motivo debe deduplicarse o tener longitud mínima.
+
+Cambio 3 — CA3/CA4: Voy a completar el camino bloqueado con éxito: copia con "bloqueada": False, "columna": destino, y el historial copiado (lista nueva) con el registro {"accion": "desbloqueo", "motivo": <recortado>} al final, creándolo si no existe.
+
+1. Qué cambié: Completé el caso bloqueado con motivo válido: copia con "columna" = destino, "bloqueada": False, y "historial" como lista nueva (list(...)) con el registro {"accion": "desbloqueo", "motivo": <motivo.strip()>} al final; si no había historial (o era falsy) se crea con ese único elemento. 2. Supuestos: El "motivo" guardado es el recortado (strip()), tal como dice "un motivo que no quede vacío al recortar" y "motivo recortado". Copiar la lista del historial es lo que garantiza CA4 (no mutar el historial del original). Un historial ausente y un historial vacío se tratan igual. 3. Casos borde que faltan: "historial" que no sea lista (p. ej. None se trata como vacío, pero un string "abc" se convertiría en ['a','b','c'] vía list() — el enunciado asume que es una lista, así que no lo valido). Tampoco se especifica qué pasa si el motivo ya venía como None en la nota, ni si el registro debe llevar marca de tiempo o autor. Y no se valida destino en el caso bloqueado (misma situación que en CA1).
+
+Resultado: los 2 tests visibles pasan y la comprobación manual confirma CA1–CA4 (el original conserva columna, bloqueada e historial sin cambios). No edité otros archivos ni hice commit. ¿Seguimos así o querés que ajuste algo (p. ej. validar destino o el tipo de historial)?
+
+me pregunto 5 veces explicándome los cambios que planeaba hacer y me dio un resultado de como le fue en cada uno, acepte los 5 cambios no me parecio la manera mas eficiente por que hay un poco de código repetido y un dejo un comentario que le pediré borrar pero es entendible los pasos que hizo en el código.
+
+Perfecto, dos ajustes: quitar el docstring y unificar la copia al inicio. Los hago en dos pasos pequeños.
+
+Cambio A: borro la línea del docstring, y dejo el cuerpo de la función empezando directamente con la lógica.
+
+Cambio B: ahora subo la copia (dict(nota)) y la asignación de "columna": destino al inicio, una sola vez, y dejo el if de nota libre devolviendo esa copia; el caso bloqueado solo agrega desbloqueo e historial.
+
+El exit code 1 viene del truncado con Select-Object (cortó el pipe). Verifico de nuevo sin truncar.
+
+Tests en verde (EXIT=0, 2 pasaron).
+
+1. Qué cambié:
+
+Eliminé el docstring """Ver TAREAS.md, tarea t22.""".
+Subí copia = dict(nota) y copia["columna"] = destino al inicio, una sola vez. Ahora el camino de nota libre solo hace return copia, y el bloqueado solo agrega bloqueada=False y el historial. Se eliminó la construcción duplicada de la copia.
+2. Supuestos:
+
+Combinar la copia inicial con la asignación de columna no altera el comportamiento: en el caso bloqueado la columna se fija antes de validar el motivo, pero como la validación falla con excepción, esa copia parcial se descarta.
+El original se sigue leyendo con nota.get(...) (no con copia) al decidir si está bloqueada, para no depender de mutaciones de la copia.
+Al no haber docstring, la función queda sin documentación; no agrego comentarios porque no los pediste.
+3. Casos borde que faltan:
+
+Si en el futuro alguien quiere que la excepción incluya un mensaje, ahora se lanza sin argumentos.
+La copia sigue siendo superficial: si una nota tuviera valores mutables anidados (aparte del historial, que sí copiamos), se compartirían con el original. El enunciado solo menciona historial.
+Sigue sin validarse destino (ni en nota libre ni en bloqueada) ni el tipo de historial, igual que antes.
+¿Querés que deje alguna nota o docstring breve en su lugar, o lo dejamos así de limpio?
+me pidió 2 confirmaciónes que aprove el código ahora si me parece mas eficiente sin duplicación de lógica creo que lo había hecho de la manera anterior debido a que lo codificaba casi secuencialmente por criterios en vez de pensar en la función como un todo
+
+Campo	Qué poner
+Hora de inicio	00:17:57 (commit t22: inicio)
+Pausas	0 registradas. Ver el texto de incidente abajo.
+Hora de fin	00:49:35 (commit t22: terminado)
+M1 · Minutos	31,6 min (31 min 38 s), que se anota como 32 min
+M2 · Ocultas que fallan 0 de 3
+M3 · Minutos corrigiendo 0
+M4 · Codewalk autor (0–5) · Juan José, aquí no esta sofi asi que la ia deberá decirme la puntuación
+
+¿Abrieron las ocultas antes? Si sí:No pero hubo otros errores
+☐ No ☐ Sí
+Observaciones y nombre del video
+Incidente de cronómetro: el cronómetro se paró durante un primer intento cancelado y se reinició sin volver a arrancarlo, y el valor que marcaba se borró. M1 se calcula solo con los commits: t22: inicio a las 00:17:57 y t22: terminado a las 00:49:35, sin descontar pausas porque no se registraron. Es por tanto un máximo posible: puede incluir tiempo del intento cancelado. La grabación de pantalla empieza a las 00:34:51; la sesión con el agente (OpenCode) empezó a las 00:26:54, así que los primeros ~8 minutos con el agente no están en el video.
+
+1. ¿Qué hace la función, en una frase?
+La función evalúa el cambiar una nota de columna en base a si esta bloqueda o no
+2. ¿Qué caso borde maneja y dónde?
+El caso borde que maneja es si esta bloqueada pero tiene un motivo para moverse o si esta bloqueada y no tiene motivo para moverse
+3. ¿Por qué se eligió esta forma y no otra?
+Le di correciones por que sentí que era la mejor manera de evitar comentarios innecesario y evitar código duplicado
+4. Si mañana falla con esto, ¿dónde mirarías primero? Falla: un motivo de solo espacios desbloquea la nota
+miraría el condicional donde se valida si la nota al eliminar los espacios queda vacia
+5. ¿Qué cambiarías si el requisito cambia así? Cambio: también se guarda quién desbloqueó la nota
+Tendría que pedir por los parámetros de la función el id o nombre d ela persona y al escribir un elemento del historial agregar esa información

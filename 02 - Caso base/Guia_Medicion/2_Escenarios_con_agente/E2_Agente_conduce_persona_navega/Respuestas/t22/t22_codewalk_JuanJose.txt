@@ -1,0 +1,10 @@
+1. ¿Qué hace la función, en una frase?
+La función evalúa el cambiar una nota de columna en base a si esta bloqueda o no
+2. ¿Qué caso borde maneja y dónde?
+El caso borde que maneja es si esta bloqueada pero tiene un motivo para moverse o si esta bloqueada y no tiene motivo para moverse
+3. ¿Por qué se eligió esta forma y no otra?
+Le di correciones por que sentí que era la mejor manera de evitar comentarios innecesario y evitar código duplicado
+4. Si mañana falla con esto, ¿dónde mirarías primero? Falla: un motivo de solo espacios desbloquea la nota
+miraría el condicional donde se valida si la nota al eliminar los espacios queda vacia
+5. ¿Qué cambiarías si el requisito cambia así? Cambio: también se guarda quién desbloqueó la nota
+Tendría que pedir por los parámetros de la función el id o nombre d ela persona y al escribir un elemento del historial agregar esa información
