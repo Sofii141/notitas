@@ -1,0 +1,15 @@
+Codewalk t21 · calificación
+Calificado por: Claude Code (Claude Opus 5.5), con el código abierto (backend/notitas/t21.py, commit debf4fa). No es ciega.
+Regla: guía de codewalk v9 (1 si es correcta y concreta; 0 si es vaga o incorrecta).
+Respuestas: t21_codewalk_JuanJose.txt (sin corregir).
+X: 10:00-05:00 frente a 14:00+00:00 gana el de las 14:00. Y: ante un empate, gana el valor de base.
+
+P1 · 1 · Correcta y concreta: mezcla las dos versiones y resuelve los conflictos para dejar un resultado.
+P2 · 1 · Nombra un caso borde real (empate de instantes, desempate por nombre de dispositivo) y lo ubica en la resolución del conflicto por fecha. En el límite: no señala el else de las líneas 61-66 (_dispositivo) ni la línea 67 (if elegido is not None) para los None.
+P3 · 1 · Concreta: set para unir los campos, sorted en vez de iterar a mano, datetime para las fechas. La razón principal es "lo propuso el agente": no baja la nota, pero es un dato para el análisis de pensamiento crítico.
+P4 · 1 · Señala _instante (líneas 4-17), donde la fecha se vuelve un instante comparable con su zona; si gana el de las 14:00, ahí no se respeta el offset.
+P5 · 0 · Señala la parte correcta (la comparación final) y que el conflicto se sigue registrando, pero el cambio propuesto no cumple Y: mantiene el desempate por nombre para a y b y agrega un else de base que nunca se ejecutaría, porque la comparación por nombre siempre elige a o b. Lo correcto: reemplazar el desempate (líneas 63-66) por elegido = valor_base.
+
+Total: 4/5
+
+Nota (no afecta la nota): en _fecha (línea 20) el agente proponía `or {}` y el código final usa `or ""`; si a una versión le faltara "modificado", `"".get(campo)` lanzaría AttributeError. El enunciado dice que a y b siempre lo traen, y las 3 ocultas pasaron.

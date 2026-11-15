@@ -1,0 +1,10 @@
+1. ¿Qué hace la función, en una frase?
+Compara los cambios sobre una misma nota desde 2 dispositivos y resuleve conflictos para dejar un resultado final
+2. ¿Qué caso borde maneja y dónde?
+Maneja el caso borde de si al resolver un conflicto por  fecha están empatados, entonces desempata por el nombre de los dispositivos y elimina aquello campos none.
+3. ¿Por qué se eligió esta forma y no otra?
+En su mayoría se siguió la lógica del agente guía, dios y explico funciones muy útiles de ordenamiento y decidir las columnas set y torted, que d eotra manera hubiera hecho iterativamente muy probablemente, y me ayudo a elegir una librería de fechas adecuada
+4. Si mañana falla con esto, ¿dónde mirarías primero? Falla: 10:00-05:00 frente a 14:00+00:00 gana el de las 14:00
+miraría la función _instant que es el lugar donde de algún modo obtenemos todas las fechas y las ponemos en un formato comparable volviéndolas un objeto especializaod en fechas
+5. ¿Qué cambiarías si el requisito cambia así? Cambio: ante un empate, gana el valor de base
+Probablemente cambiaria solo el condicional final la linea donde asignamos el valor del resultado y cambiaria bastante la comparación final, dando un escenario por si el desempate por nombre lo gana a, o lo gana b y un else de entonces el resultado base, ya que igual se debe regisytrar el conflicto.

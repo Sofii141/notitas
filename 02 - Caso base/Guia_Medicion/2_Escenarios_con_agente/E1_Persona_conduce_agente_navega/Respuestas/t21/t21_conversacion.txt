@@ -1,0 +1,229 @@
+Conversación t21 · Fusión t21 entre dispositivos · modelo deepseek-v4.1-flash-free (opencode)
+
+===== PERSONA (16:41:09) =====
+Actúa como navegante de pair programming (spec Copiloto v1). Tarea: t21.
+Este es el enunciado de la tarea:
+[## t21 · Fusionar cambios de dos dispositivos (L) ⚠️
+
+Archivo: `backend/notitas/t21.py`
+
+Firma: `def fusionar(base: dict, a: dict, b: dict) -> dict`
+
+Una nota se editó sin conexión en dos dispositivos. `base` es la versión común; `a` y `b` son las dos versiones editadas. Cada una de `a` y `b` trae además:
+- `"modificado"`: un diccionario `campo → fecha ISO 8601 con zona horaria` de cuándo se cambió cada campo;
+- `"dispositivo"`: un texto con el nombre del dispositivo.
+
+Reglas, **campo por campo** (todos los campos de `base`, `a` y `b`, menos `"modificado"` y `"dispositivo"`; un campo que falta cuenta como `None`):
+- CA1: si solo cambió uno de los dos respecto a `base`, gana ese cambio. Si ninguno cambió, queda el de `base`.
+- CA2: si los dos cambiaron al mismo valor, ese valor (no es conflicto).
+- CA3: si cambiaron a valores distintos, es **conflicto**: gana el cambio con la fecha `"modificado"` **más reciente**, comparando instantes reales (`"2026-11-02T10:00:00-05:00"` es **posterior** a `"2026-11-02T14:00:00+00:00"`). Si las fechas son el mismo instante, gana el dispositivo cuyo nombre va **primero** en orden alfabético.
+- CA4: el resultado incluye `"conflictos"`: la lista ordenada alfabéticamente de los campos que tuvieron conflicto. Los campos que quedan en `None` no se incluyen en el resultado.]
+Archivos: @backend/notitas/t21.py @backend/tests/visibles/test_t21.py
+No leas otros archivos ni pidas las pruebas ocultas. No hagas commit. No edites pruebas. No inventes requisitos que no estén en
+el enunciado. No edites archivos: solo propones; la persona escribe el código.
+Responde en markdown con estas 4 partes:
+1. Plan de 3 a 6 pasos.
+2. Cambio propuesto, solo en backend/notitas/t21.py.
+3. Supuestos que hiciste.
+4. Casos borde que crees que faltan (como texto, no como pruebas).
+
+===== AGENTE (16:41:09) =====
+I'll read the two referenced files first.
+
+===== AGENTE (16:41:11) =====
+## 1. Plan (3 a 6 pasos)
+
+1. Importar `datetime` y `timezone` y crear un helper `_instante(texto)` que convierta una fecha ISO 8601 en un `datetime` comparable entre zonas horarias (normalizando el sufijo `Z` a `+00:00`, y asumiendo UTC si la fecha viniera sin zona).
+2. Calcular el conjunto de campos a fusionar: unión de claves de `base`, `a` y `b`, quitando `"modificado"` y `"dispositivo"`. Leer cada valor con `.get(campo)` para que "falta" sea `None`.
+3. Aplicar CA1/CA2 con comparaciones directas: si `a == b` se toma ese valor; si `a == base` gana `b`; si `b == base` gana `a`. Cualquier otro caso es conflicto (CA3).
+4. Resolver el conflicto comparando los instantes reales de `a["modificado"][campo]` y `b["modificado"][campo]`; si son el mismo instante (o no hay datos para decidir), desempatar por nombre de `dispositivo` en orden alfabético.
+5. Armar el resultado omitiendo los campos cuyo valor final queda en `None` y añadir `"conflictos"` como lista ordenada alfabéticamente (siempre presente, aunque esté vacía).
+
+## 2. Cambio propuesto (solo `backend/notitas/t21.py`)
+
+```python
+from datetime import datetime, timezone
+
+_IGNORADAS = {"modificado", "dispositivo"}
+
+
+def _instante(valor):
+    """Convierte una fecha ISO 8601 con zona a un datetime comparable, o None."""
+    if not isinstance(valor, str):
+        return None
+    texto = valor.strip()
+    if texto.endswith(("Z", "z")):
+        texto = texto[:-1] + "+00:00"
+    try:
+        instante = datetime.fromisoformat(texto)
+    except ValueError:
+        return None
+    if instante.tzinfo is None:
+        instante = instante.replace(tzinfo=timezone.utc)
+    return instante
+
+
+def _dispositivo(version):
+    return version.get("dispositivo") or ""
+
+
+def _fecha(version, campo):
+    modificado = version.get("modificado") or {}
+    return _instante(modificado.get(campo))
+
+
+def fusionar(base: dict, a: dict, b: dict) -> dict:
+    """Ver TAREAS.md, tarea t21."""
+    campos = (set(base) | set(a) | set(b)) - _IGNORADAS
+
+    resultado = {}
+    conflictos = []
+
+    for campo in sorted(campos):
+        valor_base = base.get(campo)
+        valor_a = a.get(campo)
+        valor_b = b.get(campo)
+
+        if valor_a == valor_b:
+            # CA2 (o ninguno cambió): ambos lados coinciden.
+            elegido = valor_a
+        elif valor_a == valor_base:
+            # CA1: solo cambió b.
+            elegido = valor_b
+        elif valor_b == valor_base:
+            # CA1: solo cambió a.
+            elegido = valor_a
+        else:
+            # CA3: conflicto real.
+            conflictos.append(campo)
+            fecha_a = _fecha(a, campo)
+            fecha_b = _fecha(b, campo)
+
+            if fecha_a is not None and fecha_b is not None and fecha_a != fecha_b:
+                elegido = valor_a if fecha_a > fecha_b else valor_b
+            elif fecha_a is not None and fecha_b is None:
+                elegido = valor_a
+            elif fecha_b is not None and fecha_a is None:
+                elegido = valor_b
+            else:
+                # Mismo instante (o sin fechas comparables): desempate alfabético.
+                elegido = (
+                    valor_a
+                    if _dispositivo(a) <= _dispositivo(b)
+                    else valor_b
+                )
+
+        if elegido is not None:
+            resultado[campo] = elegido
+
+    resultado["conflictos"] = sorted(conflictos)
+    return resultado
+```
+
+## 3. Supuestos que hice
+
+- **Fechas**: `datetime.fromisoformat` cubre el formato del enunciado (`2026-11-02T10:00:00-05:00`) y las comparaciones entre `datetime` con `tzinfo` distinto ya comparan instantes reales. Normalizo `Z` por compatibilidad con versiones de Python anteriores a 3.11.
+- **Fecha sin zona horaria**: si llegara una fecha *naive*, la trato como UTC (el enunciado promete zona, así que esto es solo para no romper).
+- **Fecha ausente o inválida** en `"modificado"` para un campo en conflicto: ese lado pierde frente a una fecha válida; si ninguno tiene fecha, se decide por nombre de dispositivo.
+- **`"dispositivo"` ausente o `None`**: se trata como cadena vacía, que quedaría primera en el orden alfabético.
+- **Campo que falta = `None`** se aplica literalmente: si `a` y `b` omiten un campo que existía en `base`, ambos "cambiaron a `None`" (CA2) y el campo desaparece del resultado.
+- **`"conflictos"`** se incluye siempre, incluso vacía, y también cuando el valor final del campo conflictivo es `None` (interpreto la frase "no se incluyen en el resultado" como referida a las claves de campos, no a la lista de CA4). Si prefieres que un conflicto resuelto a `None` tampoco aparezca en `conflictos`, basta mover el `append` después del filtro `elegido is not None`.
+- **Orden alfabético** = comparación de cadenas de Python (por punto de código, sensible a mayúsculas), igual que `sorted(...)` para los nombres de campo.
+- Nada de mutar los diccionarios de entrada: todo se construye en `resultado`.
+
+## 4. Casos borde que creo que faltan (texto)
+
+- Conflicto donde las fechas son el **mismo instante** expresado en zonas distintas (`10:00-05:00` vs `15:00+00:00`) y los nombres de dispositivo deciden el ganador; incluir un caso donde el dispositivo "menor" alfabéticamente es el de `b` para verificar que el desempate no está cableado a `a`.
+- Conflicto con **fechas invertidas respecto al orden de los argumentos** (el más reciente está en `b`), y con desplazamientos horarios que engañan si se comparan las cadenas de texto en lugar de los instantes (por ejemplo `2026-11-02T10:00:00-05:00` debe ganar a `2026-11-02T14:00:00+00:00`).
+- Campo **borrado en un solo lado** (pasa a `None`) y el otro lo conserva: debe ser CA1 sin conflicto, y el resultado no debe contener esa clave.
+- Campo **borrado en ambos lados** con valores distintos antes: CA2 con `None`, sin conflicto y sin clave en el resultado.
+- Campo presente **solo en `base`** (ausente en `a` y `b`): según la lectura literal desaparece del resultado, sin conflicto.
+- Campo presente en `a` pero **ausente en `base` y en `b`** (campo nuevo en un solo dispositivo): CA1, se incorpora tal cual.
+- Campo con valor `None` explícito en `base` y editado a un texto en `a` (y sin tocar en `b`): no debe interpretarse como conflicto.
+- Varios conflictos simultáneos en el mismo campo y en campos distintos: verificar que `"conflictos"` sale **ordenada alfabéticamente** y sin duplicados.
+- Valores no textuales (números, booleanos, listas, diccionarios anidados) para comprobar que la comparación por igualdad de valor funciona más allá de cadenas.
+- Campo `"modificado"` con entradas de **otros campos** irrelevantes o vacío, y versiones sin `"modificado"`/`"dispositivo"` en absoluto (no debe lanzar excepción).
+- Un campo llamado `"conflictos"` en los datos: chocaría con la clave de salida (no está cubierto por el enunciado; conviene decidir explícitamente qué hacer).
+
+===== PERSONA (16:49:16) =====
+explicame para que es la funcion set() y sorted, y por que se usa esto " campos = (set(base) | set(a) | set(b)) - _IGNORADAS"
+
+===== AGENTE (16:49:16) =====
+Buena pregunta: esa línea es la que define **qué campos se van a fusionar**, y las dos funciones resuelven problemas distintos.
+
+## `set()`: convertir las claves de un dict en un conjunto
+
+Cuando le pasas un diccionario a `set()`, Python itera sobre él, y iterar un dict devuelve **sus claves**:
+
+```python
+BASE = {"id": "1", "titulo": "Pan", "columna": "por_hacer"}
+set(BASE)   # {"id", "titulo", "columna"}
+```
+
+Características de un conjunto que aquí nos sirven:
+
+- **No hay duplicados**: si `id` está en los tres diccionarios, aparece una sola vez.
+- **No hay orden**: no puedes indexar (`conjunto[0]`) ni confiar en el orden de iteración.
+- **Operaciones de conjuntos**: `|` (unión), `-` (diferencia), `&` (intersección).
+
+## Qué hace exactamente esa línea
+
+```python
+campos = (set(base) | set(a) | set(b)) - _IGNORADAS
+```
+
+Se lee de izquierda a derecha, y los paréntesis mandan:
+
+| Paso | Expresión | Resultado (con el test visible) |
+|---|---|---|
+| 1 | `set(base)` | `{"id", "titulo", "columna"}` |
+| 2 | `set(a)` | `{"id", "titulo", "columna", "modificado", "dispositivo"}` |
+| 3 | `set(base) \| set(a) \| set(b)` | unión: **todas las claves que existen en al menos una versión** |
+| 4 | `... - _IGNORADAS` | quita `{"modificado", "dispositivo"}` |
+| 5 | resultado | `{"id", "titulo", "columna"}` |
+
+Es decir: **la unión de claves de las tres versiones, menos los dos campos de metadatos.**
+
+### Por qué unión y no las claves de `base`
+
+Porque el enunciado dice que se fusionan *todos* los campos de `base`, `a` y `b`. Si un campo existe solo en `a` (campo nuevo creado en el celular) o solo en `b`, también hay que procesarlo. Si iteraras `base.keys()`, ese campo nuevo nunca se evaluaría.
+
+Y al revés: si un campo está en `base` pero `a` y `b` lo omiten, sigue entrando en el bucle; dentro se lee con `.get(campo)`, que devuelve `None` para las versiones donde falta — así se cumple "un campo que falta cuenta como `None`" sin necesidad de `if campo in a`.
+
+### Por qué `-` y no un `if` dentro del bucle
+
+`_IGNORADAS` es un `set` justamente para poder restar. La alternativa equivalente sería:
+
+```python
+for campo in campos:
+    if campo in ("modificado", "dispositivo"):
+        continue
+    ...
+```
+
+Restarlo antes es más limpio: el bucle solo ve campos de datos y no arrastra la condición de filtrado en cada iteración.
+
+> Nota: `set(base) | set(a)` es lo mismo que `set(base) | a` (Python acepta cualquier iterable a la derecha), pero escribir `set(...)` en los tres lados es más explícito sobre la intención.
+
+## `sorted()`: recuperar un orden determinista
+
+`set` no tiene orden, así que `for campo in campos:` iteraría en un orden arbitrario (estable dentro de una ejecución, pero no garantizado entre ejecuciones ni versiones de Python). `sorted()` toma cualquier iterable y devuelve una **lista nueva ordenada**:
+
+```python
+sorted({"titulo", "columna", "id"})   # ["columna", "id", "titulo"]
+```
+
+Se usa en dos lugares con propósitos distintos:
+
+1. **`for campo in sorted(campos)`** — no es estrictamente necesario para que las aserciones pasen (comparar dicts con `==` ignora el orden de las claves), pero:
+   - hace la ejecución **reproducible** (mismo input → mismo orden de inserción en `resultado`),
+   - al imprimir el resultado en un fallo de test se lee alfabéticamente, no en un orden aleatorio,
+   - deja el código preparado si algún día se serializa el resultado.
+
+2. **`resultado["conflictos"] = sorted(conflictos)`** — aquí sí es un **requisito del enunciado**: CA4 pide "la lista ordenada alfabéticamente de los campos que tuvieron conflicto". El bucle descubre los conflictos en el orden de iteración de `campos`, así que la lista hay que ordenarla explícitamente antes de devolverla.
+
+Ojo con un detalle de `sorted` sobre cadenas: ordena por punto de código Unicode, no con reglas de diccionario. `"Z"` va antes que `"a"`, y `"Titulo"` antes que `"columna"`. Para los nombres de campo en `snake_case` (todo minúsculas, como en el proyecto) coincide con el orden alfabético esperado.
+
+## Resumen en una frase
+
+`set(...) | set(...) | set(...) - _IGNORADAS` responde **"¿qué campos hay que revisar?"** (sin duplicados ni metadatos), y `sorted(...)` responde **"¿en qué orden los recorro y en qué orden reporto los conflictos?"** (determinista, y alfabético en el caso de `conflictos`, como exige CA4).
