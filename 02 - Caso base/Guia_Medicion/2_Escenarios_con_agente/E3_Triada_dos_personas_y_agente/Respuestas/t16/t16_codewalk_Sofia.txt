@@ -1,0 +1,5 @@
+1. Reordenar por prioridad las tareas del usuario
+2. en los empates no cambia el orden
+3. por sugerencia de opencode y fue según lo que me imaginaba que iba a hacer filtrar todo de una en una función
+4. en la función sorted debe estar haciéndose mal una validación debido a que en empates no pasa nada asi que haría prints para ver que pasa y pregutnaria a open code por sugerencias de donde mirar para entender mejor el problema
+5. iría a la función sorted y le cambio la prioridad a las notas sin fecha y repasar mas que puedo hacer con la funcion sorted

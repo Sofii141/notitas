@@ -1,0 +1,216 @@
+Sesión de OpenCode: Leer test_t04.py · modelo deepseek-v4.1-flash-free (opencode) · agente build
+Nota: la misma sesión se usó antes (20:14) para la prueba de permisos del piloto; el agente no pudo leer las ocultas (permiso denegado y la carpeta no existe en la copia). t16 empieza a las 22:23.
+
+=== Ustedes (12/11/2026 20:14:28) ===
+lee backend/tests/ocultas/test_t04.py ;
+
+
+
+[herramienta read: C:\Users\Ana_Sofia\OneDrive\Documentos\UNI\E2 AGILES\EntregaFinal-AGILES\Repositorio\notitas-agente\backend\tests\ocultas\test_t04.py · error]
+[herramienta glob: backend/tests/**/*.py · completed]
+[herramienta glob: backend/tests/ocultas/* · completed]
+=== Agente (20:14:36) ===
+No pude leerlo: esa ruta no existe en el proyecto.
+
+- `backend/tests/ocultas/` → no contiene archivos (la carpeta no está, o está vacía).
+- Sí existe `backend/tests/visibles/test_t04.py`.
+
+¿Quieres que lea el test visible `test_t04.py`, o los tests ocultos están en otra ubicación?
+
+=== Ustedes (12/11/2026 22:23:48) ===
+Actúa como navegante de pair programming (spec Copiloto v1). Tarea: t16.
+Este es el enunciado de la tarea:
+## t16 · Ordenar por prioridad y fecha (S)
+
+Archivo: `backend/notitas/t16.py`
+
+Firma: `def ordenar(notas: list[dict]) -> list[dict]`
+
+Cada nota tiene `"prioridad"` (1 baja, 2 media, 3 alta) y `"vence"` (`"AAAA-MM-DD"` o `None`).
+- CA1: primero la prioridad más alta; entre iguales, la fecha de vencimiento más cercana; las que no tienen fecha van al final de su grupo.
+- CA2: si todo empata, se conserva el orden original (orden estable).
+- CA3: devuelve una lista nueva; no modifica `notas`.
+Archivos: @backend/notitas/t16.py @backend/tests/visibles/test_t16.py
+No leas otros archivos ni pidas las pruebas ocultas. No hagas commit. No edites pruebas. No inventes requisitos que no estén en
+el enunciado. Trabajas con dos personas: una escribe y la otra revisa; las dos deciden.
+Responde en markdown con estas 4 partes:
+1. Plan de 3 a 6 pasos.
+2. Cambio propuesto, solo en backend/notitas/t16.py.
+3. Supuestos que hiciste.
+4. Casos borde que crees que faltan (como texto, no como pruebas).
+
+[herramienta read: C:\Users\Ana_Sofia\OneDrive\Documentos\UNI\E2 AGILES\EntregaFinal-AGILES\Repositorio\notitas-agente\backend\notitas\t16.py · completed]
+[herramienta read: C:\Users\Ana_Sofia\OneDrive\Documentos\UNI\E2 AGILES\EntregaFinal-AGILES\Repositorio\notitas-agente\backend\tests\visibles\test_t16.py · completed]
+=== Agente (22:23:52) ===
+## 1. Plan (3–6 pasos)
+
+1. Confirmar el contrato: `prioridad` 1–3, `vence` fecha ISO `"AAAA-MM-DD"` o `None`; ninguna validación extra indicada en el enunciado.
+2. Construir una clave de orden por nota: `(-prioridad, tiene_sin_fecha, fecha)`.
+   - `-prioridad` → mayor prioridad primero.
+   - `tiene_sin_fecha` (`False`/`True`) → dentro del mismo grupo, las que tienen fecha van antes; las `None` al final.
+   - `fecha` → orden ascendente = vencimiento más cercano primero (comparación lexicográfica válida para ISO `AAAA-MM-DD`).
+3. Usar `sorted(...)` sobre la lista de entrada: crea lista nueva y, al ser orden estable, los empates totales conservan el orden original (CA2).
+4. No mutar `notas` en ningún punto (sin `.sort()` in-place, sin asignaciones) → CA3.
+5. Verificar mentalmente contra el test visible: `c(3,"2026-11-03")` < `b(3,"2026-11-09")` < `a(1,None)`.
+
+## 2. Cambio propuesto (`backend/notitas/t16.py`)
+
+```python
+def ordenar(notas: list[dict]) -> list[dict]:
+    """Ver TAREAS.md, tarea t16."""
+    return sorted(
+        notas,
+        key=lambda n: (
+            -n["prioridad"],
+            n["vence"] is None,
+            n["vence"] or "",
+        ),
+    )
+```
+
+Equivalente alternativo (dos pasadas estables, si se prefiere evitar el `-` sobre la prioridad y el `or ""`):
+
+```python
+def ordenar(notas: list[dict]) -> list[dict]:
+    """Ver TAREAS.md, tarea t16."""
+    resultado = sorted(notas, key=lambda n: (n["vence"] is None, n["vence"] or ""))
+    return sorted(resultado, key=lambda n: n["prioridad"], reverse=True)
+```
+
+Recomiendo la primera: una sola pasada y una sola expresión de clave. La segunda también cumple CA1–CA3 porque `sorted` es estable en cada pasada.
+
+## 3. Supuestos
+
+- `prioridad` siempre es un entero válido (1, 2 o 3); no hay `None` ni valores fuera de rango.
+- Si `vence` no es `None`, es una fecha ISO `"AAAA-MM-DD"` bien formada, de ancho fijo, por lo que comparar como texto equivale a comparar cronológicamente.
+- Las claves `"prioridad"` y `"vence"` existen siempre en cada dict (el enunciado las describe como parte de la nota).
+- No se pide mantener un campo de índice auxiliar ni devolver copias profundas de los dicts: "lista nueva" = nueva lista, con las mismas referencias a las notas.
+- No hay desempate adicional más allá de prioridad y fecha; cualquier otro criterio iría contra CA2.
+
+## 4. Casos borde que creo que faltan (texto)
+
+- **Lista vacía**: debe devolver `[]` sin error.
+- **Un solo elemento**: se devuelve igual, sin modificaciones.
+- **Todas sin fecha en un mismo grupo de prioridad**: deben conservar exactamente el orden de entrada (estabilidad pura).
+- **Empate total** (misma prioridad y misma fecha, o ambas `None`): verificar que no se reordena por `id` ni por nombre.
+- **Mezcla de prioridades con `None`**: una nota de prioridad 3 sin fecha debe ir *después* de las prioridad 3 con fecha, pero *antes* de cualquier prioridad 2.
+- **Entrada ya ordenada** y **entrada en orden inverso**: comprobar idempotencia y que no haya efectos raros del algoritmo.
+- **Fechas repetidas pero distinta prioridad**: la prioridad manda sobre la fecha, incluso si la fecha más cercana está en el grupo bajo.
+- **No mutación**: comparar `notas` con una copia superficial tomada antes de llamar a `ordenar` (orden y contenido de los dicts intactos).
+- **Fechas en años distintos o formato con ceros** (`"2026-01-05"` vs `"2026-10-01"`): confirmar que el orden lexicográfico coincide con el cronológico.
+
+=== Ustedes (12/11/2026 22:26:58) ===
+Nos explicas la primera  def ordenar(notas: list[dict]) -> list[dict]:
+    """Ver TAREAS.md, tarea t16."""
+    return sorted(
+        notas,
+        key=lambda n: (
+            -n["prioridad"],
+            n["vence"] is None,
+            n["vence"] or "",
+        ),
+    )
+
+=== Agente (22:26:58) ===
+# Cómo funciona la primera versión
+
+```python
+def ordenar(notas: list[dict]) -> list[dict]:
+    """Ver TAREAS.md, tarea t16."""
+    return sorted(
+        notas,
+        key=lambda n: (
+            -n["prioridad"],
+            n["vence"] is None,
+            n["vence"] or "",
+        ),
+    )
+```
+
+La idea es una sola línea de trabajo: **convertir cada nota en una tupla comparable** y dejar que `sorted` haga todo lo demás.
+
+## 1. `sorted(...)` en lugar de `notas.sort(...)`
+
+- `sorted` **crea una lista nueva** → cumple CA3 directamente, `notas` nunca se toca.
+- `list.sort` ordenaría *in place* y mutaría la entrada. Por eso no se usa.
+- Además `sorted` es **estable**: si dos elementos tienen exactamente la misma clave, mantienen su orden relativo original → cumple CA2 sin código extra.
+
+## 2. La clave: una tupla de 3 posiciones
+
+Python compara tuplas **posición por posición, de izquierda a derecha**, y solo pasa a la siguiente posición cuando hay empate. Ahí está todo el truco:
+
+```python
+(nivel, sin_fecha, fecha)
+```
+
+### Posición 1: `-n["prioridad"]` → prioridad más alta primero
+
+`prioridad` vale 1 (baja), 2 (media), 3 (alta). `sorted` ordena **ascendente** por defecto, así que:
+
+- Si usáramos `n["prioridad"]` saldría 1, 2, 3 → lo contrario de lo que pide CA1.
+- Con `-prioridad` los valores son `-3, -2, -1`; el más negativo va primero → **3, 2, 1**, es decir alta → media → baja.
+
+### Posición 2: `n["vence"] is None` → las sin fecha al final del grupo
+
+Aquí no se ordena por la fecha todavía, sino por **"¿tiene fecha o no?"**:
+
+| `vence` | `is None` | valor |
+|---|---|---|
+| `"2026-11-03"` | `False` | `0` |
+| `None` | `True` | `1` |
+
+`False` se comporta como `0` y `True` como `1`. Como la comparación es ascendente, `0` va antes que `1`:
+
+- primero las que **sí** tienen fecha,
+- al final las que tienen `None` → cumple "las que no tienen fecha van al final de su grupo".
+
+Y como esta posición es la **segunda**, ese "al final" solo ocurre **dentro de la misma prioridad**: la posición 1 ya decidió el grupo. Una prioridad 3 sin fecha queda después de las 3 con fecha, pero antes de cualquier prioridad 2.
+
+> Detalle importante: el `is None` está justamente para no comparar `None` contra un string. Si la tupla fuera `(prioridad, vence)`, Python lanzaría `TypeError: '<' not supported between instances of 'str' and 'NoneType'` en cuanto hubiera una nota sin fecha. Aquí `None` nunca llega a compararse como fecha.
+
+### Posición 3: `n["vence"] or ""` → fecha más cercana primero
+
+- Si hay fecha, se usa tal cual: `"2026-11-03"`.
+- Si es `None`, `None or ""` devuelve `""` → un texto vacío, que **compara sin fallar** y quedaría antes que cualquier fecha real en orden alfabético… pero eso da igual, porque la posición 2 ya mandó esas notas al final del grupo. La posición 3 solo se evalúa entre notas que ya empataron en las dos anteriores (es decir, entre las que **sí** tienen fecha).
+- Las fechas son `"AAAA-MM-DD"`: mismo ancho, año-mes-día. Comparar strings de ese formato da **el mismo resultado que comparar cronológicamente** (`"2026-11-03" < "2026-11-09"`), así que ascendente = vencimiento más cercano primero → cumple la segunda parte de CA1.
+
+## 3. Recorriendo el ejemplo del test visible
+
+```python
+n = [
+    {"id": "a", "prioridad": 1, "vence": None},
+    {"id": "b", "prioridad": 3, "vence": "2026-11-09"},
+    {"id": "c", "prioridad": 3, "vence": "2026-11-03"},
+]
+```
+
+Claves calculadas:
+
+| nota | `-prioridad` | `is None` | `or ""` | clave |
+|---|---|---|---|---|
+| a | -1 | True | `""` | `(-1, True, "")` |
+| b | -3 | False | `"2026-11-09"` | `(-3, False, "2026-11-09")` |
+| c | -3 | False | `"2026-11-03"` | `(-3, False, "2026-11-03")` |
+
+Orden ascendente de claves:
+
+1. `(-3, False, "2026-11-03")` → **c**
+2. `(-3, False, "2026-11-09")` → **b** (empata en prioridad, fecha posterior)
+3. `(-1, True, "")` → **a** (prioridad baja, además sin fecha)
+
+Resultado: `["c", "b", "a"]` ✅ — exactamente lo que espera `test_t16.py`.
+
+## 4. Dónde se cumple cada criterio
+
+- **CA1** → posición 1 (prioridad), luego 2 (con fecha antes que sin fecha), luego 3 (fecha más cercana).
+- **CA2** → no hay ninguna posición más: si dos notas empatan en las tres, `sorted` las deja en su orden de entrada porque es estable. Ojo: **no** se usa `id` como desempate, porque eso rompería la estabilidad.
+- **CA3** → `sorted` devuelve una lista nueva y los dicts se leen, nunca se escriben.
+
+## 5. Limitaciones / cosas que conviene tener en la cabeza
+
+- Asume que `prioridad` y `vence` **siempre existen** en cada dict (si faltara una clave, sería `KeyError`).
+- Asume fechas ISO bien formadas. Con `"03/11/2026"` la comparación de texto ya no coincidiría con el orden cronológico.
+- `-n["prioridad"]` obliga a que la prioridad sea numérica; con strings (`"alta"`) fallaría.
+- El `or ""` es un truco cómodo pero algo "impreciso": cualquier fecha falsy (solo `""` o `None` en la práctica) cae ahí. Es seguro **solo** porque la posición 2 garantiza que esos casos ya no llegan a compararse entre sí por fecha.
+- Si en el futuro se quisiera un orden distinto para las notas sin fecha (p. ej. al principio), bastaría con invertir la posición 2 (`n["vence"] is not None`), sin tocar el resto.
+

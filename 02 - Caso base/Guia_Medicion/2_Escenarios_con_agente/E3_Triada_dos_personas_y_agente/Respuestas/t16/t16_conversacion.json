@@ -1,0 +1,551 @@
+{
+  "info": {
+    "id": "ses_e2d879a9effeOyUK366PB6Pc6s",
+    "projectID": "183e29055885e37f85ab0320668108bf9911e61c",
+    "agent": "build",
+    "model": {
+      "id": "deepseek-v4.1-flash-free",
+      "providerID": "opencode",
+      "variant": "default"
+    },
+    "cost": 0,
+    "tokens": {
+      "input": 12529,
+      "output": 3138,
+      "reasoning": 666,
+      "cache": {
+        "read": 42880,
+        "write": 0
+      }
+    },
+    "outcome": "succeeded",
+    "time": {
+      "created": 1794532468152,
+      "updated": 1794540435617,
+      "busy": 1794540418456,
+      "idle": 1794540435621,
+      "viewed": 1794540435621
+    },
+    "title": "Leer test_t04.py",
+    "permissions": [
+      {
+        "action": "browser",
+        "resource": "*",
+        "effect": "allow"
+      },
+      {
+        "action": "skill",
+        "resource": "browser",
+        "effect": "allow"
+      }
+    ],
+    "location": {
+      "directory": "C:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente"
+    }
+  },
+  "messages": [
+    {
+      "id": "msg_1d2786560001jQUmIR15woGdkb",
+      "metadata": {
+        "displayText": "lee backend/tests/ocultas/test_t04.py ;\n\n",
+        "comments": [],
+        "attachments": [],
+        "agent": "build",
+        "model": {
+          "modelID": "deepseek-v4.1-flash-free",
+          "providerID": "opencode"
+        }
+      },
+      "time": {
+        "created": 1794532468283
+      },
+      "text": "lee backend/tests/ocultas/test_t04.py ;\n\n",
+      "files": [],
+      "agents": [],
+      "type": "user"
+    },
+    {
+      "id": "msg_1d2786649001y1hkH8yhJzAiCD",
+      "time": {
+        "created": 1794532468303,
+        "streamed": 1794532470684,
+        "completed": 1794532470689
+      },
+      "type": "assistant",
+      "agent": "build",
+      "model": {
+        "id": "deepseek-v4.1-flash-free",
+        "providerID": "opencode",
+        "variant": "default"
+      },
+      "content": [
+        {
+          "type": "reasoning",
+          "text": "The user asks to read backend/tests/ocultas/test_t04.py. Let me read it.",
+          "native": {
+            "reasoningField": "reasoning_content"
+          },
+          "time": {
+            "created": 1794532469999,
+            "completed": 1794532470679
+          }
+        },
+        {
+          "type": "tool",
+          "id": "call_8db14a383d5b4d50bd4e3dd7",
+          "name": "read",
+          "executed": false,
+          "state": {
+            "status": "error",
+            "input": {
+              "path": "C:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\tests\\ocultas\\test_t04.py"
+            },
+            "error": {
+              "type": "permission.rejected",
+              "message": "Permission denied: read"
+            }
+          },
+          "time": {
+            "created": 1794532470183,
+            "ran": 1794532470682,
+            "completed": 1794532470687
+          }
+        }
+      ],
+      "finish": "tool-calls",
+      "rawFinish": "tool_calls",
+      "cost": 0,
+      "tokens": {
+        "input": 3332,
+        "output": 88,
+        "reasoning": 22,
+        "cache": {
+          "read": 2816,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_1d2786fa8001g16tFCm7qdZr6V",
+      "time": {
+        "created": 1794532470701,
+        "streamed": 1794532472591,
+        "completed": 1794532474089
+      },
+      "type": "assistant",
+      "agent": "build",
+      "model": {
+        "id": "deepseek-v4.1-flash-free",
+        "providerID": "opencode",
+        "variant": "default"
+      },
+      "content": [
+        {
+          "type": "reasoning",
+          "text": "Permission denied. Maybe try shell? But likely also denied. Let's check what's in the directory... Hmm, the user asked to read that file. Permission was rejected. Maybe I should report. But maybe try shell `type`? That could also be blocked. Let me attempt a glob to see if the file exists.",
+          "native": {
+            "reasoningField": "reasoning_content"
+          },
+          "time": {
+            "created": 1794532471692,
+            "completed": 1794532472586
+          }
+        },
+        {
+          "type": "tool",
+          "id": "call_1d8bad082ea445da9a474af4",
+          "name": "glob",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "pattern": "backend/tests/**/*.py"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "C:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\tests\\visibles\\test_t11.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\tests\\visibles\\test_t10.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\tests\\visibles\\test_t09.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\tests\\visibles\\test_t08.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\tests\\visibles\\test_t07.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\tests\\visibles\\test_t06.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\tests\\visibles\\test_t05.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\tests\\visibles\\test_t04.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\tests\\visibles\\test_t03.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\tests\\visibles\\test_t02.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\tests\\visibles\\test_t01.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\tests\\visibles\\test_t18.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\tests\\visibles\\test_t17.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\tests\\visibles\\test_t16.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\tests\\visibles\\test_t15.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\tests\\visibles\\test_t14.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\tests\\visibles\\test_t13.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\tests\\visibles\\test_t12.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\tests\\visibles\\test_t21.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\tests\\visibles\\test_t20.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\tests\\visibles\\test_t19.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\tests\\visibles\\test_t23.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\tests\\visibles\\test_t22.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\tests\\visibles\\test_t24.py"
+              }
+            ],
+            "metadata": {
+              "count": 24,
+              "truncated": false
+            }
+          },
+          "time": {
+            "created": 1794532472388,
+            "ran": 1794532472589,
+            "completed": 1794532474086
+          }
+        }
+      ],
+      "finish": "tool-calls",
+      "rawFinish": "tool_calls",
+      "cost": 0,
+      "tokens": {
+        "input": 146,
+        "output": 44,
+        "reasoning": 67,
+        "cache": {
+          "read": 6144,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_1d2787cf1001bXOXVGO70n2979",
+      "time": {
+        "created": 1794532474101,
+        "streamed": 1794532476040,
+        "completed": 1794532476094
+      },
+      "type": "assistant",
+      "agent": "build",
+      "model": {
+        "id": "deepseek-v4.1-flash-free",
+        "providerID": "opencode",
+        "variant": "default"
+      },
+      "content": [
+        {
+          "type": "reasoning",
+          "text": "The hidden tests aren't listed by glob — hidden dir maybe excluded? glob pattern with hidden false default; `ocultas` isn't hidden though. Maybe the directory exists but the read permission is rejected by policy. Let me check if the directory exists via glob specifically.",
+          "native": {
+            "reasoningField": "reasoning_content"
+          },
+          "time": {
+            "created": 1794532475205,
+            "completed": 1794532476035
+          }
+        },
+        {
+          "type": "tool",
+          "id": "call_7b027af8397f405ab574494c",
+          "name": "glob",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "pattern": "backend/tests/ocultas/*"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "No files found"
+              }
+            ],
+            "metadata": {
+              "count": 0,
+              "truncated": false
+            }
+          },
+          "time": {
+            "created": 1794532475821,
+            "ran": 1794532476038,
+            "completed": 1794532476092
+          }
+        }
+      ],
+      "finish": "tool-calls",
+      "rawFinish": "tool_calls",
+      "cost": 0,
+      "tokens": {
+        "input": 1362,
+        "output": 45,
+        "reasoning": 55,
+        "cache": {
+          "read": 6272,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_1d27884c6001X2HhmwtfxwwpNT",
+      "time": {
+        "created": 1794532476106,
+        "streamed": 1794532478929,
+        "completed": 1794532478931
+      },
+      "type": "assistant",
+      "agent": "build",
+      "model": {
+        "id": "deepseek-v4.1-flash-free",
+        "providerID": "opencode",
+        "variant": "default"
+      },
+      "content": [
+        {
+          "type": "reasoning",
+          "text": "The `ocultas` folder doesn't exist. Report that to the user. Maybe the user wants me to infer the test from test_t04 visible? Let's just report: hidden folder doesn't exist; visible test exists. Ask if they want me to read visible one.\n\nMaybe better to just briefly state the result and offer.",
+          "native": {
+            "reasoningField": "reasoning_content"
+          },
+          "time": {
+            "created": 1794532477293,
+            "completed": 1794532478926
+          }
+        },
+        {
+          "type": "text",
+          "text": "No pude leerlo: esa ruta no existe en el proyecto.\n\n- `backend/tests/ocultas/` → no contiene archivos (la carpeta no está, o está vacía).\n- Sí existe `backend/tests/visibles/test_t04.py`.\n\n¿Quieres que lea el test visible `test_t04.py`, o los tests ocultos están en otra ubicación?"
+        }
+      ],
+      "finish": "stop",
+      "rawFinish": "stop",
+      "cost": 0,
+      "tokens": {
+        "input": 196,
+        "output": 87,
+        "reasoning": 68,
+        "cache": {
+          "read": 7552,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_1d2788fd6001ZW20mb7JhFiMXF",
+      "time": {
+        "created": 1794532478935
+      },
+      "type": "idle",
+      "outcome": "succeeded"
+    },
+    {
+      "id": "msg_1d2eed0fe001O2vboRiR5P02eH",
+      "metadata": {
+        "displayText": "Actúa como navegante de pair programming (spec Copiloto v1). Tarea: t16.\nEste es el enunciado de la tarea:\n## t16 · Ordenar por prioridad y fecha (S)\n\nArchivo: `backend/notitas/t16.py`\n\nFirma: `def ordenar(notas: list[dict]) -> list[dict]`\n\nCada nota tiene `\"prioridad\"` (1 baja, 2 media, 3 alta) y `\"vence\"` (`\"AAAA-MM-DD\"` o `None`).\n- CA1: primero la prioridad más alta; entre iguales, la fecha de vencimiento más cercana; las que no tienen fecha van al final de su grupo.\n- CA2: si todo empata, se conserva el orden original (orden estable).\n- CA3: devuelve una lista nueva; no modifica `notas`.\nArchivos: @backend/notitas/t16.py @backend/tests/visibles/test_t16.py\nNo leas otros archivos ni pidas las pruebas ocultas. No hagas commit. No edites pruebas. No inventes requisitos que no estén en\nel enunciado. Trabajas con dos personas: una escribe y la otra revisa; las dos deciden.\nResponde en markdown con estas 4 partes:\n1. Plan de 3 a 6 pasos.\n2. Cambio propuesto, solo en backend/notitas/t16.py.\n3. Supuestos que hiciste.\n4. Casos borde que crees que faltan (como texto, no como pruebas).",
+        "comments": [],
+        "attachments": [],
+        "agent": "build",
+        "model": {
+          "modelID": "deepseek-v4.1-flash-free",
+          "providerID": "opencode"
+        }
+      },
+      "time": {
+        "created": 1794540228951
+      },
+      "text": "Actúa como navegante de pair programming (spec Copiloto v1). Tarea: t16.\nEste es el enunciado de la tarea:\n## t16 · Ordenar por prioridad y fecha (S)\n\nArchivo: `backend/notitas/t16.py`\n\nFirma: `def ordenar(notas: list[dict]) -> list[dict]`\n\nCada nota tiene `\"prioridad\"` (1 baja, 2 media, 3 alta) y `\"vence\"` (`\"AAAA-MM-DD\"` o `None`).\n- CA1: primero la prioridad más alta; entre iguales, la fecha de vencimiento más cercana; las que no tienen fecha van al final de su grupo.\n- CA2: si todo empata, se conserva el orden original (orden estable).\n- CA3: devuelve una lista nueva; no modifica `notas`.\nArchivos: @backend/notitas/t16.py @backend/tests/visibles/test_t16.py\nNo leas otros archivos ni pidas las pruebas ocultas. No hagas commit. No edites pruebas. No inventes requisitos que no estén en\nel enunciado. Trabajas con dos personas: una escribe y la otra revisa; las dos deciden.\nResponde en markdown con estas 4 partes:\n1. Plan de 3 a 6 pasos.\n2. Cambio propuesto, solo en backend/notitas/t16.py.\n3. Supuestos que hiciste.\n4. Casos borde que crees que faltan (como texto, no como pruebas).",
+      "files": [],
+      "agents": [],
+      "type": "user"
+    },
+    {
+      "id": "msg_1d2eed1630010FvVIyCfjfv97y",
+      "time": {
+        "created": 1794540228974,
+        "streamed": 1794540232296,
+        "completed": 1794540232333
+      },
+      "type": "assistant",
+      "agent": "build",
+      "model": {
+        "id": "deepseek-v4.1-flash-free",
+        "providerID": "opencode",
+        "variant": "default"
+      },
+      "content": [
+        {
+          "type": "reasoning",
+          "text": "Let me read the two files allowed: backend/notitas/t16.py and backend/tests/visibles/test_t16.py.",
+          "native": {
+            "reasoningField": "reasoning_content"
+          },
+          "time": {
+            "created": 1794540231282,
+            "completed": 1794540232283
+          }
+        },
+        {
+          "type": "tool",
+          "id": "call_ade02e9170024ac58caa48ee",
+          "name": "read",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "path": "C:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\notitas\\t16.py"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Read file C:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\notitas\\t16.py, lines 1-3\n1: def ordenar(notas: list[dict]) -> list[dict]:\n2:     \"\"\"Ver TAREAS.md, tarea t16.\"\"\"\n3:     raise NotImplementedError"
+              }
+            ],
+            "metadata": {
+              "truncated": false
+            }
+          },
+          "time": {
+            "created": 1794540231502,
+            "ran": 1794540232289,
+            "completed": 1794540232325
+          }
+        },
+        {
+          "type": "tool",
+          "id": "call_bc919b862acf4877a6b3ff22",
+          "name": "read",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "path": "C:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\tests\\visibles\\test_t16.py"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Read file C:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\tests\\visibles\\test_t16.py, lines 1-5\n1: from notitas.t16 import ordenar\n2: def test_prioridad_y_fecha():\n3:     n = [{\"id\": \"a\", \"prioridad\": 1, \"vence\": None}, {\"id\": \"b\", \"prioridad\": 3, \"vence\": \"2026-11-09\"},\n4:          {\"id\": \"c\", \"prioridad\": 3, \"vence\": \"2026-11-03\"}]\n5:     assert [x[\"id\"] for x in ordenar(n)] == [\"c\", \"b\", \"a\"]"
+              }
+            ],
+            "metadata": {
+              "truncated": false
+            }
+          },
+          "time": {
+            "created": 1794540231911,
+            "ran": 1794540232293,
+            "completed": 1794540232329
+          }
+        }
+      ],
+      "finish": "tool-calls",
+      "rawFinish": "tool_calls",
+      "cost": 0,
+      "tokens": {
+        "input": 5438,
+        "output": 159,
+        "reasoning": 27,
+        "cache": {
+          "read": 2816,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_1d2eede9c001RdTAKL0ng1gwOp",
+      "time": {
+        "created": 1794540232356,
+        "streamed": 1794540246293,
+        "completed": 1794540246295
+      },
+      "type": "assistant",
+      "agent": "build",
+      "model": {
+        "id": "deepseek-v4.1-flash-free",
+        "providerID": "opencode",
+        "variant": "default"
+      },
+      "content": [
+        {
+          "type": "reasoning",
+          "text": "Simple task. Write the implementation. Key: stable sort. Approach: sorted(notas, key=lambda n: (-n[\"prioridad\"], n[\"vence\"] is None, n[\"vence\"] or \"\")). Since dates are ISO strings, lexicographic comparison works. Stable sort preserves original order for ties.\n\nAlternatively two-pass stable sorts. Single sort with tuple key is fine and stable.\n\nCareful: notes without date go to end of their group — with priority group, `n[\"vence\"] is None` True goes last within group. Good.\n\nShould I actually edit the file? The user asks as copilot navigator: respond with plan, proposed change (only in file), assumptions, edge cases. In pair programming \"navegante\" typically doesn't write code; presents proposal. The instruction says \"Cambio propuesto, solo en backend/notitas/t16.py\" — a proposed change, not necessarily applied. Safer to present the diff without editing, since they said one writes and other reviews and both decide. I'll present the code block, not edit.\n\nBut maybe they expect implementation applied? \"Cambio propuesto\" = proposed change. Don't apply. Answer in markdown with 4 parts, concise.",
+          "native": {
+            "reasoningField": "reasoning_content"
+          },
+          "time": {
+            "created": 1794540233765,
+            "completed": 1794540246288
+          }
+        },
+        {
+          "type": "text",
+          "text": "## 1. Plan (3–6 pasos)\n\n1. Confirmar el contrato: `prioridad` 1–3, `vence` fecha ISO `\"AAAA-MM-DD\"` o `None`; ninguna validación extra indicada en el enunciado.\n2. Construir una clave de orden por nota: `(-prioridad, tiene_sin_fecha, fecha)`.\n   - `-prioridad` → mayor prioridad primero.\n   - `tiene_sin_fecha` (`False`/`True`) → dentro del mismo grupo, las que tienen fecha van antes; las `None` al final.\n   - `fecha` → orden ascendente = vencimiento más cercano primero (comparación lexicográfica válida para ISO `AAAA-MM-DD`).\n3. Usar `sorted(...)` sobre la lista de entrada: crea lista nueva y, al ser orden estable, los empates totales conservan el orden original (CA2).\n4. No mutar `notas` en ningún punto (sin `.sort()` in-place, sin asignaciones) → CA3.\n5. Verificar mentalmente contra el test visible: `c(3,\"2026-11-03\")` < `b(3,\"2026-11-09\")` < `a(1,None)`.\n\n## 2. Cambio propuesto (`backend/notitas/t16.py`)\n\n```python\ndef ordenar(notas: list[dict]) -> list[dict]:\n    \"\"\"Ver TAREAS.md, tarea t16.\"\"\"\n    return sorted(\n        notas,\n        key=lambda n: (\n            -n[\"prioridad\"],\n            n[\"vence\"] is None,\n            n[\"vence\"] or \"\",\n        ),\n    )\n```\n\nEquivalente alternativo (dos pasadas estables, si se prefiere evitar el `-` sobre la prioridad y el `or \"\"`):\n\n```python\ndef ordenar(notas: list[dict]) -> list[dict]:\n    \"\"\"Ver TAREAS.md, tarea t16.\"\"\"\n    resultado = sorted(notas, key=lambda n: (n[\"vence\"] is None, n[\"vence\"] or \"\"))\n    return sorted(resultado, key=lambda n: n[\"prioridad\"], reverse=True)\n```\n\nRecomiendo la primera: una sola pasada y una sola expresión de clave. La segunda también cumple CA1–CA3 porque `sorted` es estable en cada pasada.\n\n## 3. Supuestos\n\n- `prioridad` siempre es un entero válido (1, 2 o 3); no hay `None` ni valores fuera de rango.\n- Si `vence` no es `None`, es una fecha ISO `\"AAAA-MM-DD\"` bien formada, de ancho fijo, por lo que comparar como texto equivale a comparar cronológicamente.\n- Las claves `\"prioridad\"` y `\"vence\"` existen siempre en cada dict (el enunciado las describe como parte de la nota).\n- No se pide mantener un campo de índice auxiliar ni devolver copias profundas de los dicts: \"lista nueva\" = nueva lista, con las mismas referencias a las notas.\n- No hay desempate adicional más allá de prioridad y fecha; cualquier otro criterio iría contra CA2.\n\n## 4. Casos borde que creo que faltan (texto)\n\n- **Lista vacía**: debe devolver `[]` sin error.\n- **Un solo elemento**: se devuelve igual, sin modificaciones.\n- **Todas sin fecha en un mismo grupo de prioridad**: deben conservar exactamente el orden de entrada (estabilidad pura).\n- **Empate total** (misma prioridad y misma fecha, o ambas `None`): verificar que no se reordena por `id` ni por nombre.\n- **Mezcla de prioridades con `None`**: una nota de prioridad 3 sin fecha debe ir *después* de las prioridad 3 con fecha, pero *antes* de cualquier prioridad 2.\n- **Entrada ya ordenada** y **entrada en orden inverso**: comprobar idempotencia y que no haya efectos raros del algoritmo.\n- **Fechas repetidas pero distinta prioridad**: la prioridad manda sobre la fecha, incluso si la fecha más cercana está en el grupo bajo.\n- **No mutación**: comparar `notas` con una copia superficial tomada antes de llamar a `ordenar` (orden y contenido de los dicts intactos).\n- **Fechas en años distintos o formato con ceros** (`\"2026-01-05\"` vs `\"2026-10-01\"`): confirmar que el orden lexicográfico coincide con el cronológico."
+        }
+      ],
+      "finish": "stop",
+      "rawFinish": "stop",
+      "cost": 0,
+      "tokens": {
+        "input": 547,
+        "output": 1043,
+        "reasoning": 256,
+        "cache": {
+          "read": 8192,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_1d2ef151b001H8Z5pIN2yUgC87",
+      "time": {
+        "created": 1794540246299
+      },
+      "type": "idle",
+      "outcome": "succeeded"
+    },
+    {
+      "id": "msg_1d2f1b571001v9oD3RGXYCNcNA",
+      "metadata": {
+        "displayText": "Nos explicas la primera  def ordenar(notas: list[dict]) -> list[dict]:\n    \"\"\"Ver TAREAS.md, tarea t16.\"\"\"\n    return sorted(\n        notas,\n        key=lambda n: (\n            -n[\"prioridad\"],\n            n[\"vence\"] is None,\n            n[\"vence\"] or \"\",\n        ),\n    )",
+        "comments": [],
+        "attachments": [],
+        "agent": "build",
+        "model": {
+          "modelID": "deepseek-v4.1-flash-free",
+          "providerID": "opencode"
+        }
+      },
+      "time": {
+        "created": 1794540418462
+      },
+      "text": "Nos explicas la primera  def ordenar(notas: list[dict]) -> list[dict]:\n    \"\"\"Ver TAREAS.md, tarea t16.\"\"\"\n    return sorted(\n        notas,\n        key=lambda n: (\n            -n[\"prioridad\"],\n            n[\"vence\"] is None,\n            n[\"vence\"] or \"\",\n        ),\n    )",
+      "files": [],
+      "agents": [],
+      "type": "user"
+    },
+    {
+      "id": "msg_1d2f1b5a5001weaoTFRLdBi5sw",
+      "time": {
+        "created": 1794540418474,
+        "streamed": 1794540435615,
+        "completed": 1794540435617
+      },
+      "type": "assistant",
+      "agent": "build",
+      "model": {
+        "id": "deepseek-v4.1-flash-free",
+        "providerID": "opencode",
+        "variant": "default"
+      },
+      "content": [
+        {
+          "type": "reasoning",
+          "text": "Explain the first implementation in detail. No tool calls needed. Explain sorted stability, key tuple semantics, boolean sorting, `or \"\"`, why -prioridad, why not mutate. Also mention caveats (True/False sorting, None handling), and walk through example from test.\n\nKeep clear, in Spanish.",
+          "native": {
+            "reasoningField": "reasoning_content"
+          },
+          "time": {
+            "created": 1794540419513,
+            "completed": 1794540435608
+          }
+        },
+        {
+          "type": "text",
+          "text": "# Cómo funciona la primera versión\n\n```python\ndef ordenar(notas: list[dict]) -> list[dict]:\n    \"\"\"Ver TAREAS.md, tarea t16.\"\"\"\n    return sorted(\n        notas,\n        key=lambda n: (\n            -n[\"prioridad\"],\n            n[\"vence\"] is None,\n            n[\"vence\"] or \"\",\n        ),\n    )\n```\n\nLa idea es una sola línea de trabajo: **convertir cada nota en una tupla comparable** y dejar que `sorted` haga todo lo demás.\n\n## 1. `sorted(...)` en lugar de `notas.sort(...)`\n\n- `sorted` **crea una lista nueva** → cumple CA3 directamente, `notas` nunca se toca.\n- `list.sort` ordenaría *in place* y mutaría la entrada. Por eso no se usa.\n- Además `sorted` es **estable**: si dos elementos tienen exactamente la misma clave, mantienen su orden relativo original → cumple CA2 sin código extra.\n\n## 2. La clave: una tupla de 3 posiciones\n\nPython compara tuplas **posición por posición, de izquierda a derecha**, y solo pasa a la siguiente posición cuando hay empate. Ahí está todo el truco:\n\n```python\n(nivel, sin_fecha, fecha)\n```\n\n### Posición 1: `-n[\"prioridad\"]` → prioridad más alta primero\n\n`prioridad` vale 1 (baja), 2 (media), 3 (alta). `sorted` ordena **ascendente** por defecto, así que:\n\n- Si usáramos `n[\"prioridad\"]` saldría 1, 2, 3 → lo contrario de lo que pide CA1.\n- Con `-prioridad` los valores son `-3, -2, -1`; el más negativo va primero → **3, 2, 1**, es decir alta → media → baja.\n\n### Posición 2: `n[\"vence\"] is None` → las sin fecha al final del grupo\n\nAquí no se ordena por la fecha todavía, sino por **\"¿tiene fecha o no?\"**:\n\n| `vence` | `is None` | valor |\n|---|---|---|\n| `\"2026-11-03\"` | `False` | `0` |\n| `None` | `True` | `1` |\n\n`False` se comporta como `0` y `True` como `1`. Como la comparación es ascendente, `0` va antes que `1`:\n\n- primero las que **sí** tienen fecha,\n- al final las que tienen `None` → cumple \"las que no tienen fecha van al final de su grupo\".\n\nY como esta posición es la **segunda**, ese \"al final\" solo ocurre **dentro de la misma prioridad**: la posición 1 ya decidió el grupo. Una prioridad 3 sin fecha queda después de las 3 con fecha, pero antes de cualquier prioridad 2.\n\n> Detalle importante: el `is None` está justamente para no comparar `None` contra un string. Si la tupla fuera `(prioridad, vence)`, Python lanzaría `TypeError: '<' not supported between instances of 'str' and 'NoneType'` en cuanto hubiera una nota sin fecha. Aquí `None` nunca llega a compararse como fecha.\n\n### Posición 3: `n[\"vence\"] or \"\"` → fecha más cercana primero\n\n- Si hay fecha, se usa tal cual: `\"2026-11-03\"`.\n- Si es `None`, `None or \"\"` devuelve `\"\"` → un texto vacío, que **compara sin fallar** y quedaría antes que cualquier fecha real en orden alfabético… pero eso da igual, porque la posición 2 ya mandó esas notas al final del grupo. La posición 3 solo se evalúa entre notas que ya empataron en las dos anteriores (es decir, entre las que **sí** tienen fecha).\n- Las fechas son `\"AAAA-MM-DD\"`: mismo ancho, año-mes-día. Comparar strings de ese formato da **el mismo resultado que comparar cronológicamente** (`\"2026-11-03\" < \"2026-11-09\"`), así que ascendente = vencimiento más cercano primero → cumple la segunda parte de CA1.\n\n## 3. Recorriendo el ejemplo del test visible\n\n```python\nn = [\n    {\"id\": \"a\", \"prioridad\": 1, \"vence\": None},\n    {\"id\": \"b\", \"prioridad\": 3, \"vence\": \"2026-11-09\"},\n    {\"id\": \"c\", \"prioridad\": 3, \"vence\": \"2026-11-03\"},\n]\n```\n\nClaves calculadas:\n\n| nota | `-prioridad` | `is None` | `or \"\"` | clave |\n|---|---|---|---|---|\n| a | -1 | True | `\"\"` | `(-1, True, \"\")` |\n| b | -3 | False | `\"2026-11-09\"` | `(-3, False, \"2026-11-09\")` |\n| c | -3 | False | `\"2026-11-03\"` | `(-3, False, \"2026-11-03\")` |\n\nOrden ascendente de claves:\n\n1. `(-3, False, \"2026-11-03\")` → **c**\n2. `(-3, False, \"2026-11-09\")` → **b** (empata en prioridad, fecha posterior)\n3. `(-1, True, \"\")` → **a** (prioridad baja, además sin fecha)\n\nResultado: `[\"c\", \"b\", \"a\"]` ✅ — exactamente lo que espera `test_t16.py`.\n\n## 4. Dónde se cumple cada criterio\n\n- **CA1** → posición 1 (prioridad), luego 2 (con fecha antes que sin fecha), luego 3 (fecha más cercana).\n- **CA2** → no hay ninguna posición más: si dos notas empatan en las tres, `sorted` las deja en su orden de entrada porque es estable. Ojo: **no** se usa `id` como desempate, porque eso rompería la estabilidad.\n- **CA3** → `sorted` devuelve una lista nueva y los dicts se leen, nunca se escriben.\n\n## 5. Limitaciones / cosas que conviene tener en la cabeza\n\n- Asume que `prioridad` y `vence` **siempre existen** en cada dict (si faltara una clave, sería `KeyError`).\n- Asume fechas ISO bien formadas. Con `\"03/11/2026\"` la comparación de texto ya no coincidiría con el orden cronológico.\n- `-n[\"prioridad\"]` obliga a que la prioridad sea numérica; con strings (`\"alta\"`) fallaría.\n- El `or \"\"` es un truco cómodo pero algo \"impreciso\": cualquier fecha falsy (solo `\"\"` o `None` en la práctica) cae ahí. Es seguro **solo** porque la posición 2 garantiza que esos casos ya no llegan a compararse entre sí por fecha.\n- Si en el futuro se quisiera un orden distinto para las notas sin fecha (p. ej. al principio), bastaría con invertir la posición 2 (`n[\"vence\"] is not None`), sin tocar el resto."
+        }
+      ],
+      "finish": "stop",
+      "rawFinish": "stop",
+      "cost": 0,
+      "tokens": {
+        "input": 1413,
+        "output": 1664,
+        "reasoning": 62,
+        "cache": {
+          "read": 8704,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_1d2f1f8a5001r21u1H9CpCXlIK",
+      "time": {
+        "created": 1794540435621
+      },
+      "type": "idle",
+      "outcome": "succeeded"
+    }
+  ]
+}

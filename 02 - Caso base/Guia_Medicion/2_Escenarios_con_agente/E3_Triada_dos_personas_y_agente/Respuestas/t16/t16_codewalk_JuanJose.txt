@@ -1,0 +1,5 @@
+1. Reordenar las notas de las columnas en base a prioridad y fecha limite
+2. El caso en el que la nota no tenga una fecha limite
+3. Es la manera mas corta y eficiente de solucionar, a pesar de que tla vez no sea la mas fácil de entender a simple vista
+4. La verdad no sabría muy bien si esto es posible con la función sorted, probablemnet puedo añadir otro criterio de ordenamiento obteniendo el índice del objeto y poniendo como criterio el negativo para que asi el que estaba primero lo ponga después y el de sefundo de primero
+5. en el criterio del sorted que dice Nota"fecha" is None le pondría una negación asi pondría con cero o mas prioridad a los que no tienen fecha
