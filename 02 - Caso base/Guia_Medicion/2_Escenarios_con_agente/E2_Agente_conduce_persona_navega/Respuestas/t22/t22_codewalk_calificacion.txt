@@ -1,0 +1,13 @@
+Codewalk t22 · calificación
+Calificado por: Claude Code (Claude Opus 5.5), con el código abierto (backend/notitas/t22.py, commit ed3f45a). No es ciega.
+Regla: guía de codewalk v9 (1 si es correcta y concreta; 0 si es vaga o incorrecta).
+Respuestas: t22_codewalk_JuanJose.txt (sin corregir).
+X: un motivo de solo espacios desbloquea la nota. Y: también se guarda quién desbloqueó la nota.
+
+P1 · 1 · Correcta: mueve la nota según si está bloqueada. Breve, sin decir que devuelve una copia ni que registra el desbloqueo.
+P2 · 0 · No dice dónde está el caso borde (la regla lo exige) y nombra las dos ramas principales, no un caso borde. Ejemplos válidos: motivo de solo espacios en `if not motivo or not motivo.strip()`; historial ausente en `nota.get("historial") or []`.
+P3 · 1 · Da la razón de la forma final: evitar la copia duplicada y el docstring. En el límite: no nombra la construcción (copia y columna al inicio con return temprano).
+P4 · 1 · Señala el if que valida el motivo recortado, que es donde estaría el error.
+P5 · 1 · Señala la firma (nuevo parámetro) y el diccionario que se agrega al historial.
+
+Total: 4/5
