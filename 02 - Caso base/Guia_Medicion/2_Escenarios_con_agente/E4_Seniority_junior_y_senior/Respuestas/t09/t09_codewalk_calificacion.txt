@@ -1,5 +1,5 @@
 Codewalk t09 · calificación
-Calificado por: Claude Code (Claude Opus 5.5), con el código abierto (backend/notitas/t09.py, commit 1a63353). No es ciega, y es el mismo modelo que hizo de senior en la tarea.
+Calificado por: Claude Code (Claude Opus 5.5), con el código abierto (backend/notitas/t09.py, commit 60b5938). No es ciega, y es el mismo modelo que hizo de senior en la tarea.
 Regla: guía de codewalk v9 (1 si es correcta y concreta; 0 si es vaga o incorrecta).
 Respuestas: t09_codewalk_JuanJose.txt (sin corregir).
 X: ["a","A"] devuelve dos etiquetas. Y: el máximo pasa a 3 etiquetas y se descartan las sobrantes en vez de dar error.
