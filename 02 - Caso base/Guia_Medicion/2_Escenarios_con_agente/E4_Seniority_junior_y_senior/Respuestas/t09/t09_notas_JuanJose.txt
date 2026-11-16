@@ -1,0 +1,118 @@
+t09
+15 de noviembre de 2026  · sesión 3 solo Juan Jose
+Quién Persona que decide: Juan José (junior escribe, senior revisa)
+Herramienta, versión y modelo exacto (OpenCode Desktop 1.19.5 · DeepSeek V4.1 Flash ·Junior)(Senior Opus 5.5 high effort).
+
+M5 · Pronóstico en minutos: 25 min
+
+Enfoque
+primeramente crearía una lista de resultado vacias, buscaría una función para iterativamente normalizar cada etiqueta eliminando espacios de los extremos y internos repetidos y pasaría a minúscula, luego iteraria de nuevo en un for con condicionales adentro si no esta vacia y la etiqueta actual not in la lista de resultado la añado a la lista de resultados, al final miraría el tamaño de la lista y si tiene mas de 5 lanzaría el error, luego iteraria de nuevo apra comprobar si alguna de las etiquetax super alo 20 caracteres para dispara el error
+
+Actúa como conductor junior de pair programming (spec Junior v1). Tarea: t09.
+Este es el enunciado de la tarea:
+[## t09 · Normalizar etiquetas (S)
+
+Archivo: `backend/notitas/t09.py`
+
+Firma: `def normalizar_etiquetas(etiquetas: list[str]) -> list[str]`
+
+- CA1: cada etiqueta se recorta, se pasa a minúsculas y sus espacios internos repetidos quedan en uno.
+- CA2: se descartan las vacías y las repetidas, conservando el orden de la **primera** aparición.
+- CA3: si quedan **más de 5** etiquetas, o alguna tiene **más de 20** caracteres, `ValueError`.]
+Archivos: @backend/notitas/t09.py @backend/tests/visibles/test_t09.py
+Escribe tú el código, directamente en backend/notitas/t09.py, en cambios pequeños: uno por vez. Antes de cada cambio, explica en
+una o dos frases qué vas a hacer y por qué.
+No edites otros archivos ni las pruebas. No leas ni pidas las pruebas ocultas. No hagas commit. No inventes requisitos que no
+estén en el enunciado.
+Después de cada cambio responde con: 1. Qué cambiaste. 2. Supuestos que hiciste. 3. Casos borde que crees que faltan.
+La persona decide: si rechaza un cambio, no lo repitas igual; pregunta qué cambiar.
+Voy a revisar el archivo de la tarea y las pruebas visibles para ajustarme exactamente a lo pedido.
+
+Antes de escribir, reviso cómo están resueltas otras tareas del repo para seguir el mismo estilo.
+
+Voy a implementar CA1: normalizar cada etiqueta usando split()/join para recortar y colapsar espacios internos, y lower() para minúsculas.
+
+Juniro 1er cambio aceptado uso las funcionalidades que esperaba primero
+2do cambios también sigue el enfoque que esperaba, apruebo
+3ro también según el enfoque que esperaba
+4to me solicito correr las pruebas pero lo rechace para ver la opinión del senior
+
+Senior me dijo 
+Read backend\notitas\t09.py (11 lines)
+Read backend\tests\visibles\test_t09.py (8 lines)
+Error: No such tool available: Write. Write is disabled for this session, in subagents as well as here.
+
+Revisión t09 · normalizar_etiquetas
+
+Revisé backend/notitas/t09.py tal como está ahora contra CA1–CA3 y las pruebas visibles. No ejecuté las pruebas: en esta sesión solo puedo leer archivos.
+
+Revisé backend/notitas/t09.py tal como está ahora contra CA1–CA3 y las pruebas visibles. No ejecuté las pruebas: en esta sesión solo puedo leer archivos.
+
+1. Preguntas para la persona
+
+1. ¿Qué devuelve la función con ["  mi    casa  "]? Sigue la línea 3 paso a paso: ¿split() sin argumentos recorta los extremos y además deja los espacios internos en uno solo? ¿Y qué pasa con "mi\tcasa"? Ese resultado, ¿lo elegiste a propósito o salió sin buscarlo?
+2. Con ["a", "A", "b", "b ", "c", "d", "e"] hay 7 entradas pero solo 5 distintas. ¿Lanza ValueError? ¿Por qué importa que la línea 8 compruebe los límites después de quitar las vacías y las repetidas?
+3. Si una etiqueta tiene 25 caracteres en la entrada y 18 después de juntar los espacios, ¿debe pasar? ¿Tu código mide el texto original o el normalizado?
+
+2. Riesgos o errores
+
+- No encuentro errores que incumplan CA1, CA2 o CA3.
+- L3 (CA1): split() sin argumentos corta por espacios, tabuladores y saltos de línea. Elenunciado solo habla de "espacios", así que no lo cuento como error, pero la persona debería tomar esa decisión a sabiendas.
+- L6 (CA2): etiqueta not in resultado busca dentro de una lista, lo que tiene coste O(n²). Como el resultado aceptado no pasa de 5, no importa en la práctica. Es un comentario de estilo y no impide aceptar el cambio.
+- L8 (CA3): > 5 y > 20 coinciden con el "más de" del enunciado. Conviene vigilar que en un cambio futuro no se
+  conviertan en >=.
+- L3 (CA1/CA3), solo como aviso: con algunos caracteres Unicode, .lower() cambia la longitud del texto (por ejemplo, "İ".lower() da 2 caracteres). El enunciado no lo pide, así que no lo trato como requisito.
+
+- L3 (CA1/CA3), solo como aviso: con algunos caracteres Unicode, .lower() cambia la longitud del texto (por ejemplo, "İ".lower() da 2 caracteres). El enunciado no lo pide, así que no lo trato como requisito.
+
+3. Casos borde que faltan en las pruebas vis
+
+- Espacios internos (CA1): "mi   casa" → "mi casa". Ninguna prueba lo cubre.
+- Vacías (CA2): ["", "   ", "x"] → ["x"], y ["  "] → [].
+- Lista vacía: [] → [].
+- Orden de la primera aparición (CA2): cuando la repetida aparece después con otra forma, ["B", "a", "b"] → ["b", "a"].
+- Límite exacto de cantidad (CA3): con exactamente 5 etiquetas no hay error. El caso de 6 ya está probado.
+- Más de 5 en la entrada que se reducen a 5 o menos (CA2 + CA3): no hay error.
+- Límite exacto de longitud (CA3): 20 caracteres pasan y 21 lanzan ValueError. Hoy no hay ninguna prueba de longitud.
+- Etiqueta larga solo por espacios sobrantes: si al normalizar queda en 20 caracteres o menos, no hay error.
+
+4. Recomendación sobre el último cambio
+
+Aceptar. El código cumple los tres criterios
+- CA1: recorta, pasa a minúsculas y deja los espacios internos en uno.
+- CA2: quita vacías y repetidas y conserva el orden de la primera aparición.
+- CA3: comprueba los límites después de normalizar, con comparaciones estrictas.
+
+También satisface las dos pruebas visibles, aunque no las ejecuté. Sugiero añadir pruebas para los casos de la sección 3, sobre todo los límites exactos (5 y 20) y los espacios internos, que hoy nadie prueba, pero eso no impideaceptarlo. La decisión final es tuya.
+no se si intento escribir, el curioso
+conteste a las preguntas
+1. ¿Qué devuelve la función con ["  mi    casa  "]? Sigue la línea 3 paso a paso: ¿split() sin argumentos recorta los extremos y además deja los espacios internos en uno solo? ¿Y qué pasa con "mi\tcasa"? Ese resultado, ¿lo elegiste a propósito o salió sin buscarlo?
+R.["mi casa"], no realmente el Split lo que hace es devolverme una lista con las palabras que no son espacios luego debo unirlas de nuevo con el join, no se que pasa con mi\tcasa lo mas probable es que se quede igual ya que no es un espacio vacio, fue la opción que me dio el junior pero si era con las funciones que pensaba
+2. Con ["a", "A", "b", "b ", "c", "d", "e"] hay 7 entradas pero solo 5 distintas. ¿Lanza ValueError?No lo lanza ¿Por qué importa que la línea 8 compruebe los límites después de quitar las vacías y las repetidas? por que si la compara antes y tiene en cuenta las repetidas o vacias lanzaría el error aunque no sea el comportamiento que se busca
+3. Si una etiqueta tiene 25 caracteres en la entrada y 18 después de juntar los espacios, ¿debe pasar? no deberia haber error ¿Tu código mide el texto original o el normalizado? mide el texto normalizado
+
+entiendo los casos borde y tiene razón al decir que son cosas que no se han pedido que seria bueno tener en cuenta si pero dice que no incumple los ca y bajo mi criterio es cierto y veo innecesario cambiarlo, asi que lo acepto , a pesar de recomendaciones que dio me parecen un poco excesivas algunas me parecio que fue mas coherente que cuando se le pedían casos borde no evaluado a open code.
+
+Hora de inicio: 6:57 pm
+Pausas No
+Hora de fin 7:17 pm
+
+M1 · 22:39 min
+
+M2 · Ocultas que fallan 0 de 3
+M3 · Minutos corrigiendo 0 
+M4 · Codewalk autor (0–5) · Juan José
+1. ¿Qué hace la función, en una frase?
+La función normaliza las etiquetas de una nota volviéndolas minúscula y eliminando espacios innecesario, además de etiquetas repetidas
+2. ¿Qué caso borde maneja y dónde?
+El caso en el que haya mas de 5 etiquetas finales o si alguna excede la longitud de 20 caracteres con el texto ya normalizado
+3. ¿Por qué se eligió esta forma y no otra?
+Es una forma entendible de codificar el flujo si sigue el enfoque inicialmente planteado por mi, aunque con funciones que lo hacen muy ordenado de ver como el Split o join
+4. Si mañana falla con esto, ¿dónde mirarías primero? Falla: ["a","A"] devuelve dos etiquetas
+Miraria el inicio de la función donde pasamos los caracteres a minúscula, por que significa que no lo esta haciendo bien
+5. ¿Qué cambiarías si el requisito cambia así? Cambio: el máximo pasa a 3 etiquetas y se descartan las sobrantes en vez de dar
+error
+Iria a la comprobación final y si excede las 3 etiquetas retornaría una copia de la lista pero solo de sus primeras 3 posiciones
+
+¿Abrieron las ocultas antes? Si sí: No 
+Observaciones y nombre del video

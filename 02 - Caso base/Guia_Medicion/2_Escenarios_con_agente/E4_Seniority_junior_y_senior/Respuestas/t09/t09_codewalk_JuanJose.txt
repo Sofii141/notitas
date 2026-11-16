@@ -1,0 +1,11 @@
+1. ¿Qué hace la función, en una frase?
+La función normaliza las etiquetas de una nota volviéndolas minúscula y eliminando espacios innecesario, además de etiquetas repetidas
+2. ¿Qué caso borde maneja y dónde?
+El caso en el que haya mas de 5 etiquetas finales o si alguna excede la longitud de 20 caracteres con el texto ya normalizado
+3. ¿Por qué se eligió esta forma y no otra?
+Es una forma entendible de codificar el flujo si sigue el enfoque inicialmente planteado por mi, aunque con funciones que lo hacen muy ordenado de ver como el Split o join
+4. Si mañana falla con esto, ¿dónde mirarías primero? Falla: ["a","A"] devuelve dos etiquetas
+Miraria el inicio de la función donde pasamos los caracteres a minúscula, por que significa que no lo esta haciendo bien
+5. ¿Qué cambiarías si el requisito cambia así? Cambio: el máximo pasa a 3 etiquetas y se descartan las sobrantes en vez de dar
+error
+Iria a la comprobación final y si excede las 3 etiquetas retornaría una copia de la lista pero solo de sus primeras 3 posiciones

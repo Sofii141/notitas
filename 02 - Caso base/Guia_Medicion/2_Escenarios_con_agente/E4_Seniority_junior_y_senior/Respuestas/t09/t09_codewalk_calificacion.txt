@@ -1,0 +1,13 @@
+Codewalk t09 · calificación
+Calificado por: Claude Code (Claude Opus 5.5), con el código abierto (backend/notitas/t09.py, commit 1a63353). No es ciega, y es el mismo modelo que hizo de senior en la tarea.
+Regla: guía de codewalk v9 (1 si es correcta y concreta; 0 si es vaga o incorrecta).
+Respuestas: t09_codewalk_JuanJose.txt (sin corregir).
+X: ["a","A"] devuelve dos etiquetas. Y: el máximo pasa a 3 etiquetas y se descartan las sobrantes en vez de dar error.
+
+P1 · 1 · Correcta y concreta: minúsculas, espacios y repetidas. No menciona el error de CA3, suficiente para una frase.
+P2 · 1 · Nombra la condición exacta (más de 5 al final, o más de 20 caracteres ya normalizada), que es el if de la línea 8. En el límite: no dice "línea 8" ni "el if final".
+P3 · 1 · Concreta: sigue su enfoque inicial y usa split() y join() (línea 3). La razón es suya, no "lo propuso el agente".
+P4 · 1 · Si ["a","A"] da dos, el .lower() de la línea 3 no se aplica antes de comparar en la línea 6. Señala la parte correcta y explica por qué.
+P5 · 1 · En la comprobación final (línea 8), cambiar el error por devolver resultado[:3]. Detalle que no baja la nota: el chequeo de más de 20 caracteres debe seguir lanzando ValueError.
+
+Total: 5/5
