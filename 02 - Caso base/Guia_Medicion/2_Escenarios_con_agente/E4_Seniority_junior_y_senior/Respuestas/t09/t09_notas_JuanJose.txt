@@ -113,6 +113,6 @@ Miraria el inicio de la función donde pasamos los caracteres a minúscula, por 
 5. ¿Qué cambiarías si el requisito cambia así? Cambio: el máximo pasa a 3 etiquetas y se descartan las sobrantes en vez de dar
 error
 Iria a la comprobación final y si excede las 3 etiquetas retornaría una copia de la lista pero solo de sus primeras 3 posiciones
-
+5 de 5 según Claude code
 ¿Abrieron las ocultas antes? Si sí: No 
 Observaciones y nombre del video
