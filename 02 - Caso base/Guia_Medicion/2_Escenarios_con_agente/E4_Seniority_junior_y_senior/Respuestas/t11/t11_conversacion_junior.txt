@@ -1,0 +1,152 @@
+Sesión de OpenCode (junior): Historial de deshacer para t11 · modelo deepseek-v4.1-flash-free (opencode) · agente build
+
+=== Ana Sofía (15/11/2026 18:37:38) ===
+Actúa como conductor junior de pair programming (spec Junior v1). Tarea: t11.
+Este es el enunciado de la tarea:
+## t11 · Deshacer movimientos (M)
+
+Archivo: `backend/notitas/t11.py`
+
+Clase: `Historial` con `registrar(movimiento: dict) -> None` y `deshacer() -> dict | None`
+
+Un movimiento es `{"nota_id": ..., "desde": ..., "hacia": ...}`.
+- CA1: `deshacer()` devuelve el movimiento **inverso** del último registrado (`desde` y `hacia` intercambiados) y lo saca del historial.
+- CA2: si no hay nada que deshacer, devuelve `None`.
+- CA3: solo se guardan los **últimos 20** movimientos; los más viejos se descartan.
+Archivos: @backend/notitas/t11.py @backend/tests/visibles/test_t11.py
+Escribe tú el código, directamente en backend/notitas/t11.py, en cambios pequeños: uno por vez. Antes de cada cambio, explica en
+una o dos frases qué vas a hacer y por qué.
+No edites otros archivos ni las pruebas. No leas ni pidas las pruebas ocultas. No hagas commit. No inventes requisitos que no
+estén en el enunciado.
+Después de cada cambio responde con: 1. Qué cambiaste. 2. Supuestos que hiciste. 3. Casos borde que crees que faltan.
+La persona decide: si rechaza un cambio, no lo repitas igual; pregunta qué cambiar.
+
+=== Junior (18:37:38) ===
+I'll start by reading the current state of the target file and the visible tests.
+
+[herramienta read: backend/notitas/t11.py · completed]
+[herramienta read: backend/tests/visibles/test_t11.py · completed]
+[herramienta glob: backend/notitas/*.py · completed]
+[herramienta read: backend/notitas/t10.py · completed]
+[herramienta read: backend/notitas/t12.py · completed]
+=== Junior (18:37:42) ===
+Ya tengo el contexto: el archivo solo tiene los stubs y las pruebas visibles cubren el caso básico y el historial vacío.
+
+**Cambio 1 — estado interno.** Voy a añadir un `__init__` con la lista vacía `_movimientos`, porque la clase necesita guardar los movimientos registrados entre llamadas.
+
+[herramienta edit: backend/notitas/t11.py · completed]
+=== Junior (18:37:47) ===
+**Cambio 2 — `registrar`.** Ahora guardo el movimiento al final de la lista y recorto para conservar solo los últimos 20 (CA3).
+
+[herramienta edit: backend/notitas/t11.py · completed]
+[herramienta edit: backend/notitas/t11.py · completed]
+=== Junior (18:37:54) ===
+**Cambio 3 — `deshacer`.** Implemento el movimiento inverso: si hay historial, saco el último con `pop()` y devuelvo un diccionario nuevo con `desde` y `hacia` intercambiados; si está vacío, devuelvo `None` (CA1 y CA2).
+
+[herramienta edit: backend/notitas/t11.py · completed]
+[herramienta read: backend/notitas/t11.py · completed]
+[herramienta shell: cd backend && python -m pytest tests/visibles/test_t11.py -q · completed]
+=== Junior (18:38:00) ===
+Implementado y verificado: `python -m pytest tests/visibles/test_t11.py -q` → `2 passed`.
+
+## Reporte por cambio
+
+**Cambio 1 — `__init__` con `_movimientos`**
+1. Añadí el constructor con una lista vacía y su anotación de tipo.
+2. Supuesto: el historial vive en memoria, por instancia; no se persiste ni se comparte entre instancias.
+3. Faltaría definir: ¿debe poder inicializarse con un historial previo (p. ej. `Historial(movimientos)`)? El enunciado no lo pide, así que no lo agregué.
+
+**Cambio 2 — `registrar` + `MAX_MOVIMIENTOS = 20`**
+1. `registrar` hace `append` del movimiento y, si se pasa de 20, descarta el más antiguo con `pop(0)`. La constante `MAX_MOVIMIENTOS` documenta el límite de CA3.
+2. Supuestos: el límite 20 aplica a movimientos ya registrados, no a la cantidad de `deshacer` exitosos; `registrar` no valida el contenido del dict.
+3. Casos borde a considerar: `registrar` con un dict incompleto (sin `nota_id`/`desde`/`hacia`) — falla luego en `deshacer` con `KeyError`; movimientos con claves extra (p. ej. `version`) se aceptan pero no se devuelven en el inverso.
+
+**Cambio 3 — `deshacer`**
+1. Devuelve `None` si la lista está vacía; si no, extrae el último con `pop()` y retorna un dict nuevo con `desde` y `hacia` intercambiados.
+2. Supuestos: el inverso es un dict nuevo (no muto el movimiento guardado), y el orden de deshacer es LIFO puro.
+3. Casos borde a considerar: mutación posterior del dict original por parte del llamador (al no copiar en `registrar`, el historial refleja ese cambio); deshacer 21 movimientos seguidos solo llega a los 20 conservados.
+
+Resumen de la decisión de diseño que más te puede interesar revisar: **no copio el dict en `registrar`**. Si prefieres aislamiento total respecto al llamador, es un cambio de una línea (`copy.deepcopy` o `dict(movimiento)`) — dime y lo aplico.
+
+=== Ana Sofía (15/11/2026 18:42:52) ===
+porque propusiste esta forma de realizar el ejercicio? 
+
+=== Junior (18:42:52) ===
+Buena pregunta. Te separo el **porqué de la estructura**, el **porqué de cada micro-decisión** y **qué alternativas descarté**.
+
+## 1. Por qué una lista como único estado
+
+Los tres CA hablan de una secuencia con dos operaciones: añadir al final y sacar el último. Eso es una pila, y en Python la pila canónica es una `list`:
+
+- `append` es O(1) y respeta el orden de llegada → el "último registrado" de CA1 es literalmente el último elemento.
+- `pop()` sin índice saca exactamente ese elemento y lo devuelve en una sola operación, lo que cumple "devuelve el inverso **y lo saca del historial**" sin dos pasos separados (`leer` + `del`) que podrían desincronizarse.
+- CA3 (ventana de 20) se resuelve sobre la misma estructura, sin estado auxiliar.
+
+Un solo atributo, sin contadores de posición, sin punteros: menos superficie donde equivocarse.
+
+## 2. Por qué `pop(0)` al pasarse de 20
+
+`registrar` añade **uno** y recorta **a lo sumo uno**, así que tras cada llamada la longitud nunca supera 20 y basta con eliminar la cabeza. El coste O(n) es irrelevante con n=20.
+
+Descarté `collections.deque(maxlen=20)`: da el recorte "gratis", pero esconde la regla del negocio dentro de una librería, y el día que alguien lea el archivo no ve el 20 explícito. También descarté `self._movimientos = self._movimientos[-20:]`: funciona, pero crea una lista nueva en cada registro sobrante y hace menos evidente que solo se tira el más viejo.
+
+## 3. Por qué construyo el dict inverso explícitamente
+
+```python
+return {"nota_id": ..., "desde": m["hacia"], "hacia": m["desde"]}
+```
+
+- Hace visible en una línea que el contrato son **tres** campos y que solo se intercambian dos; el enunciado es explícito con `{"nota_id": ..., "desde": ..., "hacia": ...}`.
+- **No muta** el movimiento guardado, así que deshacer uno no corrompe los anteriores que quedan en el historial.
+
+Descarté `{**m, "desde": m["hacia"], "hacia": m["desde"]}`, que es más corto pero arrastra claves desconocidas hacia la salida. Eso sería inventar comportamiento: si alguien registra `{"version": 3}`, el enunciado no dice que deba reaparecer en el inverso.
+
+## 4. Por qué `if not self._movimientos: return None`
+
+CA2 pide `None` cuando no hay nada. Comprobar la lista vacía es idiomático y no oculta errores reales (un `try/except IndexError` sí podría tragarse un fallo distinto). Es la rama que las pruebas visibles ejercitan en `test_vacio`.
+
+## 5. Por qué `MAX_MOVIMIENTOS = 20` como atributo de clase
+
+El 20 es un número de negocio (CA3). Ponerlo con nombre evita el "número mágico" suelto, lo deja visible junto a la clase y permite ajustarlo sin buscar en el cuerpo del método. No lo convertí en parámetro de constructor porque el enunciado fija 20 y añadirlo sería un requisito inventado.
+
+## 6. Por qué añadí `__init__`
+
+El stub solo declaraba `registrar` y `deshacer`; sin constructor, `self._movimientos` no existiría y la primera llamada a `registrar` fallaría con `AttributeError`. La anotación `list[dict]` sigue el estilo de tipos del resto del repo (mira `t12.py`).
+
+## 7. Qué decidí **no** hacer, a propósito
+
+- **No valido** el dict (claves faltantes, tipos): el enunciado no define qué hacer y una excepción inventada sería un requisito nuevo.
+- **No copio** el dict en `registrar`: si copio, aíslo al llamador; si no, soy fiel a "guarda el movimiento". Lo dejé sin copiar por mínima intervención, y por eso lo marqué como el punto que tú puedes revertir con una línea.
+- **No persisto** ni uso locks: no hay concurrencia ni almacenamiento pedidos aquí (eso aparece en t12, que es otro archivo).
+- **No uso un historial por nota**: los CA hablan de un historial global; separarlo por `nota_id` cambiaría la semántica de CA2.
+
+## 8. Por qué en tres cambios pequeños
+
+Uno por preocupación (estado → registrar → deshacer). Cada paso deja el archivo importable y revisable por separado, y si rechazas uno (por ejemplo el recorte con `pop(0)`) solo hay que rehacer 3 líneas sin tocar el resto. Es la parte de método de pair programming junior: cambios pequeños, explicados antes, con supuestos declarados después.
+
+¿Quieres que ajuste alguno de estos puntos? Los candidatos naturales son el **copiado defensivo en `registrar`** y el **recorte con `deque(maxlen=20)`**.
+
+=== Ana Sofía (15/11/2026 18:45:17) ===
+porque un dic dentro de una lista en pocas palabras
+
+=== Junior (18:45:17) ===
+En pocas palabras:
+
+- **El `dict`** guarda **un** movimiento porque el enunciado lo define así: tres campos con nombre (`nota_id`, `desde`, `hacia`). Acceder por clave (`m["hacia"]`) es legible y no depende del orden de los campos.
+- **La `list`** guarda **muchos** movimientos porque el historial es una **secuencia ordenada**: importa cuál llegó último (CA1) y hay que recortar los viejos (CA3).
+
+Juntos: **lista = el historial; dict = cada hoja del historial**. Es la traducción literal del enunciado, sin estructura extra.
+
+=== Ana Sofía (15/11/2026 18:46:27) ===
+porque solo devolvemos algo en el deshacer
+
+=== Junior (18:46:27) ===
+Porque la firma del enunciado solo lo pide ahí, y por la naturaleza de cada operación:
+
+1. **`registrar(movimiento) -> None`**: es una *orden* (push). Su efecto es el estado interno; el llamador ya tiene el movimiento, devolvérselo no le aporta nada.
+2. **`deshacer() -> dict | None`**: es *pregunta + acción*. Quien llama no sabe qué hay en el historial, así que necesita que le digamos **qué aplicar** para revertir, y además enterarse de si había algo (`None`).
+
+O sea: `deshacer` devuelve porque **produce información nueva** (el inverso) que solo el historial conoce. `registrar` no devuelve porque el dato lo pone el llamador.
+
+El `dict | None` es justamente el canal para CA1 (devolver el inverso) y CA2 (devolver `None` si no hay nada).
+

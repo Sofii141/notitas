@@ -1,0 +1,85 @@
+Conversación con el senior (Claude Code · Claude Opus 5.5, solo lectura con agente/claude_senior/settings.json), copiada por Ana Sofía de la app de Claude. Sin horas.
+
+=== Ana Sofía ===
+Actúa como navegante senior (mentor) de pair programming (spec Senior v1). Tarea: t11.
+Este es el enunciado de la tarea:
+## t11 · Deshacer movimientos (M)
+
+Archivo: backend/notitas/t11.py
+
+Clase: `Historial` con `registrar(movimiento: dict) -> None` y `deshacer() -> dict | None`
+
+Un movimiento es `{"nota_id": ..., "desde": ..., "hacia": ...}`.
+- CA1: `deshacer()` devuelve el movimiento **inverso** del último registrado (`desde` y `hacia` intercambiados) y lo saca del historial.
+- CA2: si no hay nada que deshacer, devuelve `None`.
+- CA3: solo se guardan los **últimos 20** movimientos; los más viejos se descartan.
+Revisa @backend/notitas/t11.py, que escribe otro agente (el junior), contra el enunciado y @backend/tests/visibles/test_t11.py.
+No escribas código ni la solución, y no edites archivos. No leas ni pidas las pruebas ocultas. No inventes requisitos.
+Cada vez que te pida revisar, responde en markdown con estas 4 partes:
+1. Hasta 3 preguntas para la persona que la hagan pensar en el código (por ejemplo: qué pasa con tal entrada).
+2. Riesgos o errores que ves, con la línea y el criterio de aceptación relacionado.
+3. Casos borde que faltan, como texto.
+4. Tu recomendación sobre el último cambio: aceptar, corregir o rechazar, y por qué. La decisión final es de la persona.
+
+=== Senior ===
+No pude guardar la revisión en un archivo porque la herramienta para escribir está desactivada en esta sesión, así que te la dejo aquí. No edité ningún archivo y no leí las pruebas ocultas.
+Revisión t11 · `Historial`
+1. Preguntas
+
+1. Si registras 21 movimientos y luego llamas `deshacer()` 21 veces, ¿cuántas veces recibes un dict y en qué llamada empieza a salir `None`? ¿Cuál es el primer movimiento que ya no se puede deshacer?
+2. Si llamas `deshacer()` dos veces seguidas, ¿la segunda devuelve el penúltimo movimiento registrado, o vuelve a aparecer el inverso que acabas de devolver?
+3. `registrar` guarda el mismo dict que le pasan, no una copia. Si quien llama modifica ese dict después de registrarlo, ¿qué devuelve `deshacer()`?
+
+2. Riesgos o errores
+
+* No veo errores contra CA1, CA2 ni CA3.
+* t11.py:17-22 (CA1): toma el último movimiento, lo saca del historial e intercambia `desde` y `hacia`. Correcto.
+* t11.py:15-16 (CA2): con el historial vacío devuelve `None`. Correcto.
+* t11.py:11-12 (CA3): borra el más viejo cuando hay más de 20, así que se quedan exactamente 20. Correcto. `pop(0)` es lento en listas grandes, pero con 20 elementos no importa.
+* t11.py:10 (riesgo menor, el enunciado no lo pide): guarda una referencia al dict de quien llama, no una copia. Si ese dict cambia después, cambia también el historial.
+* t11.py:19-21: si a un movimiento le falta alguna de las claves, sale `KeyError`. El enunciado no dice qué hacer con entradas inválidas, así que no es un requisito.
+
+3. Casos borde que faltan en las pruebas visibles
+
+* Varios movimientos registrados: `deshacer()` los devuelve del más reciente al más viejo.
+* Deshacer hasta vaciar el historial: después, `deshacer()` devuelve `None`.
+* Registrar 21 movimientos: solo se pueden deshacer 20 y el primero ya no está (CA3).
+* Registrar exactamente 20: no se descarta ninguno.
+* El movimiento deshecho sale del historial: dos `deshacer()` seguidos devuelven movimientos distintos.
+
+4. Recomendación: aceptar
+El código cumple CA1, CA2 y CA3. Por lectura del código, también debería pasar las dos pruebas visibles, pero no las ejecuté. Ninguna prueba visible cubre el límite de 20 ni el orden de deshacer, así que conviene que el junior agregue pruebas para eso. La decisión final es tuya.
+
+=== Ana Sofía ===
+revisa el último cambio
+
+=== Senior ===
+Volví a leer t11.py y está igual que en la revisión anterior: el junior no lo ha tocado desde entonces. No pude ver el diff de git porque en esta sesión solo puedo leer archivos, así que comparé contra la versión que revisé antes.
+Revisión t11 · sin cambios
+1. Preguntas
+
+1. Al registrar el movimiento número 21, ¿cuál se descarta: el primero o el último? ¿En qué línea pasa?
+2. Si llamas `deshacer()` dos veces seguidas, ¿la segunda devuelve el penúltimo movimiento registrado?
+3. Si quien llama modifica el dict después de pasarlo a `registrar`, ¿qué devuelve `deshacer()`?
+
+2. Riesgos o errores
+
+* No veo errores contra CA1, CA2 ni CA3. Cada criterio sigue cumplido en las mismas líneas: CA1 en L17-22, CA2 en L15-16, CA3 en L11-12.
+* t11.py:10 (riesgo menor, el enunciado no lo pide): guarda una referencia al dict de quien llama, no una copia.
+* t11.py:19-21: si falta alguna clave en el movimiento sale `KeyError`. El enunciado no lo exige.
+
+3. Casos borde que siguen sin pruebas
+
+* Varios movimientos: `deshacer()` los devuelve del más reciente al más viejo.
+* Registrar 21 movimientos: solo se pueden deshacer 20 y el primero ya no está (CA3).
+* Registrar exactamente 20: no se descarta ninguno.
+* Deshacer hasta vaciar el historial: después, `deshacer()` devuelve `None`.
+
+4. Recomendación: aceptar
+No hay cambios nuevos que revisar y la versión actual cumple los tres criterios. La única tarea pendiente es que el junior agregue pruebas para el límite de 20 y el orden de deshacer. La decisión final es tuya.
+
+=== Ana Sofía ===
+estoy de acuerdo contigo adicional el codigo esta entendible
+
+=== Senior ===
+Entonces t11 queda aceptada. Si después agregan pruebas para el límite de 20 movimientos y para el orden en que se deshacen, pídeme otra revisión y las miro contra CA1, CA2 y CA3.

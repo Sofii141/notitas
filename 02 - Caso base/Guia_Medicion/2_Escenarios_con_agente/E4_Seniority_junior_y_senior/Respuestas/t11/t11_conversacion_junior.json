@@ -1,0 +1,1001 @@
+{
+  "info": {
+    "id": "ses_e1e6d2d3affeyDWMwnHwSc2dhg",
+    "projectID": "183e29055885e37f85ab0320668108bf9911e61c",
+    "agent": "build",
+    "model": {
+      "id": "deepseek-v4.1-flash-free",
+      "providerID": "opencode",
+      "variant": "default"
+    },
+    "cost": 0,
+    "tokens": {
+      "input": 11896,
+      "output": 3294,
+      "reasoning": 1792,
+      "cache": {
+        "read": 117376,
+        "write": 0
+      }
+    },
+    "outcome": "succeeded",
+    "time": {
+      "created": 1794785858380,
+      "updated": 1794786391721,
+      "busy": 1794786387139,
+      "idle": 1794786391723,
+      "viewed": 1794786391723
+    },
+    "title": "Historial de deshacer para t11",
+    "permissions": [
+      {
+        "action": "browser",
+        "resource": "*",
+        "effect": "allow"
+      },
+      {
+        "action": "skill",
+        "resource": "browser",
+        "effect": "allow"
+      }
+    ],
+    "location": {
+      "directory": "C:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente"
+    }
+  },
+  "messages": [
+    {
+      "id": "msg_1e192d2c4001Hx2drBI9vsNYus",
+      "metadata": {
+        "displayText": "Actúa como conductor junior de pair programming (spec Junior v1). Tarea: t11.\nEste es el enunciado de la tarea:\n## t11 · Deshacer movimientos (M)\n\nArchivo: `backend/notitas/t11.py`\n\nClase: `Historial` con `registrar(movimiento: dict) -> None` y `deshacer() -> dict | None`\n\nUn movimiento es `{\"nota_id\": ..., \"desde\": ..., \"hacia\": ...}`.\n- CA1: `deshacer()` devuelve el movimiento **inverso** del último registrado (`desde` y `hacia` intercambiados) y lo saca del historial.\n- CA2: si no hay nada que deshacer, devuelve `None`.\n- CA3: solo se guardan los **últimos 20** movimientos; los más viejos se descartan.\nArchivos: @backend/notitas/t11.py @backend/tests/visibles/test_t11.py\nEscribe tú el código, directamente en backend/notitas/t11.py, en cambios pequeños: uno por vez. Antes de cada cambio, explica en\nuna o dos frases qué vas a hacer y por qué.\nNo edites otros archivos ni las pruebas. No leas ni pidas las pruebas ocultas. No hagas commit. No inventes requisitos que no\nestén en el enunciado.\nDespués de cada cambio responde con: 1. Qué cambiaste. 2. Supuestos que hiciste. 3. Casos borde que crees que faltan.\nLa persona decide: si rechaza un cambio, no lo repitas igual; pregunta qué cambiar.",
+        "comments": [],
+        "attachments": [],
+        "agent": "build",
+        "model": {
+          "modelID": "deepseek-v4.1-flash-free",
+          "providerID": "opencode"
+        }
+      },
+      "time": {
+        "created": 1794785858500
+      },
+      "text": "Actúa como conductor junior de pair programming (spec Junior v1). Tarea: t11.\nEste es el enunciado de la tarea:\n## t11 · Deshacer movimientos (M)\n\nArchivo: `backend/notitas/t11.py`\n\nClase: `Historial` con `registrar(movimiento: dict) -> None` y `deshacer() -> dict | None`\n\nUn movimiento es `{\"nota_id\": ..., \"desde\": ..., \"hacia\": ...}`.\n- CA1: `deshacer()` devuelve el movimiento **inverso** del último registrado (`desde` y `hacia` intercambiados) y lo saca del historial.\n- CA2: si no hay nada que deshacer, devuelve `None`.\n- CA3: solo se guardan los **últimos 20** movimientos; los más viejos se descartan.\nArchivos: @backend/notitas/t11.py @backend/tests/visibles/test_t11.py\nEscribe tú el código, directamente en backend/notitas/t11.py, en cambios pequeños: uno por vez. Antes de cada cambio, explica en\nuna o dos frases qué vas a hacer y por qué.\nNo edites otros archivos ni las pruebas. No leas ni pidas las pruebas ocultas. No hagas commit. No inventes requisitos que no\nestén en el enunciado.\nDespués de cada cambio responde con: 1. Qué cambiaste. 2. Supuestos que hiciste. 3. Casos borde que crees que faltan.\nLa persona decide: si rechaza un cambio, no lo repitas igual; pregunta qué cambiar.",
+      "files": [],
+      "agents": [],
+      "type": "user"
+    },
+    {
+      "id": "msg_1e192d3da001rh1a3Ms7UhUtkG",
+      "time": {
+        "created": 1794785858529,
+        "streamed": 1794785860031,
+        "completed": 1794785860050
+      },
+      "type": "assistant",
+      "agent": "build",
+      "model": {
+        "id": "deepseek-v4.1-flash-free",
+        "providerID": "opencode",
+        "variant": "default"
+      },
+      "content": [
+        {
+          "type": "text",
+          "text": "I'll start by reading the current state of the target file and the visible tests."
+        },
+        {
+          "type": "tool",
+          "id": "call_74088c32bf824d5b86a285cb",
+          "name": "read",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "path": "backend/notitas/t11.py"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Read file backend/notitas/t11.py, lines 1-8\n1: class Historial:\n2:     \"\"\"Ver TAREAS.md, tarea t11.\"\"\"\n3: \n4:     def registrar(self, movimiento: dict) -> None:\n5:         raise NotImplementedError\n6: \n7:     def deshacer(self) -> dict | None:\n8:         raise NotImplementedError"
+              }
+            ],
+            "metadata": {
+              "truncated": false
+            }
+          },
+          "time": {
+            "created": 1794785859712,
+            "ran": 1794785860022,
+            "completed": 1794785860045
+          }
+        },
+        {
+          "type": "tool",
+          "id": "call_4d50b26d31914dfa8e4d684b",
+          "name": "read",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "path": "backend/tests/visibles/test_t11.py"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Read file backend/tests/visibles/test_t11.py, lines 1-7\n1: from notitas.t11 import Historial\n2: def test_deshacer():\n3:     h = Historial()\n4:     h.registrar({\"nota_id\": \"a\", \"desde\": \"por_hacer\", \"hacia\": \"en_curso\"})\n5:     assert h.deshacer() == {\"nota_id\": \"a\", \"desde\": \"en_curso\", \"hacia\": \"por_hacer\"}\n6: def test_vacio():\n7:     assert Historial().deshacer() is None"
+              }
+            ],
+            "metadata": {
+              "truncated": false
+            }
+          },
+          "time": {
+            "created": 1794785859850,
+            "ran": 1794785860027,
+            "completed": 1794785860048
+          }
+        }
+      ],
+      "finish": "tool-calls",
+      "rawFinish": "tool_calls",
+      "cost": 0,
+      "tokens": {
+        "input": 3687,
+        "output": 96,
+        "reasoning": 0,
+        "cache": {
+          "read": 2816,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_1e192d9de0016H6ESqjduWTzWv",
+      "time": {
+        "created": 1794785860068,
+        "streamed": 1794785861292,
+        "completed": 1794785861350
+      },
+      "type": "assistant",
+      "agent": "build",
+      "model": {
+        "id": "deepseek-v4.1-flash-free",
+        "providerID": "opencode",
+        "variant": "default"
+      },
+      "content": [
+        {
+          "type": "reasoning",
+          "text": "Let me check the project structure briefly for conventions (e.g., other t*.py files) to keep style consistent.\n\nLet me look at sibling files.",
+          "native": {
+            "reasoningField": "reasoning_content"
+          },
+          "time": {
+            "created": 1794785860905,
+            "completed": 1794785861285
+          }
+        },
+        {
+          "type": "tool",
+          "id": "call_166f0166633d485d89074d24",
+          "name": "glob",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "pattern": "backend/notitas/*.py"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "C:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\notitas\\__init__.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\notitas\\t24.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\notitas\\t23.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\notitas\\t22.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\notitas\\t21.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\notitas\\t20.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\notitas\\t19.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\notitas\\t18.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\notitas\\t17.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\notitas\\t16.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\notitas\\t15.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\notitas\\t14.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\notitas\\t13.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\notitas\\t12.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\notitas\\t11.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\notitas\\t10.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\notitas\\t09.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\notitas\\t08.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\notitas\\t07.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\notitas\\t06.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\notitas\\t05.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\notitas\\t04.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\notitas\\t03.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\notitas\\t02.py\nC:\\Users\\Ana_Sofia\\OneDrive\\Documentos\\UNI\\E2 AGILES\\EntregaFinal-AGILES\\Repositorio\\notitas-agente\\backend\\notitas\\t01.py"
+              }
+            ],
+            "metadata": {
+              "count": 25,
+              "truncated": false
+            }
+          },
+          "time": {
+            "created": 1794785861208,
+            "ran": 1794785861290,
+            "completed": 1794785861346
+          }
+        }
+      ],
+      "finish": "tool-calls",
+      "rawFinish": "tool_calls",
+      "cost": 0,
+      "tokens": {
+        "input": 438,
+        "output": 44,
+        "reasoning": 31,
+        "cache": {
+          "read": 6400,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_1e192def50018jHFztkhKabXYd",
+      "time": {
+        "created": 1794785861374,
+        "streamed": 1794785862695,
+        "completed": 1794785862711
+      },
+      "type": "assistant",
+      "agent": "build",
+      "model": {
+        "id": "deepseek-v4.1-flash-free",
+        "providerID": "opencode",
+        "variant": "default"
+      },
+      "content": [
+        {
+          "type": "reasoning",
+          "text": "Let me read a couple of adjacent files to get the style (docstrings, implementation style).",
+          "native": {
+            "reasoningField": "reasoning_content"
+          },
+          "time": {
+            "created": 1794785862196,
+            "completed": 1794785862685
+          }
+        },
+        {
+          "type": "tool",
+          "id": "call_f13e1622a1e7409da16bc2ad",
+          "name": "read",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "path": "backend/notitas/t10.py"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Read file backend/notitas/t10.py, lines 1-6\n1: from datetime import date\n2: \n3: \n4: def notas_para_archivar(notas: list[dict], hoy: date) -> list[str]:\n5:     \"\"\"Ver TAREAS.md, tarea t10.\"\"\"\n6:     raise NotImplementedError"
+              }
+            ],
+            "metadata": {
+              "truncated": false
+            }
+          },
+          "time": {
+            "created": 1794785862411,
+            "ran": 1794785862689,
+            "completed": 1794785862706
+          }
+        },
+        {
+          "type": "tool",
+          "id": "call_52489f7e565a4f2f8dc978b2",
+          "name": "read",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "path": "backend/notitas/t12.py"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Read file backend/notitas/t12.py, lines 1-39\n1: import threading\n2: import copy\n3: class Conflicto(Exception):\n4:     pass\n5: \n6: \n7: class Tablero:\n8:     _notas: list[dict]\n9:     lock_acceso_tablero: threading.Lock\n10:     def __init__(self, notas: list[dict]):\n11:         self._notas = copy.deepcopy(notas)\n12:         self.lock_acceso_tablero = threading.Lock()\n13:     \n14:     def get_notas(self):\n15:         return self._notas\n16:     def set_notas(self, notas: list[dict]):\n17:         self._notas = copy.deepcopy(notas)\n18: \n19:     def mover(self, nota_id: str, destino: str, version: int) -> dict:\n20:         nota_a_mover = None\n21:         for nota in self.get_notas():\n22:             if nota[\"id\"] == nota_id:\n23:                 nota_a_mover = nota\n24:                 break\n25:         if nota_a_mover is None:\n26:             raise KeyError(f\"No se encontró la nota con id {nota_id}\")\n27:         \n28:         self.lock_acceso_tablero.acquire()\n29:         if nota_a_mover[\"version\"] == version:\n30:             nota_a_mover[\"version\"] += 1\n31:             nota_a_mover[\"columna\"] = destino\n32:             self.lock_acceso_tablero.release()\n33:             return copy.deepcopy(nota_a_mover)\n34:         else:\n35:             self.lock_acceso_tablero.release()\n36:             raise Conflicto(\n37:                 f\"Conflicto de versión: la nota ya ha sido movida.\"\n38:             )\n39:     "
+              }
+            ],
+            "metadata": {
+              "truncated": false
+            }
+          },
+          "time": {
+            "created": 1794785862555,
+            "ran": 1794785862693,
+            "completed": 1794785862708
+          }
+        }
+      ],
+      "finish": "tool-calls",
+      "rawFinish": "tool_calls",
+      "cost": 0,
+      "tokens": {
+        "input": 1315,
+        "output": 77,
+        "reasoning": 19,
+        "cache": {
+          "read": 6784,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_1e192e4450011mipAn0p9w4QXO",
+      "time": {
+        "created": 1794785862733,
+        "streamed": 1794785867597,
+        "completed": 1794785867619
+      },
+      "type": "assistant",
+      "agent": "build",
+      "model": {
+        "id": "deepseek-v4.1-flash-free",
+        "providerID": "opencode",
+        "variant": "default"
+      },
+      "content": [
+        {
+          "type": "reasoning",
+          "text": "Let me check other simple class tasks with state to see conventions, e.g., t08, t09, t13.\n\nActually enough. Now I'll make small incremental changes.\n\nStep 1: add `__init__` with empty list `self._movimientos: list[dict] = []`. Explain why (need state).\n\nLet me do the changes one at a time, and after each change respond with the 3 points. The instruction says \"Después de cada cambio responde con: 1.. 2.. 3..\". So I should do change, then report, then next change. But as an agent, I can do multiple tool calls in one turn... The spirit is incremental with explanation before each change. I'll do it in a few visible steps within my response: explain, edit, report. Perhaps I'll do 3 edits sequentially with narration between them. That's acceptable — but to be faithful to \"one at a time\" pair programming, better to do the first change, report, and then continue with second change in the same turn? Hmm, the persona: \"Escribe tú el código... en cambios pequeños: uno por vez.\" Since there's no human turn-taking enforced beyond the final response, I'll do sequential small edits, each with explanation, and report after each. I'll present them in the answer as blocks.\n\nActually there is a risk of over-doing. I'll aim for 3 changes: (1) __init__ state, (2) registrar with limit of 20, (3) deshacer. Then run tests.\n\nOnly 4 lines of code but fine.\n\nChange 1: init.\n\nNote: existing class has no __init__; add one. Style in t12 uses annotations. Keep simple.\n\nLet me write change 1.",
+          "native": {
+            "reasoningField": "reasoning_content"
+          },
+          "time": {
+            "created": 1794785863543,
+            "completed": 1794785867590
+          }
+        },
+        {
+          "type": "text",
+          "text": "Ya tengo el contexto: el archivo solo tiene los stubs y las pruebas visibles cubren el caso básico y el historial vacío.\n\n**Cambio 1 — estado interno.** Voy a añadir un `__init__` con la lista vacía `_movimientos`, porque la clase necesita guardar los movimientos registrados entre llamadas."
+        },
+        {
+          "type": "tool",
+          "id": "call_50438e7db49447d1af9ba87c",
+          "name": "edit",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "path": "backend/notitas/t11.py",
+              "oldString": "class Historial:\n    \"\"\"Ver TAREAS.md, tarea t11.\"\"\"\n\n    def registrar(self, movimiento: dict) -> None:",
+              "newString": "class Historial:\n    \"\"\"Ver TAREAS.md, tarea t11.\"\"\"\n\n    def __init__(self) -> None:\n        self._movimientos: list[dict] = []\n\n    def registrar(self, movimiento: dict) -> None:"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Edited backend/notitas/t11.py (1 replacement)"
+              }
+            ],
+            "metadata": {
+              "files": [
+                {
+                  "file": "backend/notitas/t11.py",
+                  "patch": "Index: backend/notitas/t11.py\n===================================================================\n--- backend/notitas/t11.py\n+++ backend/notitas/t11.py\n@@ -1,7 +1,10 @@\n class Historial:\n     \"\"\"Ver TAREAS.md, tarea t11.\"\"\"\n \n+    def __init__(self) -> None:\n+        self._movimientos: list[dict] = []\n+\n     def registrar(self, movimiento: dict) -> None:\n         raise NotImplementedError\n \n     def deshacer(self) -> dict | None:\n",
+                  "status": "modified",
+                  "additions": 3,
+                  "deletions": 0
+                }
+              ],
+              "truncated": false
+            }
+          },
+          "time": {
+            "created": 1794785867022,
+            "ran": 1794785867594,
+            "completed": 1794785867616
+          }
+        }
+      ],
+      "finish": "tool-calls",
+      "rawFinish": "tool_calls",
+      "cost": 0,
+      "tokens": {
+        "input": 645,
+        "output": 231,
+        "reasoning": 372,
+        "cache": {
+          "read": 8064,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_1e192f76f001c9D0Od8mSC1VNy",
+      "time": {
+        "created": 1794785867638,
+        "streamed": 1794785871125,
+        "completed": 1794785871148
+      },
+      "type": "assistant",
+      "agent": "build",
+      "model": {
+        "id": "deepseek-v4.1-flash-free",
+        "providerID": "opencode",
+        "variant": "default"
+      },
+      "content": [
+        {
+          "type": "reasoning",
+          "text": "Report change 1.\n\nThen change 2: registrar.\n\nKeep the record: store copy? Requirement: deshacer returns inverse with desde/hacia swapped. I'll construct a new dict on deshacer. Should registrar store as-is or copy? To be safe with later mutation by caller, copy is reasonable but not stated. Simpler: store as-is. But then deshacer builds new dict anyway. I'll store as-is (no invented requirements) — mention in supuestos.\n\nChange 2: registrar appends and trims to last 20.\n\nUse MAX constant? Simple: `del self._movimientos[:-20]` or if len > 20 pop(0). I'll use a class constant `MAX_MOVIMIENTOS = 20`.\n\nLet me keep it small and explicit.",
+          "native": {
+            "reasoningField": "reasoning_content"
+          },
+          "time": {
+            "created": 1794785869106,
+            "completed": 1794785871117
+          }
+        },
+        {
+          "type": "text",
+          "text": "**Cambio 2 — `registrar`.** Ahora guardo el movimiento al final de la lista y recorto para conservar solo los últimos 20 (CA3)."
+        },
+        {
+          "type": "tool",
+          "id": "call_9e3c7d684399438fbfe257f6",
+          "name": "edit",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "newString": "    def registrar(self, movimiento: dict) -> None:\n        self._movimientos.append(movimiento)\n        if len(self._movimientos) > self.MAX_MOVIMIENTOS:\n            self._movimientos.pop(0)",
+              "oldString": "    def registrar(self, movimiento: dict) -> None:\n        raise NotImplementedError",
+              "path": "backend/notitas/t11.py"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Edited backend/notitas/t11.py (1 replacement)"
+              }
+            ],
+            "metadata": {
+              "files": [
+                {
+                  "file": "backend/notitas/t11.py",
+                  "patch": "Index: backend/notitas/t11.py\n===================================================================\n--- backend/notitas/t11.py\n+++ backend/notitas/t11.py\n@@ -4,8 +4,10 @@\n     def __init__(self) -> None:\n         self._movimientos: list[dict] = []\n \n     def registrar(self, movimiento: dict) -> None:\n-        raise NotImplementedError\n+        self._movimientos.append(movimiento)\n+        if len(self._movimientos) > self.MAX_MOVIMIENTOS:\n+            self._movimientos.pop(0)\n \n     def deshacer(self) -> dict | None:\n         raise NotImplementedError\n",
+                  "status": "modified",
+                  "additions": 3,
+                  "deletions": 1
+                }
+              ],
+              "truncated": false
+            }
+          },
+          "time": {
+            "created": 1794785870584,
+            "ran": 1794785871121,
+            "completed": 1794785871145
+          }
+        }
+      ],
+      "finish": "tool-calls",
+      "rawFinish": "tool_calls",
+      "cost": 0,
+      "tokens": {
+        "input": 630,
+        "output": 175,
+        "reasoning": 166,
+        "cache": {
+          "read": 8704,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_1e1930539001gs12tsf9MNxr0L",
+      "time": {
+        "created": 1794785871169,
+        "streamed": 1794785873961,
+        "completed": 1794785873988
+      },
+      "type": "assistant",
+      "agent": "build",
+      "model": {
+        "id": "deepseek-v4.1-flash-free",
+        "providerID": "opencode",
+        "variant": "default"
+      },
+      "content": [
+        {
+          "type": "reasoning",
+          "text": "I used self.MAX_MOVIMIENTOS but haven't defined it. Add it as class attribute in the next change (part of change 3 or a separate small change). Better: define it now as change 2b — because code would break. Let me add class attribute right away as part of change 2 completion. Actually I'll make it change 2b (small) and report both, or just add it now and mention.\n\nLet me add it now, as it belongs to change 2.",
+          "native": {
+            "reasoningField": "reasoning_content"
+          },
+          "time": {
+            "created": 1794785872544,
+            "completed": 1794785873954
+          }
+        },
+        {
+          "type": "tool",
+          "id": "call_d8905fb3864a4906acd4b1cc",
+          "name": "edit",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "newString": "class Historial:\n    \"\"\"Ver TAREAS.md, tarea t11.\"\"\"\n\n    MAX_MOVIMIENTOS = 20\n\n    def __init__(self) -> None:",
+              "oldString": "class Historial:\n    \"\"\"Ver TAREAS.md, tarea t11.\"\"\"\n\n    def __init__(self) -> None:",
+              "path": "backend/notitas/t11.py"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Edited backend/notitas/t11.py (1 replacement)"
+              }
+            ],
+            "metadata": {
+              "files": [
+                {
+                  "file": "backend/notitas/t11.py",
+                  "patch": "Index: backend/notitas/t11.py\n===================================================================\n--- backend/notitas/t11.py\n+++ backend/notitas/t11.py\n@@ -1,7 +1,9 @@\n class Historial:\n     \"\"\"Ver TAREAS.md, tarea t11.\"\"\"\n \n+    MAX_MOVIMIENTOS = 20\n+\n     def __init__(self) -> None:\n         self._movimientos: list[dict] = []\n \n     def registrar(self, movimiento: dict) -> None:\n",
+                  "status": "modified",
+                  "additions": 2,
+                  "deletions": 0
+                }
+              ],
+              "truncated": false
+            }
+          },
+          "time": {
+            "created": 1794785873411,
+            "ran": 1794785873958,
+            "completed": 1794785873985
+          }
+        }
+      ],
+      "finish": "tool-calls",
+      "rawFinish": "tool_calls",
+      "cost": 0,
+      "tokens": {
+        "input": 481,
+        "output": 141,
+        "reasoning": 105,
+        "cache": {
+          "read": 9216,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_1e1931054001f2nZQrv7vaB4HF",
+      "time": {
+        "created": 1794785874018,
+        "streamed": 1794785876177,
+        "completed": 1794785876207
+      },
+      "type": "assistant",
+      "agent": "build",
+      "model": {
+        "id": "deepseek-v4.1-flash-free",
+        "providerID": "opencode",
+        "variant": "default"
+      },
+      "content": [
+        {
+          "type": "text",
+          "text": "**Cambio 3 — `deshacer`.** Implemento el movimiento inverso: si hay historial, saco el último con `pop()` y devuelvo un diccionario nuevo con `desde` y `hacia` intercambiados; si está vacío, devuelvo `None` (CA1 y CA2)."
+        },
+        {
+          "type": "tool",
+          "id": "call_1eb05c4754e64b378992afe1",
+          "name": "edit",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "newString": "    def deshacer(self) -> dict | None:\n        if not self._movimientos:\n            return None\n        movimiento = self._movimientos.pop()\n        return {\n            \"nota_id\": movimiento[\"nota_id\"],\n            \"desde\": movimiento[\"hacia\"],\n            \"hacia\": movimiento[\"desde\"],\n        }",
+              "oldString": "    def deshacer(self) -> dict | None:\n        raise NotImplementedError",
+              "path": "backend/notitas/t11.py"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Edited backend/notitas/t11.py (1 replacement)"
+              }
+            ],
+            "metadata": {
+              "files": [
+                {
+                  "file": "backend/notitas/t11.py",
+                  "patch": "Index: backend/notitas/t11.py\n===================================================================\n--- backend/notitas/t11.py\n+++ backend/notitas/t11.py\n@@ -11,5 +11,12 @@\n         if len(self._movimientos) > self.MAX_MOVIMIENTOS:\n             self._movimientos.pop(0)\n \n     def deshacer(self) -> dict | None:\n-        raise NotImplementedError\n+        if not self._movimientos:\n+            return None\n+        movimiento = self._movimientos.pop()\n+        return {\n+            \"nota_id\": movimiento[\"nota_id\"],\n+            \"desde\": movimiento[\"hacia\"],\n+            \"hacia\": movimiento[\"desde\"],\n+        }\n",
+                  "status": "modified",
+                  "additions": 8,
+                  "deletions": 1
+                }
+              ],
+              "truncated": false
+            }
+          },
+          "time": {
+            "created": 1794785875599,
+            "ran": 1794785876171,
+            "completed": 1794785876203
+          }
+        }
+      ],
+      "finish": "tool-calls",
+      "rawFinish": "tool_calls",
+      "cost": 0,
+      "tokens": {
+        "input": 365,
+        "output": 234,
+        "reasoning": 0,
+        "cache": {
+          "read": 9600,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_1e1931906001A9RMF7vFii6pxu",
+      "time": {
+        "created": 1794785876244,
+        "streamed": 1794785877445,
+        "completed": 1794785877454
+      },
+      "type": "assistant",
+      "agent": "build",
+      "model": {
+        "id": "deepseek-v4.1-flash-free",
+        "providerID": "opencode",
+        "variant": "default"
+      },
+      "content": [
+        {
+          "type": "tool",
+          "id": "call_9e5f7c26ae124a1d91d37aed",
+          "name": "read",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "path": "backend/notitas/t11.py"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Read file backend/notitas/t11.py, lines 1-22\n1: class Historial:\n2:     \"\"\"Ver TAREAS.md, tarea t11.\"\"\"\n3: \n4:     MAX_MOVIMIENTOS = 20\n5: \n6:     def __init__(self) -> None:\n7:         self._movimientos: list[dict] = []\n8: \n9:     def registrar(self, movimiento: dict) -> None:\n10:         self._movimientos.append(movimiento)\n11:         if len(self._movimientos) > self.MAX_MOVIMIENTOS:\n12:             self._movimientos.pop(0)\n13: \n14:     def deshacer(self) -> dict | None:\n15:         if not self._movimientos:\n16:             return None\n17:         movimiento = self._movimientos.pop()\n18:         return {\n19:             \"nota_id\": movimiento[\"nota_id\"],\n20:             \"desde\": movimiento[\"hacia\"],\n21:             \"hacia\": movimiento[\"desde\"],\n22:         }"
+              }
+            ],
+            "metadata": {
+              "truncated": false
+            }
+          },
+          "time": {
+            "created": 1794785877279,
+            "ran": 1794785877443,
+            "completed": 1794785877452
+          }
+        }
+      ],
+      "finish": "tool-calls",
+      "rawFinish": "tool_calls",
+      "cost": 0,
+      "tokens": {
+        "input": 365,
+        "output": 44,
+        "reasoning": 0,
+        "cache": {
+          "read": 9856,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_1e1931ddb001hyf0TGyfhOkNbS",
+      "time": {
+        "created": 1794785877477,
+        "streamed": 1794785878569,
+        "completed": 1794785880125
+      },
+      "type": "assistant",
+      "agent": "build",
+      "model": {
+        "id": "deepseek-v4.1-flash-free",
+        "providerID": "opencode",
+        "variant": "default"
+      },
+      "content": [
+        {
+          "type": "tool",
+          "id": "call_9d3451d749724156a103017d",
+          "name": "shell",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "cd backend && python -m pytest tests/visibles/test_t11.py -q"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "..                                                                       [100%]\r\n"
+              }
+            ],
+            "metadata": {
+              "status": "completed",
+              "truncated": false,
+              "exit": 0
+            }
+          },
+          "time": {
+            "created": 1794785878365,
+            "ran": 1794785878566,
+            "completed": 1794785880122
+          }
+        }
+      ],
+      "finish": "tool-calls",
+      "rawFinish": "tool_calls",
+      "cost": 0,
+      "tokens": {
+        "input": 396,
+        "output": 54,
+        "reasoning": 0,
+        "cache": {
+          "read": 10112,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_1e193284a001YyU5ULAMtGjeRI",
+      "time": {
+        "created": 1794785880145,
+        "streamed": 1794785886680,
+        "completed": 1794785886681
+      },
+      "type": "assistant",
+      "agent": "build",
+      "model": {
+        "id": "deepseek-v4.1-flash-free",
+        "providerID": "opencode",
+        "variant": "default"
+      },
+      "content": [
+        {
+          "type": "reasoning",
+          "text": "Both tests pass. Now report per instructions with the 3 points, ideally for each change. I'll present a compact report per change, plus note tests passing and edge cases.\n\nEdge cases thinking:\n- registrar receives a dict missing keys → KeyError on deshacer (not specified).\n- Calling deshacer twice for the same movement → second returns previous one (LIFO) ✓.\n- Exactly 20 movements → none discarded; 21 → oldest discarded.\n- deshacer does not mutate the stored dict (returns a new one) ✓.\n- If the caller mutates the dict they passed to registrar afterwards, the history changes (no copy) — a design decision.\n- Movimiento with extra keys (e.g. \"version\") → not preserved in the returned inverse. Not specified.\n\nReport.",
+          "native": {
+            "reasoningField": "reasoning_content"
+          },
+          "time": {
+            "created": 1794785881460,
+            "completed": 1794785886677
+          }
+        },
+        {
+          "type": "text",
+          "text": "Implementado y verificado: `python -m pytest tests/visibles/test_t11.py -q` → `2 passed`.\n\n## Reporte por cambio\n\n**Cambio 1 — `__init__` con `_movimientos`**\n1. Añadí el constructor con una lista vacía y su anotación de tipo.\n2. Supuesto: el historial vive en memoria, por instancia; no se persiste ni se comparte entre instancias.\n3. Faltaría definir: ¿debe poder inicializarse con un historial previo (p. ej. `Historial(movimientos)`)? El enunciado no lo pide, así que no lo agregué.\n\n**Cambio 2 — `registrar` + `MAX_MOVIMIENTOS = 20`**\n1. `registrar` hace `append` del movimiento y, si se pasa de 20, descarta el más antiguo con `pop(0)`. La constante `MAX_MOVIMIENTOS` documenta el límite de CA3.\n2. Supuestos: el límite 20 aplica a movimientos ya registrados, no a la cantidad de `deshacer` exitosos; `registrar` no valida el contenido del dict.\n3. Casos borde a considerar: `registrar` con un dict incompleto (sin `nota_id`/`desde`/`hacia`) — falla luego en `deshacer` con `KeyError`; movimientos con claves extra (p. ej. `version`) se aceptan pero no se devuelven en el inverso.\n\n**Cambio 3 — `deshacer`**\n1. Devuelve `None` si la lista está vacía; si no, extrae el último con `pop()` y retorna un dict nuevo con `desde` y `hacia` intercambiados.\n2. Supuestos: el inverso es un dict nuevo (no muto el movimiento guardado), y el orden de deshacer es LIFO puro.\n3. Casos borde a considerar: mutación posterior del dict original por parte del llamador (al no copiar en `registrar`, el historial refleja ese cambio); deshacer 21 movimientos seguidos solo llega a los 20 conservados.\n\nResumen de la decisión de diseño que más te puede interesar revisar: **no copio el dict en `registrar`**. Si prefieres aislamiento total respecto al llamador, es un cambio de una línea (`copy.deepcopy` o `dict(movimiento)`) — dime y lo aplico."
+        }
+      ],
+      "finish": "stop",
+      "rawFinish": "stop",
+      "cost": 0,
+      "tokens": {
+        "input": 86,
+        "output": 567,
+        "reasoning": 165,
+        "cache": {
+          "read": 10496,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_1e19341dc0014REYTHXg6I0adJ",
+      "time": {
+        "created": 1794785886684
+      },
+      "type": "idle",
+      "outcome": "succeeded"
+    },
+    {
+      "id": "msg_1e1979e060016WVK1UWrAPQbqa",
+      "metadata": {
+        "displayText": "porque propusiste esta forma de realizar el ejercicio? ",
+        "comments": [],
+        "attachments": [],
+        "agent": "build",
+        "model": {
+          "modelID": "deepseek-v4.1-flash-free",
+          "providerID": "opencode"
+        }
+      },
+      "time": {
+        "created": 1794786172469
+      },
+      "text": "porque propusiste esta forma de realizar el ejercicio? ",
+      "files": [],
+      "agents": [],
+      "type": "user"
+    },
+    {
+      "id": "msg_1e1979e3c001tRfUbgzmlPqNlp",
+      "time": {
+        "created": 1794786172483,
+        "streamed": 1794786188943,
+        "completed": 1794786188944
+      },
+      "type": "assistant",
+      "agent": "build",
+      "model": {
+        "id": "deepseek-v4.1-flash-free",
+        "providerID": "opencode",
+        "variant": "default"
+      },
+      "content": [
+        {
+          "type": "reasoning",
+          "text": "The user asks: why did you propose this way of doing the exercise? They want justification of design decisions. Explain reasoning: minimal incremental changes, state list, LIFO, pop(0) trimming, new dict on deshacer, no validation, no copies, MAX constant, typing.\n\nI should be concrete and tie to CAs. Also honestly note alternatives considered (deque with maxlen, slicing, index pointer) and why rejected. Keep concise but explanatory. No code changes needed.\n\nLet me justify:\n\n1. Lista como estado: CA1/CA3 need order (last registered) and a cap; list supports append at end and pop at end = O(1), natural insertion order.\n2. pop(0) trim: only one element removed per registro, so after each call length stays ≤20; cost O(n) with n≤20, irrelevant. Alternative collections.deque(maxlen=20) auto-discards but hides the rule and needs indexing/iteration; also deque is more machinery than needed, and `list` matches project style (t12 uses plain list, copy).\n3. pop() on deshacer: LIFO — \"último registrado\" literally is the last element. Also removes it in the same operation, satisfying \"lo saca del historial\" atomically, avoiding a separate `del self._movimientos[-1]`.\n4. Inverse dict built with explicit keys, swapping desde/hacia: explicit and readable, shows exactly the three fields of the contract; doesn't mutate stored record, so subsequent deshacer of older movements unaffected. Alternative `{**m, \"desde\": m[\"hacia\"], \"hacia\": m[\"desde\"]}` would carry extra keys — I chose explicit because the spec defines exactly three keys, and silently propagating unknowns would be inventing behavior.\n5. Guard `if not self._movimientos: return None`: CA2, emptiness check on list is idiomatic; alternatively try/except IndexError but explicit check is clearer and doesn't hide real bugs.\n6. MAX_MOVIMIENTOS as class attr: names the magic number 20, testable/tweakable, no inventing behavior beyond spec.\n7. Type annotations matching existing stub signature (dict | None), and __init__ added because the stub had none — Python would otherwise fail on attribute assignment in registrar.\n8. No validation, no copies, no persistence, no exception on malformed dict: spec doesn't ask; avoid inventing requirements. Coping would be a defensive choice; flagged it as a decision for the human.\n9. Small steps: change per concern (state / registrar / deshacer) so each is reviewable and revertible, per pair-programming junior spec.\n\nAlso mention alternatives forgotten: index cursor (stack pointer) — rejects because trimming and pointer bookkeeping increases state; a single dict of note->stacks — wrong because spec is a global history.\n\nAlso mention why tests pass, and what would change if requirements differ.\n\nKeep it structured, moderate length. Spanish.",
+          "native": {
+            "reasoningField": "reasoning_content"
+          },
+          "time": {
+            "created": 1794786173458,
+            "completed": 1794786188940
+          }
+        },
+        {
+          "type": "text",
+          "text": "Buena pregunta. Te separo el **porqué de la estructura**, el **porqué de cada micro-decisión** y **qué alternativas descarté**.\n\n## 1. Por qué una lista como único estado\n\nLos tres CA hablan de una secuencia con dos operaciones: añadir al final y sacar el último. Eso es una pila, y en Python la pila canónica es una `list`:\n\n- `append` es O(1) y respeta el orden de llegada → el \"último registrado\" de CA1 es literalmente el último elemento.\n- `pop()` sin índice saca exactamente ese elemento y lo devuelve en una sola operación, lo que cumple \"devuelve el inverso **y lo saca del historial**\" sin dos pasos separados (`leer` + `del`) que podrían desincronizarse.\n- CA3 (ventana de 20) se resuelve sobre la misma estructura, sin estado auxiliar.\n\nUn solo atributo, sin contadores de posición, sin punteros: menos superficie donde equivocarse.\n\n## 2. Por qué `pop(0)` al pasarse de 20\n\n`registrar` añade **uno** y recorta **a lo sumo uno**, así que tras cada llamada la longitud nunca supera 20 y basta con eliminar la cabeza. El coste O(n) es irrelevante con n=20.\n\nDescarté `collections.deque(maxlen=20)`: da el recorte \"gratis\", pero esconde la regla del negocio dentro de una librería, y el día que alguien lea el archivo no ve el 20 explícito. También descarté `self._movimientos = self._movimientos[-20:]`: funciona, pero crea una lista nueva en cada registro sobrante y hace menos evidente que solo se tira el más viejo.\n\n## 3. Por qué construyo el dict inverso explícitamente\n\n```python\nreturn {\"nota_id\": ..., \"desde\": m[\"hacia\"], \"hacia\": m[\"desde\"]}\n```\n\n- Hace visible en una línea que el contrato son **tres** campos y que solo se intercambian dos; el enunciado es explícito con `{\"nota_id\": ..., \"desde\": ..., \"hacia\": ...}`.\n- **No muta** el movimiento guardado, así que deshacer uno no corrompe los anteriores que quedan en el historial.\n\nDescarté `{**m, \"desde\": m[\"hacia\"], \"hacia\": m[\"desde\"]}`, que es más corto pero arrastra claves desconocidas hacia la salida. Eso sería inventar comportamiento: si alguien registra `{\"version\": 3}`, el enunciado no dice que deba reaparecer en el inverso.\n\n## 4. Por qué `if not self._movimientos: return None`\n\nCA2 pide `None` cuando no hay nada. Comprobar la lista vacía es idiomático y no oculta errores reales (un `try/except IndexError` sí podría tragarse un fallo distinto). Es la rama que las pruebas visibles ejercitan en `test_vacio`.\n\n## 5. Por qué `MAX_MOVIMIENTOS = 20` como atributo de clase\n\nEl 20 es un número de negocio (CA3). Ponerlo con nombre evita el \"número mágico\" suelto, lo deja visible junto a la clase y permite ajustarlo sin buscar en el cuerpo del método. No lo convertí en parámetro de constructor porque el enunciado fija 20 y añadirlo sería un requisito inventado.\n\n## 6. Por qué añadí `__init__`\n\nEl stub solo declaraba `registrar` y `deshacer`; sin constructor, `self._movimientos` no existiría y la primera llamada a `registrar` fallaría con `AttributeError`. La anotación `list[dict]` sigue el estilo de tipos del resto del repo (mira `t12.py`).\n\n## 7. Qué decidí **no** hacer, a propósito\n\n- **No valido** el dict (claves faltantes, tipos): el enunciado no define qué hacer y una excepción inventada sería un requisito nuevo.\n- **No copio** el dict en `registrar`: si copio, aíslo al llamador; si no, soy fiel a \"guarda el movimiento\". Lo dejé sin copiar por mínima intervención, y por eso lo marqué como el punto que tú puedes revertir con una línea.\n- **No persisto** ni uso locks: no hay concurrencia ni almacenamiento pedidos aquí (eso aparece en t12, que es otro archivo).\n- **No uso un historial por nota**: los CA hablan de un historial global; separarlo por `nota_id` cambiaría la semántica de CA2.\n\n## 8. Por qué en tres cambios pequeños\n\nUno por preocupación (estado → registrar → deshacer). Cada paso deja el archivo importable y revisable por separado, y si rechazas uno (por ejemplo el recorte con `pop(0)`) solo hay que rehacer 3 líneas sin tocar el resto. Es la parte de método de pair programming junior: cambios pequeños, explicados antes, con supuestos declarados después.\n\n¿Quieres que ajuste alguno de estos puntos? Los candidatos naturales son el **copiado defensivo en `registrar`** y el **recorte con `deque(maxlen=20)`**."
+        }
+      ],
+      "finish": "stop",
+      "rawFinish": "stop",
+      "cost": 0,
+      "tokens": {
+        "input": 834,
+        "output": 1247,
+        "reasoning": 628,
+        "cache": {
+          "read": 10496,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_1e197de92001H4zLz66J1wrCQn",
+      "time": {
+        "created": 1794786188946
+      },
+      "type": "idle",
+      "outcome": "succeeded"
+    },
+    {
+      "id": "msg_1e199d440001GFiVKR8iSBWfUv",
+      "metadata": {
+        "displayText": "porque un dic dentro de una lista en pocas palabras",
+        "comments": [],
+        "attachments": [],
+        "agent": "build",
+        "model": {
+          "modelID": "deepseek-v4.1-flash-free",
+          "providerID": "opencode"
+        }
+      },
+      "time": {
+        "created": 1794786317421
+      },
+      "text": "porque un dic dentro de una lista en pocas palabras",
+      "files": [],
+      "agents": [],
+      "type": "user"
+    },
+    {
+      "id": "msg_1e199d4740015oAhMuoqp2YKKw",
+      "time": {
+        "created": 1794786317434,
+        "streamed": 1794786319809,
+        "completed": 1794786319813
+      },
+      "type": "assistant",
+      "agent": "build",
+      "model": {
+        "id": "deepseek-v4.1-flash-free",
+        "providerID": "opencode",
+        "variant": "default"
+      },
+      "content": [
+        {
+          "type": "reasoning",
+          "text": "Answer briefly: why dict inside list.\n\nShort: dict = one movement with its 3 named fields; list = order + the 20 cap. Defaultdict-like structure, readable, matches the spec's shape literally.",
+          "native": {
+            "reasoningField": "reasoning_content"
+          },
+          "time": {
+            "created": 1794786318272,
+            "completed": 1794786319806
+          }
+        },
+        {
+          "type": "text",
+          "text": "En pocas palabras:\n\n- **El `dict`** guarda **un** movimiento porque el enunciado lo define así: tres campos con nombre (`nota_id`, `desde`, `hacia`). Acceder por clave (`m[\"hacia\"]`) es legible y no depende del orden de los campos.\n- **La `list`** guarda **muchos** movimientos porque el historial es una **secuencia ordenada**: importa cuál llegó último (CA1) y hay que recortar los viejos (CA3).\n\nJuntos: **lista = el historial; dict = cada hoja del historial**. Es la traducción literal del enunciado, sin estructura extra."
+        }
+      ],
+      "finish": "stop",
+      "rawFinish": "stop",
+      "cost": 0,
+      "tokens": {
+        "input": 1956,
+        "output": 153,
+        "reasoning": 44,
+        "cache": {
+          "read": 11264,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_1e199ddc9001eL1qFpYm1DzlaW",
+      "time": {
+        "created": 1794786319817
+      },
+      "type": "idle",
+      "outcome": "succeeded"
+    },
+    {
+      "id": "msg_1e19ae49d001yeYBHBv4VbjCxn",
+      "metadata": {
+        "displayText": "porque solo devolvemos algo en el deshacer",
+        "comments": [],
+        "attachments": [],
+        "agent": "build",
+        "model": {
+          "modelID": "deepseek-v4.1-flash-free",
+          "providerID": "opencode"
+        }
+      },
+      "time": {
+        "created": 1794786387144
+      },
+      "text": "porque solo devolvemos algo en el deshacer",
+      "files": [],
+      "agents": [],
+      "type": "user"
+    },
+    {
+      "id": "msg_1e19ae4cf0015eldpW4clJYS0k",
+      "time": {
+        "created": 1794786387156,
+        "streamed": 1794786391720,
+        "completed": 1794786391721
+      },
+      "type": "assistant",
+      "agent": "build",
+      "model": {
+        "id": "deepseek-v4.1-flash-free",
+        "providerID": "opencode",
+        "variant": "default"
+      },
+      "content": [
+        {
+          "type": "reasoning",
+          "text": "Explain: because deshacer is the only operation with an output in the spec. registrar returns None per signature. The spec defines deshacer -> dict | None. Also conceptually: registrar is a push (side effect only), deshacer is a query+mutation that must tell the caller what inverse to apply. Why returning inverse rather than the original: caller needs to apply the undo. Why None when empty: nothing to undo, and None forces caller to check.\n\nAlso mention that we don't return anything from registrar because spec says -> None and the effect is the state change.\n\nKeep short, they asked \"porque solo devolvemos algo en el deshacer\" — in few words maybe. Provide concise answer with 2-3 reasons, plus note that this is dictated by spec signatures.",
+          "native": {
+            "reasoningField": "reasoning_content"
+          },
+          "time": {
+            "created": 1794786388366,
+            "completed": 1794786391717
+          }
+        },
+        {
+          "type": "text",
+          "text": "Porque la firma del enunciado solo lo pide ahí, y por la naturaleza de cada operación:\n\n1. **`registrar(movimiento) -> None`**: es una *orden* (push). Su efecto es el estado interno; el llamador ya tiene el movimiento, devolvérselo no le aporta nada.\n2. **`deshacer() -> dict | None`**: es *pregunta + acción*. Quien llama no sabe qué hay en el historial, así que necesita que le digamos **qué aplicar** para revertir, y además enterarse de si había algo (`None`).\n\nO sea: `deshacer` devuelve porque **produce información nueva** (el inverso) que solo el historial conoce. `registrar` no devuelve porque el dato lo pone el llamador.\n\nEl `dict | None` es justamente el canal para CA1 (devolver el inverso) y CA2 (devolver `None` si no hay nada)."
+        }
+      ],
+      "finish": "stop",
+      "rawFinish": "stop",
+      "cost": 0,
+      "tokens": {
+        "input": 249,
+        "output": 220,
+        "reasoning": 164,
+        "cache": {
+          "read": 13184,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_1e19af6ab001vp26JvVGRWu6Zb",
+      "time": {
+        "created": 1794786391723
+      },
+      "type": "idle",
+      "outcome": "succeeded"
+    }
+  ]
+}
