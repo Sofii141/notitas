@@ -1,6 +1,6 @@
 # Revisión a ciegas del codewalk · comparación
 
-IA: ChatGPT (el modelo exacto no se anotó [N]). Recibió solo `16112026_01_Codewalk_ciego_para_IA.md`; su respuesta, tal cual, está en `16112026_02_Resultado_ChatGPT.md`. La clave se unió después.
+IA: ChatGPT · GPT Astra Max. Recibió solo `16112026_01_Codewalk_ciego_para_IA.md`; su respuesta, tal cual, está en `16112026_02_Resultado_ChatGPT.md`. La clave se unió después.
 
 | ID | Tarea | Escenario | Quién | Ciega (P1–P5) | Total ciega | Nota oficial |
 |---|---|---|---|---|---|---|
