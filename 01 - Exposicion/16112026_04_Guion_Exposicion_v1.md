@@ -80,7 +80,7 @@ Lo que más pesa en la nota de crítica. Decirlo con ejemplos propios:
 "Lo que cambiaríamos: darle solo los archivos de la tarea, pedirle sus supuestos antes del código y escribir al menos una prueba nuestra en cada tarea."
 
 ### 16 · Demo en vivo · conduce y navega · 4:30
-Seguir `16112026_02_Guia_Demo_v2.md`. Lo que se va diciendo:
+Seguir `Demo/16112026_02_Guia_Demo_v2.md`. Lo que se va diciendo:
 - "Esta es t20, duplicar una nota. Creemos que nos va a tomar __ minutos."
 - Navegante: "Antes de abrir el agente, escribimos cómo lo haríamos."
 - Conductor pega el prompt: "El agente es el navegante: solo propone."
