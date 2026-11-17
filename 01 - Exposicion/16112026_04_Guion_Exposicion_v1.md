@@ -1,6 +1,6 @@
 # Guion de la exposición
 
-Diapositivas: `01 - Exposicion/Diapositivas/16112026_01_Diapositivas_v4.html` (flechas para avanzar, **F** para pantalla completa).
+Diapositivas: `01 - Exposicion/Diapositivas/16112026_01_Diapositivas_v5.html` (flechas para avanzar, **F** para pantalla completa).
 
 **Cómo usar este guion:** no es para leerlo en voz alta. Léanlo varias veces, quédense con la idea de cada diapositiva y díganla con sus palabras. Lo que está entre comillas es un ejemplo de cómo decirlo. Los tiempos suman 10 minutos de tema y 8 de proyecto.
 

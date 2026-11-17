@@ -2,7 +2,7 @@
 
 Archivos:
 - Reporte: `08 - Reporte/16112026_01_Reporte_Final_v6.pdf`
-- Diapositivas: `01 - Exposicion/Diapositivas/16112026_01_Diapositivas_v4.html`
+- Diapositivas: `01 - Exposicion/Diapositivas/16112026_01_Diapositivas_v5.html`
 - Demo: `01 - Exposicion/16112026_02_Guia_Demo_v2.md`
 
 > **Importante:** esta división es solo para repartir el trabajo y los turnos para hablar. **Los dos deben poder explicar todo**: el profe pregunta cosas que no están en las diapositivas, y en la entrega anterior se perdieron puntos por repartirse la sustentación por roles. Cada uno lleva escritas las cifras clave (al final de este archivo).
