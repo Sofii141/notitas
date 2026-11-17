@@ -1,7 +1,7 @@
 # Quién revisa, quién expone y quién prepara la demo
 
 Archivos:
-- Reporte: `08 - Reporte/16112026_01_Reporte_Final_v6.pdf`
+- Reporte: `08 - Reporte/16112026_01_Reporte_Final_v7.pdf`
 - Diapositivas: `01 - Exposicion/Diapositivas/16112026_01_Diapositivas_v5.html`
 - Demo: `01 - Exposicion/Demo/16112026_02_Guia_Demo_v2.md`
 
