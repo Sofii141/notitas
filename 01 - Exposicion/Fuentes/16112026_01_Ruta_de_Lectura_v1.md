@@ -22,16 +22,16 @@ Sale de la propuesta tras la asesoría (`09 - Control de entrega/Actas pareja/06
 
 ## El mapa (cada uno lo llena con lo que leyó)
 
-Una frase por fila, con su fuente. Al final se intercambian y cada uno le explica al otro su parte, como en el codewalk.
+Una frase por fila, con su fuente. Lo de Juan José viene de `07112026_01_Mapa_Lectura_v1.xlsx` (en esta carpeta), con las referencias completas; solo escribió lo que pudo leer. Falta la fila de la IA y la parte de Ana Sofía. Al final se intercambian y cada uno le explica al otro su parte, como en el codewalk.
 
 | Tema | Qué dice | Fuente |
 |---|---|---|
-| Origen | | |
-| Objetivo | | |
-| Roles | | |
-| Beneficios | | |
-| Costos | | |
-| Cuándo conviene y cuándo no | | |
+| Origen | Juan José: Beck lo define como una práctica de Extreme Programming: todo el código lo escriben dos personas en una máquina. Nace del primer valor de XP, la comunicación. | Beck (2000), págs. 58–59 y 100–106; Hannay et al. (2009) |
+| Objetivo | Juan José: mejorar el conocimiento y el aprendizaje del equipo, además de una mejor calidad de código (Beck). | Beck (2000), págs. 58–59 y 100–106 |
+| Roles | Juan José: el que teclea piensa en cómo implementarlo en el momento; el otro piensa en general en cómo se integra al sistema (Beck). | Beck (2000), págs. 58–59 y 100–106; Hannay et al. (2009) |
+| Beneficios | Juan José: código de mejor calidad y menor probabilidad de que el equipo abandone las buenas prácticas (Beck). Hannay sugiere que las parejas de juniors mejoran mucho la precisión en tareas complejas y son las más beneficiadas en el aprendizaje. | Beck (2000), págs. 58–59 y 100–106; Hannay et al. (2009) |
+| Costos | Juan José: muchas veces se ve como un costo porque parece menos productivo (Beck). Hannay sugiere que puede requerir más esfuerzo, y costos de precisión y tiempo si la pareja es de programadores muy experimentados. | Beck (2000), págs. 58–59 y 100–106; Hannay et al. (2009) |
+| Cuándo conviene y cuándo no | Juan José: según Hannay, a mi parecer conviene en una tarea compleja asignada a una pareja con algún junior. | Hannay et al. (2009) |
 | Qué cambia con la IA | | |
 
 Cuando terminen la puesta en común, me cuentan y cambio en el reporte la frase de que "estamos leyendo" por "leímos".
